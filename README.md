@@ -1,4 +1,75 @@
-# Astro Starter Kit: Minimal
+# Kids Kreations Website
+
+A modern, responsive website for Kids Kreations, a premium infantwear OEM/ODM manufacturer based in Thailand. Built with Astro and deployed on Vercel.
+
+## Features
+
+- 🎨 Modern, responsive design
+- 🚀 Fast performance with Astro
+- 📱 Mobile-first approach
+- 📧 Contact form with email notifications
+- 🖼️ Interactive product gallery
+- 🌐 Multi-page structure
+- 🔍 SEO optimized
+
+## Tech Stack
+
+- [Astro](https://astro.build/) - Web framework
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [TailwindCSS](https://tailwindcss.com/) - Styling
+- [Nodemailer](https://nodemailer.com/) - Email handling
+- [Vercel](https://vercel.com/) - Deployment
+
+## Prerequisites
+
+- Node.js (v18 or later)
+- npm or yarn
+- Git
+
+
+## Project Structure
+
+```
+better-binary/
+├── public/          # Static assets
+├── src/
+│   ├── assets/      # Images and other assets
+│   ├── components/  # Reusable components
+│   ├── data/        # Data files
+│   ├── layouts/     # Page layouts
+│   ├── pages/       # Route pages
+│   └── styles/      # Global styles
+├── .env            # Environment variables
+├── astro.config.mjs # Astro configuration
+└── package.json    # Project dependencies
+```
+
+## Deployment
+
+The site is automatically deployed to Vercel when changes are pushed to the main branch. The deployment process:
+
+1. Push changes to main:
+```bash
+git add .
+git commit -m "your commit message"
+git push origin main
+```
+
+2. Vercel automatically:
+   - Detects the push
+   - Builds the project
+   - Deploys to production
+
+
+## License
+
+This project is proprietary and confidential. All rights reserved.
+
+## Contact
+
+For any questions or support, please contact:
+- Email: pranav@kidskreationsco.com
+
 
 ```sh
 npm create astro@latest -- --template minimal
