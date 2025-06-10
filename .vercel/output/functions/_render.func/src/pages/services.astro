@@ -1,0 +1,607 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+
+const services = [
+  {
+    title: "OEM Manufacturing",
+    description: "Best for established brands or distributors seeking full-scale manufacturing based on their own tech packs, materials, and brand standards.",
+    icon: "fa-industry",
+    type: "oem",
+    features: [
+      "Custom design implementation",
+      "Material sourcing",
+      "Production management"
+    ],
+    learnMore: "Learn about our OEM capabilities"
+  },
+  {
+    title: "ODM Development",
+    description: "Ideal for entrepreneurs or growing labels looking for expert help in turning ideas into ready-to-sell babywear. From sketch to sample.",
+    icon: "fa-lightbulb",
+    type: "odm",
+    features: [
+      "Design consultation",
+      "Prototype development",
+      "Production optimization"
+    ],
+    learnMore: "Explore ODM services"
+  },
+  {
+    title: "Private Label",
+    description: "Launch your babywear brand instantly with fully packaged products, ideal for influencers, boutiques, and online retailers.",
+    icon: "fa-tag",
+    type: "private",
+    features: [
+      "Brand customization",
+      "Packaging design",
+      "Quality assurance"
+    ],
+    learnMore: "View private label options"
+  },
+  {
+    title: "Custom Packaging",
+    description: "Great for brands that want their babywear to stand out, with gift-ready boxes, branded tags, and beautiful presentation for retail or e-commerce.",
+    icon: "fa-box",
+    type: "packaging",
+    features: [
+      "Custom box design",
+      "Hang tags",
+      "Branding elements"
+    ],
+    learnMore: "See packaging examples"
+  }
+];
+
+const processSteps = [
+  {
+    title: "Inquiry & Brief",
+    description: "We review your request and assess feasibility",
+    icon: "fa-envelope-open-text",
+    details: [
+      "Initial consultation",
+      "Requirements analysis",
+      "Technical feasibility check"
+    ],
+    color: "rgb(41, 128, 185)"
+  },
+  {
+    title: "Sampling & Quote",
+    description: "We develop samples and estimate costs",
+    icon: "fa-calculator",
+    details: [
+      "Material selection",
+      "Sample development",
+      "Cost calculation"
+    ],
+    color: "rgb(52, 152, 219)"
+  },
+  {
+    title: "Bulk Production",
+    description: "We manufacture at scale with QC checks",
+    icon: "fa-industry",
+    details: [
+      "Bulk material procurement",
+      "Production monitoring",
+      "Quality checks"
+    ],
+    color: "rgb(155, 89, 182)"
+  },
+  {
+    title: "Final QC & Packaging",
+    description: "We inspect, label, and brand your product",
+    icon: "fa-box-check",
+    details: [
+      "Final inspection",
+      "Packaging design",
+      "Label verification"
+    ],
+    color: "rgb(231, 76, 60)"
+  },
+  {
+    title: "Export & Delivery",
+    description: "We arrange documents and ship globally",
+    icon: "fa-shipping-fast",
+    details: [
+      "Export documentation",
+      "Shipping arrangement",
+      "Tracking setup"
+    ],
+    color: "rgb(230, 126, 34)"
+  },
+  {
+    title: "Kickstart Your Project",
+    description: "Send us your designs or idea — we'll handle the rest",
+    icon: "fa-paper-plane",
+    details: [],
+    color: "rgb(46, 204, 113)"
+  }
+];
+---
+
+<Layout title="Services - Kids Kreations">
+  <Navigation />
+  
+  <main>
+    <section class="hero services-hero">
+      <div class="container">
+        <div class="section-title">
+          <h1>Our Services</h1>
+          <p>Comprehensive manufacturing solutions for your infantwear brand</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="services-content">
+      <div class="container">
+        <div class="services-grid">
+          {services.map(service => (
+            <div class="service-card" data-type={service.type}>
+              <div class="service-icon">
+                <i class={`fas ${service.icon}`}></i>
+              </div>
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+              <ul class="service-features">
+                {service.features.map(feature => (
+                  <li>
+                    <i class="fas fa-check"></i>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <a href="/contact" class="service-link">{service.learnMore} </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="process">
+      <div class="container">
+        <div class="section-title">
+          <h2>From Idea to Export</h2>
+          <p>A full-service roadmap to bring your babywear brand to life.</p>
+        </div>
+        
+        <div class="process-grid">
+          {processSteps.map((step, index) => (
+            <div class="process-card" data-step={index + 1} style={`--delay: ${index * 100}ms`}>
+              <div class="step-number" style={`--step-color: ${step.color}`}>
+                {index + 1}
+              </div>
+              <div class="step-icon">
+                <i class={`fas ${step.icon}`}></i>
+              </div>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+              {step.details.length > 0 && (
+                <div class="step-details">
+                  <ul>
+                    {step.details.map(detail => (
+                      <li>
+                        <i class="fas fa-check"></i>
+                        <span>{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {index === processSteps.length - 1 && (
+                <a href="/contact" class="button button-primary mt-4">Start Your Project →</a>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Ready to Start Your Project?</h2>
+          <p>Let's discuss how we can help bring your infantwear designs to life</p>
+          <a href="/contact" class="button button-primary">Get in Touch</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .services-hero {
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--background) 100%);
+    padding: var(--spacing-xl) 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .services-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/images/pattern.svg') repeat;
+    opacity: 0.1;
+    z-index: 0;
+  }
+
+  .services-content {
+    padding: var(--spacing-xl) 0;
+    background: var(--background);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+    contain: content;
+    padding: 1px; /* Prevents border clipping */
+  }
+
+  .service-card {
+    padding: var(--spacing-xl);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: visible;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    contain: content;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--primary-light) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: var(--radius-lg);
+  }
+
+  /* Specific adjustments for OEM and ODM cards */
+  .service-card[data-type="oem"]::before,
+  .service-card[data-type="odm"]::before {
+    top: -2px; /* Move the line up slightly */
+  }
+
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+  }
+
+  .service-card:hover::before {
+    opacity: 0.1;
+  }
+
+  .service-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-md);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: color-mix(in srgb, var(--primary) 10%, white);
+    position: relative;
+    z-index: 1;
+  }
+
+  .service-card:hover .service-icon {
+    transform: scale(1.1) rotate(5deg);
+    background: color-mix(in srgb, var(--primary) 15%, white);
+  }
+
+  .service-icon i {
+    font-size: 1.5rem;
+    color: var(--primary);
+    transition: all 0.3s ease;
+  }
+
+  .service-card:hover .service-icon i {
+    color: var(--primary-dark);
+  }
+
+  .service-card h3 {
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.25rem;
+  }
+
+  .service-features {
+    list-style: none;
+    padding: 0;
+    margin: var(--spacing-lg) 0;
+  }
+
+  .service-features li {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-light);
+  }
+
+  .service-features i {
+    color: var(--primary);
+    margin-right: var(--spacing-sm);
+    font-size: 0.875rem;
+  }
+
+  .service-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+
+  .service-link:hover {
+    color: var(--primary-dark);
+    transform: translateX(5px);
+  }
+
+  .service-link::after {
+    content: '→';
+    transition: transform 0.3s ease;
+  }
+
+  .service-link:hover::after {
+    transform: translateX(4px);
+  }
+
+  .process {
+    background: var(--background-alt);
+    padding: var(--spacing-xl) 0;
+    position: relative;
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin: var(--spacing-xl) 0;
+    position: relative;
+    contain: content;
+  }
+
+  @media (min-width: 768px) {
+    .process-grid::before {
+      content: '';
+      position: absolute;
+      top: 44px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(to right, 
+        var(--primary) 0%,
+        var(--success) 20%,
+        var(--warning) 40%,
+        var(--info) 60%,
+        var(--secondary) 80%,
+        var(--primary-dark) 100%
+      );
+      opacity: 0.2;
+      z-index: 0;
+      pointer-events: none;
+    }
+  }
+
+  .process-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease forwards;
+    animation-delay: var(--delay);
+    z-index: 1;
+    contain: content;
+    will-change: transform, opacity;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .process-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    z-index: 2;
+    will-change: transform;
+  }
+
+  .step-number {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 32px;
+    background: var(--step-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: var(--shadow-sm);
+    z-index: 3;
+    will-change: transform;
+  }
+
+  .step-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--step-color) 10%, white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-md);
+    position: relative;
+    z-index: 3;
+    will-change: transform;
+  }
+
+  .step-icon i {
+    font-size: 1.5rem;
+    color: var(--step-color);
+  }
+
+  .process-card h3 {
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.25rem;
+    position: relative;
+    z-index: 3;
+  }
+
+  .process-card p {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-md);
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 3;
+  }
+
+  .step-details {
+    margin-top: auto;
+    width: 100%;
+    position: relative;
+    z-index: 3;
+  }
+
+  .step-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+  }
+
+  .step-details li {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-light);
+    font-size: 0.875rem;
+  }
+
+  .step-details i {
+    color: var(--step-color);
+    font-size: 0.875rem;
+  }
+
+  .process-cta {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-xl);
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .process-cta h3 {
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.5rem;
+  }
+
+  .process-cta p {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-lg);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-section {
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+    padding: var(--spacing-xl) 0;
+    text-align: center;
+    color: white;
+  }
+
+  .cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cta-content h2 {
+    color: white;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .cta-content p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  @media (max-width: 768px) {
+    .services-hero,
+    .process {
+      padding: var(--spacing-lg) 0;
+    }
+
+    .process-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .process-card {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Intersection Observer for process cards
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    document.querySelectorAll('.process-card').forEach(card => {
+      observer.observe(card);
+    });
+  });
+</script> 
