@@ -1,16 +1,511 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import TrustedRegions from '../components/TrustedRegions.astro';
+import { Image } from 'astro:assets';
 
+import romper from '/src/assets/products/romper.webp';
+import giftset from '/src/assets/products/giftset.webp';
+import twopiece from '/src/assets/products/2piece.webp';
+import herobaby from '/src/assets/home/hero-babywear.png';
+import organiclogo from '/src/assets/icons/organic.png';
+import palette from '/src/assets/icons/paintbrush.png';
+import globe from '/src/assets/icons/international.png';
+
+
+// Import Google Fonts
+const fontLinks = [
+	'https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;500;600;700&display=swap',
+	'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap'
+];
+
+const features = [
+	{
+		title: "Certified Organic Fabrics",
+		description: "Certified materials ensuring the highest quality and safety standards for infantwear.",
+		icon: organiclogo,
+		type: "image",
+		color: "var(--success)"
+	},
+	{
+		title: "Made to Fit Your Brand",
+		description: "Custom designs, packaging, and branding solutions tailored to your vision.",
+		icon: palette,
+		type: "image",
+		color: "var(--primary)"
+	},
+	{
+		title: "Internationally Compliant",
+		description: "Export-ready products meeting global safety and quality standards.",
+		icon: globe,
+		type: "image",
+		color: "var(--info)"
+	}
+];
+
+const featuredProducts = [
+	{
+		title: "Gift Sets",
+		description: "Complete sets of coordinated babywear",
+		image: giftset,
+		format: "jpeg", 
+		badge: "Popular"
+	},
+	{
+		title: "Rompers & Playsuits",
+		description: "Comfortable one-piece outfits",
+		image: romper,
+		badge: "Best Seller"
+	},
+	{
+		title: "Two-Piece Sets",
+		description: "Coordinated tops and bottoms",
+		image: twopiece,
+		badge: "New"
+	}
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Kids Kreations - Premium Infantwear Manufacturing">
+	<Navigation />
+	
+	{fontLinks.map(link => (
+		<link rel="stylesheet" href={link} />
+	))}
+	
+	<main>
+		<section class="hero">
+			<div class="container">
+				<div class="hero-grid">
+					<div class="hero-content">
+						<h1>Your Partner in Premium Babywear Manufacturing</h1>
+						<p>Certified organic production, custom designs, and seamless export support. Everything you need to bring your brand to life.</p>
+						<div class="hero-cta">
+							<a href="/products" class="button button-primary">Explore Products</a>
+							<a href="/contact" class="button button-secondary">Request a Quote</a>
+						</div>
+					</div>
+					<div class="hero-image">
+						<Image 
+							src={herobaby}
+							alt="Premium babywear collection" 
+							width={800}
+							height={600}
+							class="hero-img"
+							loading="eager"
+						/>
+						<div class="hero-pattern"></div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<TrustedRegions />
+
+		<section class="features">
+			<div class="container">
+				<div class="section-header">
+					<h2>Why Choose Us</h2>
+					<p>Premium manufacturing solutions for your infantwear brand</p>
+				</div>
+				<div class="features-grid">
+					{features.map(feature => (
+						<div class="feature-card" data-aos="fade-up">
+							<div class="feature-icon" style={`--icon-color: ${feature.color}`}>
+								{feature.type === 'fa' ? (
+									<i class={`fas ${feature.icon}`}></i>
+								) : (
+									<Image 
+										src={feature.icon} 
+										alt={feature.title} 
+										width={64}
+										height={64}
+										quality={100}
+										class="feature-icon-img"
+									/>
+								)}
+							</div>
+							<h3>{feature.title}</h3>
+							<p>{feature.description}</p>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="featured-products">
+			<div class="container">
+				<div class="section-header">
+					<h2>Featured Products</h2>
+					<p>Explore our premium infantwear collection</p>
+				</div>
+				<div class="products-grid">
+					{featuredProducts.map(product => (
+						<div class="product-card" data-aos="fade-up">
+							<div class="product-image">
+								<Image 
+									src={product.image} 
+									alt={product.title}
+									width={600}
+									height={600}
+									quality={80}
+									format="webp"
+									class="product-img"
+								/>
+								<span class="product-badge">{product.badge}</span>
+							</div>
+							<div class="product-info">
+								<h3>{product.title}</h3>
+								<p>{product.description}</p>
+								<a href="/products" class="button button-text">View Collection</a>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="cta">
+			<div class="container">
+				<div class="cta-content">
+					<h2>Let's create something beautiful together.</h2>
+					<p>Start your journey with Kids Kreations today</p>
+					<a href="/contact" class="button button-primary">Request a Quote</a>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<Footer />
+</Layout>
+
+<style>
+	/* Typography */
+	h1 {
+		font-family: 'Libre Baskerville', serif;
+		font-size: clamp(2rem, 5vw, 3rem);
+		line-height: 1.2;
+		color: var(--text-dark);
+		margin-bottom: var(--spacing-md);
+	}
+
+	h2 {
+		font-family: 'Libre Baskerville', serif;
+		font-size: clamp(1.75rem, 4vw, 2.3rem);
+		line-height: 1.3;
+		color: var(--text-dark);
+		margin-bottom: var(--spacing-sm);
+	}
+
+	h3 {
+		font-family: 'Inter', serif;
+		font-size: clamp(1.25rem, 3vw, 1.75rem);
+		line-height: 1.4;
+		color: var(--text-dark);
+		margin-bottom: var(--spacing-sm);
+	}
+
+	p {
+		font-family: 'Inter', sans-serif;
+		font-size: clamp(1rem, 2vw, 1.25rem);
+		line-height: 1.6;
+		color: var(--text-light);
+	}
+
+	/* Hero Section */
+	.hero {
+		padding: var(--spacing-xl) 0;
+		background: linear-gradient(135deg, #fefefe 0%, #f8f9fa 100%);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.hero-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--spacing-xl);
+		align-items: center;
+	}
+
+	.hero-content {
+		max-width: 600px;
+	}
+
+	.hero-image {
+		position: relative;
+	}
+
+	.hero-img {
+		width: 100%;
+		height: auto;
+		border-radius: var(--radius-lg);
+		box-shadow: var(--shadow-lg);
+	}
+
+	.hero-pattern {
+		position: absolute;
+		top: -20px;
+		right: -20px;
+		width: 200px;
+		height: 200px;
+		background: url('/images/pattern.svg') repeat;
+		opacity: 0.1;
+		z-index: -1;
+	}
+
+	.hero-cta {
+		display: flex;
+		gap: var(--spacing-md);
+		margin-top: var(--spacing-lg);
+	}
+
+	/* Features Section */
+	.features {
+		padding: var(--spacing-xl) 0;
+		background: var(--background);
+	}
+
+	.section-header {
+		text-align: center;
+		max-width: 800px;
+		margin: 0 auto var(--spacing-xl);
+	}
+
+	.features-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: var(--spacing-lg);
+	}
+
+	.feature-card {
+		background: white;
+		padding: var(--spacing-xl);
+		border-radius: var(--radius-lg);
+		box-shadow: var(--shadow-md);
+		transition: all 0.3s ease;
+		text-align: center;
+	}
+
+	.feature-card:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--shadow-lg);
+	}
+
+	.feature-icon {
+		width: 64px;
+		height: 64px;
+		background: color-mix(in srgb, var(--icon-color) 10%, white);
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto var(--spacing-md);
+		padding: 12px;
+	}
+
+	.feature-icon i {
+		font-size: 1.5rem;
+		color: var(--icon-color);
+	}
+
+	.feature-icon-img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		display: block;
+	}
+
+
+	/* Featured Products Section */
+	.featured-products {
+		padding: var(--spacing-xl) 0;
+		background: white;
+	}
+
+	.products-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: var(--spacing-xl);
+	}
+
+	.product-card {
+		background: white;
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		box-shadow: var(--shadow-md);
+		transition: all 0.3s ease;
+	}
+
+	.product-card:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--shadow-lg);
+	}
+
+	.product-image {
+		position: relative;
+		width: 100%;
+		aspect-ratio: 1;
+		overflow: hidden;
+		border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+		background: var(--background);
+		border: 1px solid var(--border);
+	}
+
+	.product-img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		object-position: center;
+		padding: var(--spacing-sm);
+	}
+
+	.product-badge {
+		position: absolute;
+		top: var(--spacing-md);
+		right: var(--spacing-md);
+		background: var(--primary);
+		color: white;
+		padding: 0.25rem 0.75rem;
+		border-radius: var(--radius-full);
+		font-size: 0.75rem;
+		font-weight: 500;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	.product-info {
+		padding: var(--spacing-xl);
+	}
+
+	.product-info h3 {
+		margin-bottom: var(--spacing-sm);
+		font-size: 1.25rem;
+	}
+
+	.product-info p {
+		margin-bottom: var(--spacing-lg);
+		font-size: 0.9375rem;
+		color: var(--text-light);
+	}
+
+	/* CTA Section */
+	.cta {
+		padding: var(--spacing-xl) 0;
+		background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+		color: white;
+		text-align: center;
+	}
+
+	.cta-content {
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	.cta h2 {
+		color: white;
+		margin-bottom: var(--spacing-sm);
+	}
+
+	.cta p {
+		color: rgba(255, 255, 255, 0.9);
+		margin-bottom: var(--spacing-lg);
+	}
+
+	/* Buttons */
+	.button {
+		display: inline-block;
+		padding: 0.75rem 1.5rem;
+		border-radius: var(--radius-full);
+		font-weight: 500;
+		text-decoration: none;
+		transition: all 0.3s ease;
+	}
+
+	.button-primary {
+		background: var(--primary);
+		color: white;
+	}
+
+	.button-primary:hover {
+		background: var(--primary-dark);
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-md);
+	}
+
+	.button-secondary {
+		background: transparent;
+		color: var(--primary);
+		border: 2px solid var(--primary);
+	}
+
+	.button-secondary:hover {
+		background: var(--primary);
+		color: white;
+		transform: translateY(-2px);
+	}
+
+	.button-text {
+		color: var(--primary);
+		padding: 0;
+		font-weight: 500;
+		font-size: 0.9375rem;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-top: var(--spacing-md);
+	}
+
+	.button-text:hover {
+		color: var(--primary-dark);
+	}
+
+	.button-text::after {
+		content: '→';
+		font-weight: 400;
+		transition: transform 0.3s ease;
+	}
+
+	.button-text:hover::after {
+		transform: translateX(4px);
+	}
+
+	/* Responsive Design */
+	@media (max-width: 768px) {
+		.hero-grid {
+			grid-template-columns: 1fr;
+			text-align: center;
+		}
+
+		.hero-content {
+			max-width: 100%;
+		}
+
+		.hero-cta {
+			justify-content: center;
+		}
+
+		.features-grid,
+		.products-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
+
+<script>
+	// Initialize AOS (Animate On Scroll)
+	document.addEventListener('DOMContentLoaded', () => {
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('visible');
+				}
+			});
+		}, {
+			threshold: 0.1
+		});
+
+		document.querySelectorAll('[data-aos]').forEach(element => {
+			observer.observe(element);
+		});
+	});
+</script>

@@ -1,0 +1,285 @@
+---
+import { Image } from 'astro:assets';
+
+// Import flag SVGs
+// import japanFlag from '../assets/flags/japan.svg';
+// import franceFlag from '../assets/flags/france.svg';
+// import thailandFlag from '../assets/flags/thailand.svg';
+import australiaFlag from '../assets/flags/australia.svg';
+import usaFlag from '../assets/flags/usa.svg';
+import swissFlag from '../assets/flags/switzerland.svg';
+import belgFlag from '../assets/flags/belgium.svg';
+import uaeFlag from '../assets/flags/uae.svg';
+import malayFlag from '../assets/flags/malaysia.svg';
+import ukFlag from '../assets/flags/uk.svg';
+import nzFlag from '../assets/flags/nz.svg';
+import thailandFlag from '../assets/flags/thailand.svg';
+import indiaFlag from '../assets/flags/india.svg';
+// import canadaFlag from '../assets/flags/canada.svg';
+// import germanyFlag from '../assets/flags/germany.svg';
+// import ukFlag from '../assets/flags/uk.svg';
+// import italyFlag from '../assets/flags/italy.svg';
+// 
+
+const regions = [
+  { flag: australiaFlag, name: "Australia" },
+  { flag: usaFlag, name: "United States" },
+  { flag: swissFlag, name: "Switzerland" },
+  { flag: uaeFlag, name: "United Arab Emirates" },
+  { flag: ukFlag, name: "United Kingdom" },
+  { flag: belgFlag, name: "Belgium" },
+  { flag: malayFlag, name: "Malaysia" },
+  { flag: nzFlag, name: "New Zealand"},
+  { flag: thailandFlag, name: "Thailand"},
+  { flag: indiaFlag, name: "India"},
+
+];
+---
+
+<section class="trusted-regions">
+  <div class="container">
+    <div class="section-header">
+      <h2>Trusted by babywear brands in over 12 countries</h2>
+    </div>
+    <div class="scrolling-wrapper">
+      <div class="scrolling-content">
+        {regions.map(region => (
+          <div class="region-item">
+            <div class="flag-wrapper">
+              <Image 
+                src={region.flag} 
+                alt={`${region.name} flag`}
+                width={48}
+                height={36}
+                class="flag"
+                fetchpriority="high"
+                loading="eager"
+              />
+            </div>
+            <span class="name">{region.name}</span>
+          </div>
+        ))}
+        {/* Duplicate items for seamless loop */}
+        {regions.map(region => (
+          <div class="region-item">
+            <div class="flag-wrapper">
+              <Image 
+                src={region.flag} 
+                alt={`${region.name} flag`}
+                width={48}
+                height={36}
+                class="flag"
+                fetchpriority="high"
+                loading="eager"
+              />
+            </div>
+            <span class="name">{region.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .trusted-regions {
+    background: linear-gradient(135deg, var(--background) 0%, var(--background-alt) 100%);
+    padding: var(--spacing-xl) 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .trusted-regions::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/images/pattern.svg') repeat;
+    opacity: 0.05;
+    z-index: 0;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-header h2 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: -0.02em;
+  }
+
+  .section-header p {
+    color: var(--text-light);
+    font-size: 1.125rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .scrolling-wrapper {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: var(--spacing-sm) 0;
+  }
+
+  .scrolling-wrapper::before,
+  .scrolling-wrapper::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, 
+      transparent,
+      var(--border) 20%,
+      var(--border) 80%,
+      transparent
+    );
+    z-index: 2;
+  }
+
+  .scrolling-wrapper::before {
+    top: 0;
+  }
+
+  .scrolling-wrapper::after {
+    bottom: 0;
+  }
+
+  .scrolling-wrapper::before,
+  .scrolling-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .scrolling-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, var(--background-alt), transparent);
+  }
+
+  .scrolling-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, var(--background-alt), transparent);
+  }
+
+  .scrolling-content {
+    display: inline-flex;
+    gap: var(--spacing-xl);
+    animation: scroll 30s linear infinite;
+    white-space: nowrap;
+    padding: var(--spacing-md) 0;
+    will-change: transform;
+  }
+
+  .scrolling-content:hover {
+    animation-play-state: paused;
+  }
+
+  .region-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-xl);
+    background: white;
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+    flex-shrink: 0;
+    min-width: max-content;
+  }
+
+  .region-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-light);
+    background: linear-gradient(135deg, white 0%, var(--background) 100%);
+  }
+
+  .flag-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 36px;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+  }
+
+  .region-item:hover .flag-wrapper {
+    transform: scale(1.05);
+  }
+
+  .flag {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .name {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    letter-spacing: 0.01em;
+  }
+
+  @keyframes scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .trusted-regions {
+      padding: var(--spacing-lg) 0;
+    }
+
+    .section-header h2 {
+      font-size: 1.75rem;
+    }
+
+    .section-header p {
+      font-size: 1rem;
+    }
+
+    .region-item {
+      padding: var(--spacing-sm) var(--spacing-lg);
+      gap: var(--spacing-sm);
+    }
+
+    .flag-wrapper {
+      width: 36px;
+      height: 27px;
+    }
+
+    .name {
+      font-size: 0.875rem;
+    }
+
+    .scrolling-wrapper::before,
+    .scrolling-wrapper::after {
+      width: 75px;
+    }
+  }
+</style> 

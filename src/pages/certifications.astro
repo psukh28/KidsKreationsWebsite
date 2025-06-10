@@ -1,0 +1,350 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+
+const certifications = [
+  {
+    title: 'GOTS Certified',
+    description: 'Global Organic Textile Standard certification for organic textile processing',
+    icon: 'fa-seedling',
+    features: [
+      'Organic fiber processing',
+      'Environmental responsibility',
+      'Social compliance',
+      'Chemical safety'
+    ]
+  },
+  {
+    title: 'ISO 9001:2015',
+    description: 'Quality management system certification',
+    icon: 'fa-award',
+    features: [
+      'Quality assurance',
+      'Process improvement',
+      'Customer satisfaction',
+      'Risk management'
+    ]
+  },
+  {
+    title: 'OEKO-TEX® Standard 100',
+    description: 'International testing and certification system for textile products',
+    icon: 'fa-flask',
+    features: [
+      'Harmful substance testing',
+      'Product safety',
+      'Consumer protection',
+      'Environmental responsibility'
+    ]
+  }
+];
+
+const clients = [
+  {
+    name: 'Brand A',
+    logo: 'fa-store',
+    description: 'Leading children\'s wear brand in Europe'
+  },
+  {
+    name: 'Brand B',
+    logo: 'fa-leaf',
+    description: 'Premium organic clothing retailer'
+  },
+  {
+    name: 'Brand C',
+    logo: 'fa-globe',
+    description: 'Global fashion house'
+  }
+];
+---
+
+<Layout title="Certifications - Kids Kreations">
+  <Navigation />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="hero services-hero">
+      <div class="container">
+        <div class="section-title">
+          <h1>Our Certifications</h1>
+          <p>Committed to the highest standards of quality and sustainability</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications Grid -->
+    <section class="certifications-content">
+      <div class="container">
+        <div class="services-grid">
+          {certifications.map(cert => (
+            <div class="card cert-card">
+              <div class="service-icon">
+                <i class={`fas ${cert.icon}`}></i>
+              </div>
+              <h3>{cert.title}</h3>
+              <p>{cert.description}</p>
+              <ul class="service-features">
+                {cert.features.map(feature => (
+                  <li>
+                    <i class="fas fa-check"></i>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section class="clients-content">
+      <div class="container">
+        <div class="section-title">
+          <h2>Our Clients</h2>
+          <p>Trusted by leading brands worldwide</p>
+        </div>
+
+        <div class="clients-grid">
+          {clients.map(client => (
+            <div class="card client-card">
+              <div class="service-icon">
+                <i class={`fas ${client.logo}`}></i>
+              </div>
+              <h3>{client.name}</h3>
+              <p>{client.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Call To Action -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Ready to Work Together?</h2>
+          <p>Join our growing list of satisfied clients</p>
+          <a href="/contact" class="button button-primary">Get in Touch</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero (same as Services hero) */
+  .services-hero {
+    background: linear-gradient(to right, var(--primary-light), var(--background));
+    padding: var(--spacing-xl) 0;
+    text-align: center;
+  }
+
+  .section-title {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .section-title h1,
+  .section-title h2 {
+    color: var(--text-dark);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .section-title p {
+    color: var(--text-light);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+  }
+
+  /* Certifications Grid (reuses Services grid classes) */
+  .certifications-content {
+    background: var(--background);
+    padding: var(--spacing-xl) 0;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  .cert-card {
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .cert-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .service-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--primary-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .service-icon i {
+    font-size: 1.5rem;
+    color: var(--primary);
+  }
+
+  .cert-card h3 {
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--text-xl);
+  }
+
+  .cert-card p {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .service-features {
+    list-style: none;
+    padding: 0;
+    margin: var(--spacing-lg) 0 0;
+  }
+
+  .service-features li {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .service-features i {
+    color: var(--primary);
+    margin-right: var(--spacing-sm);
+  }
+
+  /* Clients Section */
+  .clients-content {
+    background: var(--background-alt);
+    padding: var(--spacing-xl) 0;
+  }
+
+  .clients-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  .client-card {
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+  }
+
+  .client-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .client-card h3 {
+    color: var(--text-dark);
+    margin: var(--spacing-sm) 0;
+    font-size: var(--text-xl);
+  }
+
+  .client-card p {
+    color: var(--text-light);
+    font-size: var(--text-base);
+    line-height: 1.6;
+  }
+
+  /* CTA Section (same as Services CTA) */
+  .cta-section {
+    background: var(--background);
+    padding: var(--spacing-xl) 0;
+    text-align: center;
+  }
+
+  .cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cta-content h2 {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .cta-content p {
+    color: var(--text-light);
+    font-size: var(--text-lg);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.6;
+  }
+
+  .button {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .button-primary {
+    background: var(--primary);
+    color: white;
+  }
+
+  .button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  @media (max-width: 768px) {
+    .services-hero,
+    .certifications-content,
+    .clients-content,
+    .cta-section {
+      padding: var(--spacing-lg) 0;
+    }
+
+    .section-title h1,
+    .section-title h2 {
+      font-size: var(--text-2xl);
+    }
+
+    .section-title p {
+      font-size: var(--text-base);
+    }
+  }
+</style>
+
+<script>
+  // IntersectionObserver for future scroll-triggered animations (if you add .animate classes)
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.cert-card, .client-card').forEach(item => {
+      observer.observe(item);
+    });
+  });
+</script>
