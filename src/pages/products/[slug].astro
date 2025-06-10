@@ -51,16 +51,11 @@ if (!product) {
         <div class="product-grid">
           <div class="product-gallery">
             <div class="main-image">
-              <Image 
-                src={product.images[0]} 
+              <img 
+                src={product.images[0].src} 
                 alt={product.title}
-                width={1200}
-                height={900}
-                quality={95}
-                format="webp"
                 class="gallery-main"
                 loading="eager"
-                data-original-src={product.images[0].src}
               />
               <button class="zoom-button" aria-label="Zoom image">
                 <i class="fas fa-search-plus"></i>
@@ -69,15 +64,10 @@ if (!product) {
             <div class="thumbnail-grid">
               {product.images.map((image, index) => (
                 <button class="thumbnail" data-index={index}>
-                  <Image 
-                    src={image} 
+                  <img 
+                    src={image.src} 
                     alt={`${product.title} - View ${index + 1}`}
-                    width={200}
-                    height={150}
-                    quality={95}
-                    format="webp"
                     loading="eager"
-                    data-original-src={image.src}
                   />
                 </button>
               ))}
@@ -415,6 +405,8 @@ if (!product) {
     font-size: 2rem;
     cursor: pointer;
     z-index: 1001;
+    padding: 0.5rem;
+    line-height: 1;
   }
 
   .modal-nav {
@@ -428,6 +420,7 @@ if (!product) {
     padding: 1rem;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    z-index: 1001;
   }
 
   .modal-nav:hover {
@@ -493,7 +486,6 @@ if (!product) {
       const img = thumb.querySelector('img');
       if (img && mainImage) {
         mainImage.src = img.src;
-        mainImage.setAttribute('data-original-src', img.getAttribute('data-original-src'));
         currentImageIndex = index;
       }
     });
@@ -503,7 +495,17 @@ if (!product) {
   mainImage?.addEventListener('click', () => {
     if (modal && modalImage) {
       modal.style.display = 'block';
-      modalImage.src = mainImage.getAttribute('data-original-src') || mainImage.src;
+      modalImage.src = mainImage.src;
+      document.body.style.overflow = 'hidden';
+    }
+  });
+
+  // Open modal when zoom button is clicked
+  document.querySelector('.zoom-button')?.addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent triggering the main image click
+    if (modal && modalImage) {
+      modal.style.display = 'block';
+      modalImage.src = mainImage.src;
       document.body.style.overflow = 'hidden';
     }
   });
@@ -525,19 +527,23 @@ if (!product) {
   });
 
   // Navigate through images in modal
-  prevButton?.addEventListener('click', () => {
+  prevButton?.addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent modal close
     currentImageIndex = (currentImageIndex - 1 + thumbnails.length) % thumbnails.length;
     const img = thumbnails[currentImageIndex].querySelector('img');
     if (img && modalImage) {
-      modalImage.src = img.getAttribute('data-original-src') || img.src;
+      modalImage.src = img.src;
+      mainImage.src = img.src;
     }
   });
 
-  nextButton?.addEventListener('click', () => {
+  nextButton?.addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent modal close
     currentImageIndex = (currentImageIndex + 1) % thumbnails.length;
     const img = thumbnails[currentImageIndex].querySelector('img');
     if (img && modalImage) {
-      modalImage.src = img.getAttribute('data-original-src') || img.src;
+      modalImage.src = img.src;
+      mainImage.src = img.src;
     }
   });
 
