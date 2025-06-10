@@ -1,0 +1,561 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+
+// Import images
+import factoryMain from '/src/assets/factory/IMG_1799-edited-removed-BSCI-2048x1365.jpg';
+import autoCutter from '/src/assets/factory/autocutter2.jpeg';
+import sewMachine from '/src/assets/factory/sewmachine2.jpeg';
+import fabricSpreader from '/src/assets/factory/spreader2.jpeg';
+import readingBook from '/src/assets/icons/reading-book.png';
+import goal from '/src/assets/icons/goal.png';
+import trust from '/src/assets/icons/trust.png';
+import chronometer from '/src/assets/icons/chronometer.png';
+import global from '/src/assets/icons/global.png';
+import quality from '/src/assets/icons/quality.png';
+import international from '/src/assets/icons/international.png';
+
+const values = [
+  {
+    title: "Our Story",
+    description: "From a single sewing line in 2000 to serving 30+ international brands today.",
+    icon: readingBook,
+    type: "image"
+  },
+  {
+    title: "Our Mission",
+    description: "To produce safe, sustainable, and beautiful infantwear with global impact.",
+    icon: goal,
+    type: "image"
+  },
+  {
+    title: "Why Brands Trust Us",
+    description: "Certified fabrics. Flexible MOQs. Unmatched quality assurance.",
+    icon: trust,
+    type: "image"
+  }
+];
+
+const stats = [
+  {
+    number: "23+",
+    label: "Years of Experience",
+    icon: chronometer,
+    type: "image"
+  },
+  {
+    number: "30+",
+    label: "Global Brands",
+    icon: global,
+    type: "image"
+  },
+  {
+    number: "100%",
+    label: "Quality Guarantee",
+    icon: quality,
+    type: "image"
+  },
+  {
+    number: "50+",
+    label: "Countries Served",
+    icon: international,
+    type: "image"
+  }
+];
+---
+
+<Layout title="About Us - Kids Kreations">
+  <Navigation />
+  
+  <main>
+    <section class="hero about-hero">
+      <div class="container">
+        <div class="section-title">
+          <h1>Built on Trust. Crafted with Care.</h1>
+          <p>For over 23 years, we've delivered premium infantwear to global brands worldwide.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-content">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-text">
+            <div class="card about-card">
+              <h2>Our Journey</h2>
+              <p>Founded in 2000, Kids Kreations has grown from a small workshop to a leading manufacturer of premium infantwear, serving over 30 global brands. Our commitment to quality, ethical production, and sustainable practices has made us a trusted partner in the industry.</p>
+              
+              <div class="feature-list">
+                <div class="feature-item">
+                  <i class="fas fa-check-circle"></i>
+                  <span>GOTS-certified organic materials</span>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-check-circle"></i>
+                  <span>Ethical production practices</span>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-check-circle"></i>
+                  <span>Flexible MOQ options</span>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-check-circle"></i>
+                  <span>Custom design capabilities</span>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-check-circle"></i>
+                  <span>Export-ready packaging</span>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-check-circle"></i>
+                  <span>Quality control at every step</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="about-images">
+            <div class="image-card main-image">
+              <figure>
+                <Image 
+                  src={factoryMain}
+                  alt="Kids Kreations manufacturing facility"
+                  width={2048}
+                  height={1365}
+                  quality={100}
+                  class="main-factory-img"
+                  loading="eager"
+                />
+                <figcaption>Our Bangkok facility: where craftsmanship meets care</figcaption>
+              </figure>
+            </div>
+            <div class="image-grid">
+              <div class="image-card">
+                <figure>
+                  <Image 
+                    src={autoCutter}
+                    alt="auto cutter machine"
+                    width={800}
+                    height={600}
+                    quality={100}
+                    class="factory-img"
+                    loading="eager"
+                  />
+                  <figcaption>Automatic fabric cutter for precise and efficient cutting</figcaption>
+                </figure>
+              </div>
+              <div class="image-card">
+                <figure>
+                  <Image 
+                    src={sewMachine}
+                    alt="sewing machine"
+                    width={800}
+                    height={600}
+                    quality={100}
+                    class="factory-img"
+                    loading="eager"
+                  />
+                  <figcaption>High-quality stitching of baby garments using industrial sewing machines</figcaption>
+                </figure>
+              </div>
+              <div class="image-card">
+                <figure>
+                  <Image 
+                    src={fabricSpreader}
+                    alt="Fabric Spreader"
+                    width={800}
+                    height={600}
+                    quality={100}
+                    class="factory-img"
+                    loading="eager"
+                  />
+                  <figcaption>Even and efficient fabric spreading to prepare for accurate cutting</figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-values">
+      <div class="container">
+        <div class="values-grid">
+          {values.map(value => (
+            <div class="value-card" data-aos="fade-up">
+              <div class="value-icon">
+                <Image 
+                  src={value.icon}
+                  alt={value.title}
+                  width={64}
+                  height={64}
+                  quality={100}
+                  class="value-icon-img"
+                />
+              </div>
+              <h3>{value.title}</h3>
+              <p>{value.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="quote">
+      <div class="container">
+        <blockquote>
+          "We don't just manufacture clothes. We help brands grow through craftsmanship, care, and consistency."
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="container">
+        <div class="stats-grid">
+          {stats.map(stat => (
+            <div class="stat-card" data-aos="fade-up">
+              {stat.type === 'fa' ? (
+                <i class={`fas ${stat.icon}`}></i>
+              ) : (
+                <Image 
+                  src={stat.icon}
+                  alt={stat.label}
+                  width={50}
+                  height={50}
+                  quality={100}
+                  class="stat-icon-img"
+                />
+              )}
+              <div class="stat-number">{stat.number}</div>
+              <p>{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Typography */
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.2;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-md);
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    line-height: 1.3;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  p {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--text-light);
+  }
+
+  /* Hero Section */
+  .about-hero {
+    background: linear-gradient(135deg, #fefefe 0%, #f8f9fa 100%);
+    padding: var(--spacing-xl) 0;
+    text-align: center;
+  }
+
+  .section-title {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* About Content Section */
+  .about-content {
+    padding: var(--spacing-xl) 0;
+    background: var(--background);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    align-items: start;
+  }
+
+  .about-card {
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .feature-list {
+    margin-top: var(--spacing-lg);
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .feature-item i {
+    color: var(--primary);
+    margin-right: var(--spacing-md);
+    font-size: 1.2rem;
+  }
+
+  .about-images {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .image-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .image-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 16/9;
+  }
+
+  .image-card figcaption {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: white;
+    color: var(--text-light);
+    font-size: 0.875rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .main-image {
+    flex: 1;
+  }
+
+  .main-image img {
+    height: 400px;
+  }
+
+  .image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+  }
+
+  .image-grid .image-card {
+    height: auto;
+  }
+
+  .image-grid .image-card img {
+    height: 250px;
+  }
+
+  /* Values Section */
+  .about-values {
+    padding: var(--spacing-xl) 0;
+    background: white;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  .value-card {
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+
+  .value-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .value-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--spacing-md);
+  }
+
+  .value-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* Quote Section */
+  .quote {
+    padding: var(--spacing-xl) 0;
+    background: var(--background);
+  }
+
+  blockquote {
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.4;
+    color: var(--text-dark);
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* Stats Section */
+  .stats {
+    padding: var(--spacing-xl) 0;
+    background: white;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  .stat-card {
+    background: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .stat-icon-img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: var(--spacing-sm);
+    object-fit: contain;
+    display: block;
+    opacity: 0.9;
+  }
+
+  .stat-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3.5rem;
+    font-weight: 500;
+    color: #2C3E50;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1;
+  }
+
+  .stat-card p {
+    color: #4A5568;
+    font-size: 1.1rem;
+    font-weight: 550;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+  }
+
+  @media (max-width: 1024px) {
+    .image-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .main-image img {
+      height: 350px;
+    }
+
+    .image-grid .image-card img {
+      height: 200px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg);
+    }
+
+    .about-images {
+      order: -1;
+    }
+
+    .image-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .main-image img {
+      height: 300px;
+    }
+
+    .image-grid .image-card img {
+      height: 250px;
+    }
+
+    .values-grid,
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    blockquote {
+      font-size: 1.5rem;
+      padding: 0 var(--spacing-md);
+    }
+  }
+
+  .main-factory-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+  }
+
+  .factory-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+
+  .value-icon-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+</style>
+
+<script>
+  // Initialize AOS (Animate On Scroll)
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    document.querySelectorAll('[data-aos]').forEach(element => {
+      observer.observe(element);
+    });
+  });
+</script> 
