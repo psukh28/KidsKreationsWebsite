@@ -40,7 +40,7 @@ import Footer from '../components/Footer.astro';
               <i class="fas fa-map-marker-alt"></i>
               <div>
                 <h3>Address</h3>
-                <p>123 Manufacturing Street<br>Bangkok, Thailand</p>
+                <p>234 หมู่ที่ 10 Setthakij 1 Rd, Khlong Maduea, Krathum Baen District,<br>Samut Sakhon, Thailand 74110</p>
               </div>
             </div>
             <div class="social-links">
@@ -62,7 +62,12 @@ import Footer from '../components/Footer.astro';
                     required 
                     placeholder="Your full name"
                     aria-required="true"
+                    minlength="2"
+                    maxlength="100"
+                    pattern="[A-Za-z\s\-']+"
+                    title="Please enter a valid name (letters, spaces, hyphens, and apostrophes only)"
                   >
+                  <div class="error-message" id="name-error"></div>
                 </div>
                 <div class="form-group">
                   <label for="email">Email<span class="required">*</span></label>
@@ -73,7 +78,10 @@ import Footer from '../components/Footer.astro';
                     required 
                     placeholder="you@company.com"
                     aria-required="true"
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                    title="Please enter a valid email address"
                   >
+                  <div class="error-message" id="email-error"></div>
                 </div>
               </div>
               <div class="form-group">
@@ -83,7 +91,9 @@ import Footer from '../components/Footer.astro';
                   id="company" 
                   name="company" 
                   placeholder="(Optional)"
+                  maxlength="100"
                 >
+                <div class="error-message" id="company-error"></div>
               </div>
               <div class="form-group">
                 <label for="type">Type of Request<span class="required">*</span></label>
@@ -111,7 +121,10 @@ import Footer from '../components/Footer.astro';
                   required 
                   placeholder="Tell us about your inquiry, order, or idea"
                   aria-required="true"
+                  minlength="10"
+                  maxlength="1000"
                 ></textarea>
+                <div class="error-message" id="message-error"></div>
               </div>
               <button type="submit" class="button button-primary">Send Message</button>
               <div id="form-status" class="form-status"></div>
@@ -303,57 +316,174 @@ import Footer from '../components/Footer.astro';
       order: 1;
     }
   }
+
+  .error-message {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: none;
+  }
+
+  .form-group input:invalid,
+  .form-group textarea:invalid,
+  .form-group select:invalid {
+    border-color: #dc2626;
+  }
+
+  .form-group input:invalid:focus,
+  .form-group textarea:invalid:focus,
+  .form-group select:invalid:focus {
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  }
 </style>
 
 <script>
-  document.getElementById('contactForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const form = e.target;
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    if (!form) {
+      console.error('Contact form not found');
+      return;
+    }
+
     const submitButton = form.querySelector('button[type="submit"]');
     const formStatus = document.getElementById('form-status');
     const originalButtonText = submitButton.textContent;
-    
-    try {
-      // Disable submit button and show loading state
-      submitButton.disabled = true;
-      submitButton.textContent = 'Sending...';
-      formStatus.textContent = '';
-      formStatus.className = 'form-status';
-      
-      const formData = {
-        name: form.name.value,
-        email: form.email.value,
-        company: form.company.value,
-        type: form.type.value,
-        message: form.message.value
-      };
 
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        formStatus.textContent = 'Thank you for your message. We will get back to you soon!';
-        formStatus.className = 'form-status success';
-        form.reset();
-      } else {
-        throw new Error(data.message || 'Something went wrong');
+    // Validation functions
+    const validators = {
+      name: (value) => {
+        if (value.length < 2) return 'Name must be at least 2 characters long';
+        if (value.length > 100) return 'Name must be less than 100 characters';
+        if (!/^[A-Za-z\s\-']+$/.test(value)) return 'Name can only contain letters, spaces, hyphens, and apostrophes';
+        return '';
+      },
+      email: (value) => {
+        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) {
+          return 'Please enter a valid email address';
+        }
+        return '';
+      },
+      company: (value) => {
+        if (value && value.length > 100) return 'Company name must be less than 100 characters';
+        return '';
+      },
+      type: (value) => {
+        if (!value) return 'Please select a request type';
+        return '';
+      },
+      message: (value) => {
+        if (value.length < 10) return 'Message must be at least 10 characters long';
+        if (value.length > 1000) return 'Message must be less than 1000 characters';
+        return '';
       }
-    } catch (error) {
-      formStatus.textContent = 'Sorry, there was an error sending your message. Please try again later.';
-      formStatus.className = 'form-status error';
-      console.error('Error:', error);
-    } finally {
-      // Re-enable submit button and restore original text
-      submitButton.disabled = false;
-      submitButton.textContent = originalButtonText;
+    };
+
+    // Show error message
+    function showError(input, message) {
+      const errorElement = document.getElementById(`${input.id}-error`);
+      if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+        input.classList.add('invalid');
+      }
     }
+
+    // Clear error message
+    function clearError(input) {
+      const errorElement = document.getElementById(`${input.id}-error`);
+      if (errorElement) {
+        errorElement.textContent = '';
+        errorElement.style.display = 'none';
+        input.classList.remove('invalid');
+      }
+    }
+
+    // Validate single field
+    function validateField(input) {
+      const validator = validators[input.name];
+      if (validator) {
+        const error = validator(input.value);
+        if (error) {
+          showError(input, error);
+          return false;
+        }
+        clearError(input);
+        return true;
+      }
+      return true;
+    }
+
+    // Validate all fields
+    function validateForm() {
+      let isValid = true;
+      const inputs = form.querySelectorAll('input, textarea, select');
+      inputs.forEach(input => {
+        if (!validateField(input)) {
+          isValid = false;
+        }
+      });
+      return isValid;
+    }
+
+    // Add input event listeners for real-time validation
+    form.querySelectorAll('input, textarea, select').forEach(input => {
+      input.addEventListener('input', () => validateField(input));
+      input.addEventListener('blur', () => validateField(input));
+    });
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      if (!validateForm()) {
+        return;
+      }
+      
+      try {
+        // Disable submit button and show loading state
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending...';
+        formStatus.textContent = '';
+        formStatus.className = 'form-status';
+        
+        const formData = {
+          name: form.name.value.trim(),
+          email: form.email.value.trim(),
+          company: form.company.value.trim(),
+          type: form.type.value,
+          message: form.message.value.trim()
+        };
+
+        const response = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          formStatus.textContent = 'Thank you for your message. We will get back to you soon!';
+          formStatus.className = 'form-status success';
+          form.reset();
+          // Clear all error messages
+          form.querySelectorAll('.error-message').forEach(el => {
+            el.textContent = '';
+            el.style.display = 'none';
+          });
+        } else {
+          throw new Error(data.message || 'Something went wrong');
+        }
+      } catch (error) {
+        formStatus.textContent = 'Sorry, there was an error sending your message. Please try again later.';
+        formStatus.className = 'form-status error';
+        console.error('Error:', error);
+      } finally {
+        // Re-enable submit button and restore original text
+        submitButton.disabled = false;
+        submitButton.textContent = originalButtonText;
+      }
+    });
   });
 </script> 

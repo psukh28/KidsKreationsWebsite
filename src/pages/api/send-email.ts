@@ -7,10 +7,106 @@ dotenv.config();
 
 export const prerender = false;
 
+// Define types
+type FormData = {
+  name: string;
+  email: string;
+  company?: string;
+  type: string;
+  message: string;
+};
+
+type ValidatorFunction = (value: string) => string | null;
+
+type Validators = {
+  [K in keyof FormData]: ValidatorFunction;
+};
+
+// Validation functions
+const validators: Validators = {
+  name: (value: string) => {
+    if (!value || value.length < 2 || value.length > 100) {
+      return 'Name must be between 2 and 100 characters';
+    }
+    if (!/^[A-Za-z\s\-']+$/.test(value)) {
+      return 'Name can only contain letters, spaces, hyphens, and apostrophes';
+    }
+    return null;
+  },
+  email: (value: string) => {
+    if (!value || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) {
+      return 'Please provide a valid email address';
+    }
+    return null;
+  },
+  company: (value: string) => {
+    if (value && value.length > 100) {
+      return 'Company name must be less than 100 characters';
+    }
+    return null;
+  },
+  type: (value: string) => {
+    const validTypes = ['Factory Visit', 'MOQ', 'Prices', 'General', 'Partnership', 'Other'];
+    if (!value || !validTypes.includes(value)) {
+      return 'Please select a valid request type';
+    }
+    return null;
+  },
+  message: (value: string) => {
+    if (!value || value.length < 10 || value.length > 1000) {
+      return 'Message must be between 10 and 1000 characters';
+    }
+    return null;
+  }
+};
+
+// Sanitize input
+function sanitizeInput(input: string): string {
+  return input
+    .trim()
+    .replace(/[<>]/g, '') // Remove potential HTML tags
+    .replace(/javascript:/gi, '') // Remove potential JavaScript protocol
+    .replace(/on\w+=/gi, ''); // Remove potential event handlers
+}
+
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const data = await request.json();
-    const { name, email, company, type, message } = data;
+    const data = await request.json() as FormData;
+    
+    // Validate all fields
+    const errors: Record<string, string> = {};
+    (Object.keys(validators) as Array<keyof FormData>).forEach(field => {
+      const value = data[field];
+      const validator = validators[field];
+      if (value !== undefined && validator) {
+        const error = validator(value);
+        if (error) {
+          errors[field] = error;
+        }
+      }
+    });
+
+    // If there are validation errors, return them
+    if (Object.keys(errors).length > 0) {
+      return new Response(JSON.stringify({
+        message: 'Validation failed',
+        errors
+      }), {
+        status: 400,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    }
+
+    // Sanitize inputs
+    const sanitizedData = {
+      name: sanitizeInput(data.name),
+      email: sanitizeInput(data.email),
+      company: data.company ? sanitizeInput(data.company) : '',
+      type: sanitizeInput(data.type),
+      message: sanitizeInput(data.message)
+    };
 
     // Verify environment variables are loaded
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
@@ -50,7 +146,7 @@ export const POST: APIRoute = async ({ request }) => {
     const mailOptions = {
       from: `"Kids Kreations Contact Form" <${process.env.EMAIL_USER}>`,
       to: ['pranav@kidskreationsco.com'],
-      subject: `New Contact Form Submission: ${type} from ${name}`,
+      subject: `New Contact Form Submission: ${sanitizedData.type} from ${sanitizedData.name}`,
       html: `
         <!DOCTYPE html>
         <html>
@@ -74,7 +170,7 @@ export const POST: APIRoute = async ({ request }) => {
               
               <!-- Request Type Badge -->
               <div style="background-color: #eff6ff; color: #2563eb; padding: 8px 16px; border-radius: 4px; display: inline-block; margin-bottom: 20px; font-weight: bold;">
-                ${type}
+                ${sanitizedData.type}
               </div>
 
               <!-- Contact Information -->
@@ -82,15 +178,15 @@ export const POST: APIRoute = async ({ request }) => {
                 <table style="width: 100%; border-collapse: collapse;">
                   <tr>
                     <td style="padding: 8px 0; width: 120px; color: #6b7280;">Name:</td>
-                    <td style="padding: 8px 0; font-weight: 500;">${name}</td>
+                    <td style="padding: 8px 0; font-weight: 500;">${sanitizedData.name}</td>
                   </tr>
                   <tr>
                     <td style="padding: 8px 0; color: #6b7280;">Email:</td>
-                    <td style="padding: 8px 0; font-weight: 500;">${email}</td>
+                    <td style="padding: 8px 0; font-weight: 500;">${sanitizedData.email}</td>
                   </tr>
                   <tr>
                     <td style="padding: 8px 0; color: #6b7280;">Company:</td>
-                    <td style="padding: 8px 0; font-weight: 500;">${company || 'Not provided'}</td>
+                    <td style="padding: 8px 0; font-weight: 500;">${sanitizedData.company || 'Not provided'}</td>
                   </tr>
                 </table>
               </div>
@@ -98,7 +194,7 @@ export const POST: APIRoute = async ({ request }) => {
               <!-- Message -->
               <div style="background-color: #ffffff; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px;">
                 <h2 style="color: #1f2937; margin: 0 0 15px 0; font-size: 18px;">Message</h2>
-                <p style="margin: 0; white-space: pre-wrap;">${message}</p>
+                <p style="margin: 0; white-space: pre-wrap;">${sanitizedData.message}</p>
               </div>
             </div>
 
@@ -127,7 +223,7 @@ export const POST: APIRoute = async ({ request }) => {
         </body>
         </html>
       `,
-      replyTo: email
+      replyTo: sanitizedData.email
     };
 
     console.log('Attempting to send email to:', mailOptions.to);
