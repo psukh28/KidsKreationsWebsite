@@ -130,9 +130,19 @@ const products = [
 
 
 ];
+
+// Preload critical images for faster navigation
+const preloadImages = products.flatMap(product => 
+  product.images.slice(0, 2).map(img => img.src)
+);
 ---
 
 <Layout title="Products - Kids Kreations">
+  <!-- Preload critical images for faster navigation -->
+  {preloadImages.map(src => (
+    <link rel="preload" as="image" href={src} />
+  ))}
+  
   <Navigation />
   
   <main>
@@ -158,11 +168,12 @@ const products = [
                         src={image} 
                         alt={`${product.title} - View ${index + 1}`}
                         class="product-image"
-                        loading={index === 0 ? "eager" : "lazy"}
+                        loading={index < 2 ? "eager" : "lazy"}
+                        decoding="async"
                         style={`display: ${index === 0 ? 'block' : 'none'}`}
-                        width={800}
-                        height={600}
-                        quality={95}
+                        width={600}
+                        height={450}
+                        quality={85}
                         format="webp"
                       />
                     ))}
@@ -180,6 +191,9 @@ const products = [
                     <button class="zoom-button" aria-label="Zoom image">
                       <i class="fas fa-search-plus"></i>
                     </button>
+                    <div class="loading-indicator" style="display: none;">
+                      <div class="spinner"></div>
+                    </div>
                   </div>
                 ) : (
                   <Image 
@@ -187,9 +201,10 @@ const products = [
                     alt={product.title}
                     class="product-image"
                     loading="lazy"
-                    width={800}
-                    height={600}
-                    quality={95}
+                    decoding="async"
+                    width={600}
+                    height={450}
+                    quality={85}
                     format="webp"
                   />
                 )}
@@ -254,6 +269,8 @@ const products = [
           src="" 
           alt="Product image"
           class="modal-image"
+          loading="lazy"
+          decoding="async"
         />
       </div>
     </div>
@@ -339,11 +356,33 @@ const products = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
   .product-card:hover .product-image {
     transform: scale(1.05);
+  }
+
+  .loading-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 30;
+  }
+
+  .spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 
   .product-info {
@@ -668,27 +707,84 @@ const products = [
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Initialize image galleries
+    // Initialize image galleries with optimized loading
     document.querySelectorAll('.product-gallery').forEach(gallery => {
       const images = Array.from(gallery.querySelectorAll('.product-image'));
       const dots = Array.from(gallery.querySelectorAll('.gallery-dot'));
       const prevBtn = gallery.querySelector('.gallery-prev');
       const nextBtn = gallery.querySelector('.gallery-next');
       const zoomBtn = gallery.querySelector('.zoom-button');
+      const loadingIndicator = gallery.querySelector('.loading-indicator');
       let currentIndex = 0;
 
+      // Preload next and previous images for faster navigation
+      function preloadAdjacentImages() {
+        const nextIndex = (currentIndex + 1) % images.length;
+        const prevIndex = (currentIndex - 1 + images.length) % images.length;
+        
+        // Preload next image
+        if (images[nextIndex] && !images[nextIndex].complete) {
+          const nextImg = new Image();
+          nextImg.src = images[nextIndex].src;
+        }
+        
+        // Preload previous image
+        if (images[prevIndex] && !images[prevIndex].complete) {
+          const prevImg = new Image();
+          prevImg.src = images[prevIndex].src;
+        }
+      }
+
       function showImage(index) {
+        // Show loading indicator
+        if (loadingIndicator) {
+          loadingIndicator.style.display = 'flex';
+        }
+
+        // Hide all images
         images.forEach(img => {
           img.style.display = 'none';
+          img.style.opacity = '0';
         });
         
+        // Update dots
         dots.forEach(dot => {
           dot.classList.remove('active');
         });
         
-        images[index].style.display = 'block';
+        // Show target image
+        const targetImage = images[index];
+        targetImage.style.display = 'block';
+        
+        // Check if image is already loaded
+        if (targetImage.complete && targetImage.naturalHeight !== 0) {
+          targetImage.style.opacity = '1';
+          if (loadingIndicator) {
+            loadingIndicator.style.display = 'none';
+          }
+        } else {
+          // Wait for image to load
+          targetImage.onload = () => {
+            targetImage.style.opacity = '1';
+            if (loadingIndicator) {
+              loadingIndicator.style.display = 'none';
+            }
+          };
+          
+          // Fallback in case onload doesn't fire
+          setTimeout(() => {
+            targetImage.style.opacity = '1';
+            if (loadingIndicator) {
+              loadingIndicator.style.display = 'none';
+            }
+          }, 1000);
+        }
+        
         dots[index].classList.add('active');
         currentIndex = index;
+        
+        // Preload adjacent images for next navigation
+        setTimeout(preloadAdjacentImages, 100);
       }
 
       if (prevBtn) {
@@ -725,6 +821,7 @@ const products = [
         };
       }
 
+      // Initialize first image
       showImage(0);
     });
 
