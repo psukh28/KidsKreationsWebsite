@@ -5,7 +5,7 @@ import Footer from '../../components/Footer.astro';
 import { Image } from 'astro:assets';
 import { products } from '../../data/products';
 
-// Import all product images
+// Import all product images with optimized imports
 import giftset1 from '/src/assets/products/giftset-1.jpg';
 import giftset2 from '/src/assets/products/giftset-2.jpg';
 import giftset3 from '/src/assets/products/giftset-3.jpg';
@@ -40,9 +40,17 @@ const product = products.find(p => p.slug === slug);
 if (!product) {
   return Astro.redirect('/404');
 }
+
+// Preload critical images for better performance
+const preloadImages = product.images.slice(0, 2).map(img => img.src);
 ---
 
 <Layout title={`${product.title} - Kids Kreations`}>
+  <!-- Preload critical images -->
+  {preloadImages.map(src => (
+    <link rel="preload" as="image" href={src} />
+  ))}
+  
   <Navigation />
   
   <main>
@@ -51,11 +59,16 @@ if (!product) {
         <div class="product-grid">
           <div class="product-gallery">
             <div class="main-image">
-              <img 
-                src={product.images[0].src} 
+              <Image 
+                src={product.images[0]} 
                 alt={product.title}
                 class="gallery-main"
                 loading="eager"
+                decoding="async"
+                width={600}
+                height={600}
+                format="webp"
+                quality={90}
               />
               <button class="zoom-button" aria-label="Zoom image">
                 <i class="fas fa-search-plus"></i>
@@ -64,10 +77,15 @@ if (!product) {
             <div class="thumbnail-grid">
               {product.images.map((image, index) => (
                 <button class="thumbnail" data-index={index}>
-                  <img 
-                    src={image.src} 
+                  <Image 
+                    src={image} 
                     alt={`${product.title} - View ${index + 1}`}
-                    loading="eager"
+                    loading={index < 4 ? "eager" : "lazy"}
+                    decoding="async"
+                    width={80}
+                    height={80}
+                    format="webp"
+                    quality={75}
                   />
                 </button>
               ))}
@@ -160,6 +178,8 @@ if (!product) {
           src="" 
           alt="Product image"
           class="modal-image"
+          loading="lazy"
+          decoding="async"
         />
       </div>
     </div>
@@ -196,6 +216,7 @@ if (!product) {
     width: 100%;
     height: auto;
     display: block;
+    transition: opacity 0.3s ease;
   }
 
   .zoom-button {
@@ -469,95 +490,145 @@ if (!product) {
   }
 </style>
 
-<script>
-  // Image Gallery Functionality
-  const mainImage = document.querySelector('.gallery-main');
-  const thumbnails = document.querySelectorAll('.thumbnail');
-  const modal = document.getElementById('imageModal');
-  const modalImage = document.getElementById('modalImage');
-  const closeModal = document.querySelector('.modal-close');
-  const prevButton = document.querySelector('.modal-prev');
-  const nextButton = document.querySelector('.modal-next');
-  let currentImageIndex = 0;
+<script define:vars={{ productImages: product.images }}>
+  // Optimized Image Gallery Functionality with high-quality image switching
+  (function() {
+    'use strict';
+    
+    // Cache DOM elements
+    const mainImage = document.querySelector('.gallery-main');
+    const thumbnailGrid = document.querySelector('.thumbnail-grid');
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const closeModal = document.querySelector('.modal-close');
+    const prevButton = document.querySelector('.modal-prev');
+    const nextButton = document.querySelector('.modal-next');
+    const zoomButton = document.querySelector('.zoom-button');
+    
+    let currentImageIndex = 0;
+    let thumbnails = [];
 
-  // Update main image when thumbnail is clicked
-  thumbnails.forEach((thumb, index) => {
-    thumb.addEventListener('click', () => {
-      const img = thumb.querySelector('img');
-      if (img && mainImage) {
-        mainImage.src = img.src;
+    // Initialize thumbnails array
+    function initThumbnails() {
+      thumbnails = Array.from(document.querySelectorAll('.thumbnail'));
+    }
+
+    // Function to get high-quality image URL
+    function getHighQualityImageUrl(index) {
+      if (!productImages || !productImages[index]) return null;
+      
+      // Get the original image source
+      const originalSrc = productImages[index].src;
+      
+      // For now, we'll use the original source
+      // In a production environment, you might want to generate optimized URLs
+      return originalSrc;
+    }
+
+    // Update main image when thumbnail is clicked (using event delegation)
+    thumbnailGrid?.addEventListener('click', (e) => {
+      const thumbnail = e.target.closest('.thumbnail');
+      if (!thumbnail) return;
+      
+      const index = parseInt(thumbnail.dataset.index);
+      const highQualityUrl = getHighQualityImageUrl(index);
+      
+      if (mainImage && highQualityUrl) {
+        // Use high-quality image URL
+        mainImage.src = highQualityUrl;
         currentImageIndex = index;
+        
+        // Add loading state
+        mainImage.style.opacity = '0.7';
+        mainImage.onload = () => {
+          mainImage.style.opacity = '1';
+        };
       }
     });
-  });
 
-  // Open modal when main image is clicked
-  mainImage?.addEventListener('click', () => {
-    if (modal && modalImage) {
-      modal.style.display = 'block';
-      modalImage.src = mainImage.src;
-      document.body.style.overflow = 'hidden';
-    }
-  });
+    // Open modal when main image is clicked
+    mainImage?.addEventListener('click', () => {
+      if (modal && modalImage) {
+        modal.style.display = 'block';
+        modalImage.src = mainImage.src;
+        document.body.style.overflow = 'hidden';
+      }
+    });
 
-  // Open modal when zoom button is clicked
-  document.querySelector('.zoom-button')?.addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent triggering the main image click
-    if (modal && modalImage) {
-      modal.style.display = 'block';
-      modalImage.src = mainImage.src;
-      document.body.style.overflow = 'hidden';
-    }
-  });
+    // Open modal when zoom button is clicked
+    zoomButton?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (modal && modalImage && mainImage) {
+        modal.style.display = 'block';
+        modalImage.src = mainImage.src;
+        document.body.style.overflow = 'hidden';
+      }
+    });
 
-  // Close modal
-  closeModal?.addEventListener('click', () => {
-    if (modal) {
-      modal.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-  });
-
-  // Close modal when clicking outside the image
-  modal?.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-  });
-
-  // Navigate through images in modal
-  prevButton?.addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent modal close
-    currentImageIndex = (currentImageIndex - 1 + thumbnails.length) % thumbnails.length;
-    const img = thumbnails[currentImageIndex].querySelector('img');
-    if (img && modalImage) {
-      modalImage.src = img.src;
-      mainImage.src = img.src;
-    }
-  });
-
-  nextButton?.addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent modal close
-    currentImageIndex = (currentImageIndex + 1) % thumbnails.length;
-    const img = thumbnails[currentImageIndex].querySelector('img');
-    if (img && modalImage) {
-      modalImage.src = img.src;
-      mainImage.src = img.src;
-    }
-  });
-
-  // Keyboard navigation in modal
-  document.addEventListener('keydown', (e) => {
-    if (modal?.style.display === 'block') {
-      if (e.key === 'Escape') {
+    // Close modal
+    closeModal?.addEventListener('click', () => {
+      if (modal) {
         modal.style.display = 'none';
         document.body.style.overflow = '';
-      } else if (e.key === 'ArrowLeft') {
-        prevButton?.click();
-      } else if (e.key === 'ArrowRight') {
-        nextButton?.click();
       }
+    });
+
+    // Close modal when clicking outside the image
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Navigate through images in modal
+    prevButton?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (thumbnails.length === 0) initThumbnails();
+      
+      currentImageIndex = (currentImageIndex - 1 + thumbnails.length) % thumbnails.length;
+      const highQualityUrl = getHighQualityImageUrl(currentImageIndex);
+      if (modalImage && mainImage && highQualityUrl) {
+        modalImage.src = highQualityUrl;
+        mainImage.src = highQualityUrl;
+      }
+    });
+
+    nextButton?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (thumbnails.length === 0) initThumbnails();
+      
+      currentImageIndex = (currentImageIndex + 1) % thumbnails.length;
+      const highQualityUrl = getHighQualityImageUrl(currentImageIndex);
+      if (modalImage && mainImage && highQualityUrl) {
+        modalImage.src = highQualityUrl;
+        mainImage.src = highQualityUrl;
+      }
+    });
+
+    // Keyboard navigation in modal (debounced)
+    let keyTimeout;
+    document.addEventListener('keydown', (e) => {
+      if (modal?.style.display === 'block') {
+        clearTimeout(keyTimeout);
+        keyTimeout = setTimeout(() => {
+          if (e.key === 'Escape') {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+          } else if (e.key === 'ArrowLeft') {
+            prevButton?.click();
+          } else if (e.key === 'ArrowRight') {
+            nextButton?.click();
+          }
+        }, 10);
+      }
+    });
+
+    // Initialize on DOM ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initThumbnails);
+    } else {
+      initThumbnails();
     }
-  });
+  })();
 </script> 

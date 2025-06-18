@@ -1,5 +1,7 @@
 ---
 import { Image } from 'astro:assets';
+import PerformanceOptimizer from '../components/PerformanceOptimizer.astro';
+import PerformanceMonitor from '../components/PerformanceMonitor.astro';
 
 interface Props {
   title: string;
@@ -24,6 +26,15 @@ const { title, description = "Premium infantwear OEM/ODM manufacturer in Thailan
     <meta name="revisit-after" content="7 days" />
     <meta name="generator" content="Kids Kreations Co." />
 
+    <!-- Performance Optimizations -->
+    <PerformanceOptimizer 
+      dnsPrefetch={["//fonts.googleapis.com", "//fonts.gstatic.com", "//cdnjs.cloudflare.com"]}
+      preconnect={["https://fonts.googleapis.com", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"]}
+    />
+
+    <!-- Performance Monitoring -->
+    <PerformanceMonitor />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://kidskreationsco.com/" />
@@ -40,9 +51,7 @@ const { title, description = "Premium infantwear OEM/ODM manufacturer in Thailan
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content="https://kidskreationsco.com/images/og-image.jpg" />
 
-    <!-- External CSS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- External CSS with optimized loading -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'" />
     
@@ -76,6 +85,21 @@ const { title, description = "Premium infantwear OEM/ODM manufacturer in Thailan
           "https://www.linkedin.com/company/kids-kreations",
           "https://www.facebook.com/kidskreations"
         ]
+      }
+    </script>
+
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
       }
     </script>
   </head>

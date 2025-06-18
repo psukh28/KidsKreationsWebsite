@@ -1,0 +1,55 @@
+---
+// Performance optimization component
+// This component provides various performance optimizations
+
+interface Props {
+  preloadImages?: string[];
+  preloadFonts?: string[];
+  dnsPrefetch?: string[];
+  preconnect?: string[];
+}
+
+const { 
+  preloadImages = [], 
+  preloadFonts = [], 
+  dnsPrefetch = [], 
+  preconnect = [] 
+} = Astro.props;
+---
+
+<!-- DNS Prefetch for external domains -->
+{dnsPrefetch.map(domain => (
+  <link rel="dns-prefetch" href={domain} />
+))}
+
+<!-- Preconnect to external domains -->
+{preconnect.map(domain => (
+  <link rel="preconnect" href={domain} crossorigin />
+))}
+
+<!-- Preload critical images -->
+{preloadImages.map(src => (
+  <link rel="preload" as="image" href={src} />
+))}
+
+<!-- Preload critical fonts -->
+{preloadFonts.map(font => (
+  <link rel="preload" as="font" href={font} type="font/woff2" crossorigin />
+))}
+
+<!-- Resource hints for better performance -->
+<link rel="preload" href="/src/assets/icons/logo.svg" as="image" type="image/svg+xml" />
+
+<!-- Performance monitoring script (optional) -->
+<script>
+  // Performance monitoring
+  if ('performance' in window) {
+    window.addEventListener('load', () => {
+      const perfData = performance.getEntriesByType('navigation')[0];
+      if (perfData) {
+        console.log('Page Load Time:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
+        console.log('DOM Content Loaded:', perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart, 'ms');
+      }
+    });
+  }
+</script> 
