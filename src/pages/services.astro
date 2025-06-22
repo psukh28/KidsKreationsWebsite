@@ -7,655 +7,695 @@ import { Image } from 'astro:assets';
 const services = [
   {
     title: "OEM Manufacturing",
-    description: "Best for established brands or distributors seeking full-scale manufacturing based on their own tech packs, materials, and brand standards.",
-    icon: "fa-industry",
-    type: "oem",
+    description: "Transform your designs into premium infantwear with our precision manufacturing expertise. Every stitch reflects our commitment to excellence.",
+    icon: "factory",
     features: [
       "Custom design implementation",
-      "Material sourcing",
-      "Production management"
-    ],
-    learnMore: "Learn about our OEM capabilities"
+      "Premium material sourcing",
+      "Scalable production capacity",
+      "Quality assurance & testing"
+    ]
   },
   {
     title: "ODM Development",
-    description: "Ideal for entrepreneurs or growing labels looking for expert help in turning ideas into ready-to-sell babywear. From sketch to sample.",
-    icon: "fa-lightbulb",
-    type: "odm",
+    description: "From concept to market-ready products, our design team brings your vision to life with innovative solutions and technical mastery.",
+    icon: "lightbulb",
     features: [
       "Design consultation",
       "Prototype development",
-      "Production optimization"
-    ],
-    learnMore: "Explore ODM services"
+      "Technical pattern creation",
+      "Cost optimization"
+    ]
   },
   {
     title: "Private Label",
-    description: "Launch your babywear brand instantly with fully packaged products, ideal for influencers, boutiques, and online retailers.",
-    icon: "fa-tag",
-    type: "private",
+    description: "Launch your brand instantly with our curated collections. Premium quality meets rapid deployment for market success.",
+    icon: "tag",
     features: [
-      "Brand customization",
-      "Packaging design",
-      "Quality assurance"
-    ],
-    learnMore: "View private label options"
+      "Ready-to-brand products",
+      "Custom packaging",
+      "Low minimum orders",
+      "Fast turnaround"
+    ]
   },
   {
-    title: "Custom Packaging",
-    description: "Great for brands that want their babywear to stand out, with gift-ready boxes, branded tags, and beautiful presentation for retail or e-commerce.",
-    icon: "fa-box",
-    type: "packaging",
+    title: "Premium Packaging",
+    description: "Elevate your brand presence with luxury packaging that creates memorable unboxing experiences and drives customer loyalty.",
+    icon: "gift",
     features: [
-      "Custom box design",
-      "Hang tags",
-      "Branding elements"
-    ],
-    learnMore: "See packaging examples"
+      "Custom gift boxes",
+      "Premium hang tags",
+      "Eco-friendly options",
+      "Brand integration"
+    ]
+  }
+];
+
+const capabilities = [
+  {
+    title: "ISO 9001:2015 Certified",
+    description: "Internationally recognized quality management system ensuring consistent excellence across every production run."
+  },
+  {
+    title: "OEKO-TEX & GOTS Certified",
+    description: "Safe, organic materials meeting the highest global standards for infant safety and environmental responsibility."
+  },
+  {
+    title: "Global Export Ready",
+    description: "Seamless logistics and full documentation support for worldwide distribution to 30+ countries."
   }
 ];
 
 const processSteps = [
   {
-    title: "Inquiry & Brief",
-    description: "We review your request and assess feasibility",
-    icon: "fa-envelope-open-text",
-    details: [
-      "Initial consultation",
-      "Requirements analysis",
-      "Technical feasibility check"
-    ],
-    color: "rgb(41, 128, 185)"
+    title: "Strategic Consultation",
+    description: "We dive deep into your brand vision, market positioning, and production requirements to craft a tailored manufacturing strategy."
   },
   {
-    title: "Sampling & Quote",
-    description: "We develop samples and estimate costs",
-    icon: "fa-calculator",
-    details: [
-      "Material selection",
-      "Sample development",
-      "Cost calculation"
-    ],
-    color: "rgb(52, 152, 219)"
+    title: "Design & Development",
+    description: "Our expert team transforms concepts into technical specifications, creating samples that exceed expectations."
   },
   {
-    title: "Bulk Production",
-    description: "We manufacture at scale with QC checks",
-    icon: "fa-industry",
-    details: [
-      "Bulk material procurement",
-      "Production monitoring",
-      "Quality checks"
-    ],
-    color: "rgb(155, 89, 182)"
+    title: "Precision Production",
+    description: "Advanced manufacturing with real-time quality control ensures every piece meets our exacting standards."
   },
   {
-    title: "Final QC & Packaging",
-    description: "We inspect, label, and brand your product",
-    icon: "fa-box-check",
-    details: [
-      "Final inspection",
-      "Packaging design",
-      "Label verification"
-    ],
-    color: "rgb(231, 76, 60)"
-  },
-  {
-    title: "Export & Delivery",
-    description: "We arrange documents and ship globally",
-    icon: "fa-shipping-fast",
-    details: [
-      "Export documentation",
-      "Shipping arrangement",
-      "Tracking setup"
-    ],
-    color: "rgb(230, 126, 34)"
-  },
-  {
-    title: "Kickstart Your Project",
-    description: "Send us your designs or idea — we'll handle the rest",
-    icon: "fa-paper-plane",
-    details: [],
-    color: "rgb(46, 204, 113)"
+    title: "Global Delivery",
+    description: "Professional packaging and comprehensive logistics ensure your products reach their destination perfectly."
   }
 ];
-
-const isComingSoon = true;
 ---
 
 <Layout title="Services - Kids Kreations">
   <Navigation />
   
   <main>
-    {isComingSoon && (
-      <div class="coming-soon-overlay">
-        <div class="coming-soon-content">
-          <h1>Coming Soon</h1>
-          <p>We're working on something special. Check back soon!</p>
-          <a href="/" class="button button-primary">Back to Home</a>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Manufacturing Excellence</h1>
+          <p>Where innovation meets precision. We transform your infantwear vision into premium products that families trust worldwide.</p>
         </div>
       </div>
-    )}
-    
-    <div class={isComingSoon ? 'content-hidden' : ''}>
-      <section class="hero services-hero">
-        <div class="container">
-          <div class="section-title">
-            <h1>Our Services</h1>
-            <p>Comprehensive manufacturing solutions for your infantwear brand</p>
-          </div>
-        </div>
-      </section>
+    </section>
 
-      <section class="services-content">
-        <div class="container">
-          <div class="services-grid">
-            {services.map(service => (
-              <div class="service-card" data-type={service.type}>
-                <div class="service-icon">
-                  <i class={`fas ${service.icon}`}></i>
-                </div>
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
-                <ul class="service-features">
-                  {service.features.map(feature => (
-                    <li>
-                      <i class="fas fa-check"></i>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <a href="/contact" class="service-link">{service.learnMore} </a>
+    <section class="services">
+      <div class="container">
+        <div class="services-grid">
+          {services.map(service => (
+            <div class="service-card fade-in">
+              <div class="service-icon">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  {service.icon === "factory" && (
+                    <path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4M9 9h1M9 13h1M9 17h1M14 13h1M14 17h1"/>
+                  )}
+                  {service.icon === "lightbulb" && (
+                    <path d="M9 21h6M10 21v-4a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4v4M9 3h6M12 3v2M9 7h6M9 11h6"/>
+                  )}
+                  {service.icon === "tag" && (
+                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82zM7 7h.01"/>
+                  )}
+                  {service.icon === "gift" && (
+                    <path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M7 7h10M7 7a2 2 0 0 1-2-2 2 2 0 0 1 2-2c2 0 4 4 6 4s4-4 6-4a2 2 0 0 1 2 2 2 2 0 0 1-2 2"/>
+                  )}
+                </svg>
               </div>
-            ))}
-          </div>
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+              <ul class="service-features">
+                {service.features.map(feature => (
+                  <li>
+                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20,6 9,17 4,12"/>
+                    </svg>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="process">
-        <div class="container">
-          <div class="section-title">
-            <h2>From Idea to Export</h2>
-            <p>A full-service roadmap to bring your babywear brand to life.</p>
-          </div>
-          
-          <div class="process-grid">
-            {processSteps.map((step, index) => (
-              <div class="process-card" data-step={index + 1} style={`--delay: ${index * 100}ms`}>
-                <div class="step-number" style={`--step-color: ${step.color}`}>
-                  {index + 1}
-                </div>
-                <div class="step-icon">
-                  <i class={`fas ${step.icon}`}></i>
-                </div>
+    <section class="capabilities">
+      <div class="container">
+        <div class="section-header">
+          <h2>Manufacturing Capabilities</h2>
+          <p>Certified excellence that opens doors to global markets</p>
+        </div>
+        <div class="capabilities-grid">
+          {capabilities.map(capability => (
+            <div class="capability-item fade-in">
+              <div class="capability-icon">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              </div>
+              <h3>{capability.title}</h3>
+              <p>{capability.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="process">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Partnership Journey</h2>
+          <p>A proven process refined over decades of manufacturing excellence</p>
+        </div>
+        <div class="process-timeline">
+          {processSteps.map((step, index) => (
+            <div class="process-step fade-in" data-step={index + 1}>
+              <div class="step-connector"></div>
+              <div class="step-content">
+                <div class="step-number">{index + 1}</div>
                 <h3>{step.title}</h3>
                 <p>{step.description}</p>
-                {step.details.length > 0 && (
-                  <div class="step-details">
-                    <ul>
-                      {step.details.map(detail => (
-                        <li>
-                          <i class="fas fa-check"></i>
-                          <span>{detail}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                {index === processSteps.length - 1 && (
-                  <a href="/contact" class="button button-primary mt-4">Start Your Project →</a>
-                )}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="cta-section">
-        <div class="container">
-          <div class="cta-content">
-            <h2>Ready to Start Your Project?</h2>
-            <p>Let's discuss how we can help bring your infantwear designs to life</p>
-            <a href="/contact" class="button button-primary">Get in Touch</a>
-          </div>
+    <section class="cta">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Ready to Elevate Your Brand?</h2>
+          <p>Join the ranks of premium infantwear brands who trust us to bring their vision to life. Let's create something extraordinary together.</p>
+          <a href="/contact" class="button button-primary">
+            <span>Start Your Project</span>
+            <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12,5 19,12 12,19"/>
+            </svg>
+          </a>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   </main>
 
   <Footer />
 </Layout>
 
 <style>
-  .services-hero {
-    background: linear-gradient(135deg, var(--primary-light) 0%, var(--background) 100%);
-    padding: var(--spacing-xl) 0;
+  .hero {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    padding: 120px 0 80px;
     text-align: center;
     position: relative;
-    overflow: hidden;
   }
 
-  .services-hero::before {
+  .hero::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('/images/pattern.svg') repeat;
-    opacity: 0.1;
-    z-index: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(44,95,155,0.05)"/></svg>') repeat;
   }
 
-  .services-content {
-    padding: var(--spacing-xl) 0;
-    background: var(--background);
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero-content h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+
+  .hero-content p {
+    font-size: 1.25rem;
+    color: #64748b;
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .section-header h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 16px;
+  }
+
+  .section-header p {
+    font-size: 1.125rem;
+    color: #64748b;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .services {
+    padding: 100px 0;
+    background: white;
   }
 
   .services-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-lg);
-    contain: content;
-    padding: 1px; /* Prevents border clipping */
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
   .service-card {
-    padding: var(--spacing-xl);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: visible;
     background: white;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    contain: content;
+    padding: 48px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
   }
 
   .service-card::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--primary-light) 0%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 0;
-    pointer-events: none;
-    border-radius: var(--radius-lg);
-  }
-
-  /* Specific adjustments for OEM and ODM cards */
-  .service-card[data-type="oem"]::before,
-  .service-card[data-type="odm"]::before {
-    top: -2px; /* Move the line up slightly */
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2C5F9B, #E8B86D);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
   }
 
   .service-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--primary-light);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    border-color: #cbd5e1;
   }
 
   .service-card:hover::before {
-    opacity: 0.1;
+    transform: scaleX(1);
   }
 
   .service-icon {
     width: 64px;
     height: 64px;
-    border-radius: 50%;
+    background: linear-gradient(135deg, #2C5F9B, #4A7BB8);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: var(--spacing-md);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    background: color-mix(in srgb, var(--primary) 10%, white);
-    position: relative;
-    z-index: 1;
-  }
-
-  .service-card:hover .service-icon {
-    transform: scale(1.1) rotate(5deg);
-    background: color-mix(in srgb, var(--primary) 15%, white);
-  }
-
-  .service-icon i {
-    font-size: 1.5rem;
-    color: var(--primary);
+    margin-bottom: 24px;
     transition: all 0.3s ease;
   }
 
-  .service-card:hover .service-icon i {
-    color: var(--primary-dark);
+  .service-card:hover .service-icon {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #1A3B5C, #2C5F9B);
+  }
+
+  .icon {
+    width: 32px;
+    height: 32px;
+    color: white;
   }
 
   .service-card h3 {
-    color: var(--text-dark);
-    margin-bottom: var(--spacing-sm);
-    font-size: 1.25rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 16px;
+  }
+
+  .service-card p {
+    color: #64748b;
+    margin-bottom: 24px;
+    line-height: 1.6;
+    font-size: 1rem;
   }
 
   .service-features {
     list-style: none;
     padding: 0;
-    margin: var(--spacing-lg) 0;
   }
 
   .service-features li {
     display: flex;
     align-items: center;
-    margin-bottom: var(--spacing-sm);
-    color: var(--text-light);
-  }
-
-  .service-features i {
-    color: var(--primary);
-    margin-right: var(--spacing-sm);
-    font-size: 0.875rem;
-  }
-
-  .service-link {
-    color: var(--primary);
-    text-decoration: none;
+    margin-bottom: 12px;
+    color: #475569;
     font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+  }
+
+  .check-icon {
+    width: 18px;
+    height: 18px;
+    color: #10b981;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
+  .capabilities {
+    padding: 100px 0;
+    background: #f8fafc;
+  }
+
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .capability-item {
+    text-align: center;
+    padding: 40px 24px;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
     transition: all 0.3s ease;
-    position: relative;
-    z-index: 1;
   }
 
-  .service-link:hover {
-    color: var(--primary-dark);
-    transform: translateX(5px);
+  .capability-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
   }
 
-  .service-link::after {
-    content: '→';
-    transition: transform 0.3s ease;
+  .capability-icon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #E8B86D, #f39c12);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
   }
 
-  .service-link:hover::after {
-    transform: translateX(4px);
+  .capability-item h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 12px;
+  }
+
+  .capability-item p {
+    color: #64748b;
+    line-height: 1.6;
+    font-size: 0.95rem;
   }
 
   .process {
-    background: var(--background-alt);
-    padding: var(--spacing-xl) 0;
-    position: relative;
-  }
-
-  .process-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-lg);
-    margin: var(--spacing-xl) 0;
-    position: relative;
-    contain: content;
-  }
-
-  @media (min-width: 768px) {
-    .process-grid::before {
-      content: '';
-      position: absolute;
-      top: 44px;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(to right, 
-        var(--primary) 0%,
-        var(--success) 20%,
-        var(--warning) 40%,
-        var(--info) 60%,
-        var(--secondary) 80%,
-        var(--primary-dark) 100%
-      );
-      opacity: 0.2;
-      z-index: 0;
-      pointer-events: none;
-    }
-  }
-
-  .process-card {
+    padding: 100px 0;
     background: white;
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
+  }
+
+  .process-timeline {
     position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: var(--shadow-md);
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .process-timeline::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: calc(100% - 80px);
+    background: linear-gradient(180deg, #2C5F9B 0%, #E8B86D 100%);
+    opacity: 0.3;
+  }
+
+  .process-step {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    text-align: center;
-    border: 1px solid var(--border);
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.5s ease forwards;
-    animation-delay: var(--delay);
-    z-index: 1;
-    contain: content;
-    will-change: transform, opacity;
+    margin-bottom: 60px;
+    position: relative;
   }
 
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .process-step:nth-child(even) {
+    flex-direction: row-reverse;
   }
 
-  .process-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
-    z-index: 2;
-    will-change: transform;
+  .step-connector {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e1 100%);
+    position: relative;
+  }
+
+  .process-step:nth-child(odd) .step-connector {
+    margin-right: 40px;
+  }
+
+  .process-step:nth-child(even) .step-connector {
+    margin-left: 40px;
   }
 
   .step-number {
-    position: absolute;
-    top: 5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 32px;
-    height: 32px;
-    background: var(--step-color);
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #2C5F9B, #E8B86D);
     color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
-    font-size: 1rem;
-    box-shadow: var(--shadow-sm);
-    z-index: 3;
-    will-change: transform;
-  }
-
-  .step-icon {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: color-mix(in srgb, var(--step-color) 10%, white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: var(--spacing-md);
-    position: relative;
-    z-index: 3;
-    will-change: transform;
-  }
-
-  .step-icon i {
     font-size: 1.5rem;
-    color: var(--step-color);
+    font-weight: 700;
+    box-shadow: 0 8px 24px rgba(44, 95, 155, 0.2);
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
   }
 
-  .process-card h3 {
-    color: var(--text-dark);
-    margin-bottom: var(--spacing-sm);
+  .step-content {
+    background: #f8fafc;
+    padding: 32px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    flex: 1;
+    max-width: 400px;
+  }
+
+  .step-content:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  .step-content h3 {
     font-size: 1.25rem;
-    position: relative;
-    z-index: 3;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 12px;
   }
 
-  .process-card p {
-    color: var(--text-light);
-    margin-bottom: var(--spacing-md);
-    font-size: 0.9rem;
-    position: relative;
-    z-index: 3;
+  .step-content p {
+    color: #64748b;
+    line-height: 1.6;
+    font-size: 0.95rem;
   }
 
-  .step-details {
-    margin-top: auto;
-    width: 100%;
-    position: relative;
-    z-index: 3;
-  }
-
-  .step-details ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: left;
-  }
-
-  .step-details li {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-sm);
-    color: var(--text-light);
-    font-size: 0.875rem;
-  }
-
-  .step-details i {
-    color: var(--step-color);
-    font-size: 0.875rem;
-  }
-
-  .process-cta {
-    text-align: center;
-    margin-top: var(--spacing-xl);
-    padding: var(--spacing-xl);
-    background: white;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-  }
-
-  .process-cta h3 {
-    color: var(--text-dark);
-    margin-bottom: var(--spacing-sm);
-    font-size: 1.5rem;
-  }
-
-  .process-cta p {
-    color: var(--text-light);
-    margin-bottom: var(--spacing-lg);
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .cta-section {
-    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
-    padding: var(--spacing-xl) 0;
-    text-align: center;
+  .cta {
+    background: linear-gradient(135deg, #1e293b 0%, #2C5F9B 50%, #4A7BB8 100%);
     color: white;
+    padding: 100px 0;
+    text-align: center;
+    position: relative;
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,10 90,90 10,90" fill="rgba(255,255,255,0.03)"/></svg>') repeat;
   }
 
   .cta-content {
+    position: relative;
+    z-index: 2;
     max-width: 600px;
     margin: 0 auto;
   }
 
-  .cta-content h2 {
+  .cta h2 {
     color: white;
-    margin-bottom: var(--spacing-sm);
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 24px;
   }
 
-  .cta-content p {
+  .cta p {
     color: rgba(255, 255, 255, 0.9);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 40px;
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+
+  .button-primary {
+    background: white;
+    color: #2C5F9B;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  }
+
+  .arrow-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  .button-primary:hover .arrow-icon {
+    transform: translateX(4px);
+  }
+
+  /* Animation classes */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 1024px) {
+    .hero-content h1 {
+      font-size: 3rem;
+    }
+    
+    .section-header h2 {
+      font-size: 2.5rem;
+    }
+    
+    .services-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    
+    .capabilities-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .process-step {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .process-step:nth-child(even) {
+      flex-direction: column;
+    }
+    
+    .process-timeline::before {
+      display: none;
+    }
+    
+    .step-connector {
+      display: none;
+    }
+    
+    .step-content {
+      max-width: none;
+      margin-top: 24px;
+    }
   }
 
   @media (max-width: 768px) {
-    .services-hero,
-    .process {
-      padding: var(--spacing-lg) 0;
+    .hero {
+      padding: 80px 0 60px;
     }
-
-    .process-grid {
+    
+    .hero-content h1 {
+      font-size: 2.5rem;
+    }
+    
+    .section-header h2 {
+      font-size: 2rem;
+    }
+    
+    .services,
+    .capabilities,
+    .process,
+    .cta {
+      padding: 60px 0;
+    }
+    
+    .service-card {
+      padding: 32px;
+    }
+    
+    .capabilities-grid {
       grid-template-columns: 1fr;
     }
-
-    .process-card {
-      max-width: 400px;
-      margin: 0 auto;
+    
+    .cta h2 {
+      font-size: 2rem;
     }
-  }
-
-  .coming-soon-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.98);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
-
-  .coming-soon-content {
-    text-align: center;
-    padding: 2rem;
-  }
-
-  .coming-soon-content h1 {
-    font-size: 2.5rem;
-    color: var(--primary);
-    margin-bottom: 1rem;
-  }
-
-  .coming-soon-content p {
-    font-size: 1.2rem;
-    color: var(--text-light);
-    margin-bottom: 2rem;
-  }
-
-  .coming-soon-content .button {
-    display: inline-block;
-    padding: 0.75rem 2rem;
-    font-size: 1.1rem;
-  }
-
-  .content-hidden {
-    display: none;
   }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Intersection Observer for process cards
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
         }
       });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+    }, observerOptions);
+
+    // Observe all fade-in elements
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
     });
 
-    document.querySelectorAll('.process-card').forEach(card => {
-      observer.observe(card);
+    // Add staggered animation delay to service cards
+    document.querySelectorAll('.service-card').forEach((card, index) => {
+      card.style.transitionDelay = `${index * 100}ms`;
+    });
+
+    // Add staggered animation delay to process steps
+    document.querySelectorAll('.process-step').forEach((step, index) => {
+      step.style.transitionDelay = `${index * 150}ms`;
     });
   });
 </script> 

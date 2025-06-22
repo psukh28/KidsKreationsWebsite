@@ -8,7 +8,7 @@ import { Image } from 'astro:assets';
 import romper from '/src/assets/products/romper.webp';
 import giftset from '/src/assets/products/giftset.webp';
 import twopiece from '/src/assets/products/2piece.webp';
-import herobaby from '/src/assets/home/hero-babywear.png';
+import herobaby from '/src/assets/home/hero-baby.jpg';
 import herohand from '/src/assets/home/hero-hand.png';
 import organiclogo from '/src/assets/icons/organic.png';
 import palette from '/src/assets/icons/paintbrush.png';
@@ -76,37 +76,27 @@ const featuredProducts = [
 	))}
 	
 	<main>
-		<section class="hero">
-			<div class="container">
-				<div class="hero-grid">
-					<div class="hero-content">
-						<h1>Your Partner in Premium Babywear Manufacturing</h1>
-						<p>Certified organic production, custom designs, and seamless export support. Everything you need to bring your brand to life.</p>
-						<div class="hero-cta">
-							<a href="/products" class="button button-primary">Explore Products</a>
-							<a href="/contact" class="button button-secondary">Request a Quote</a>
-						</div>
-					</div>
-					<div class="hero-divider"></div>
-					<div class="hero-image-wrapper">
-						<div class="hero-images-container">
-							<Image 
-								src={herobaby}
-								alt="Premium babywear collection" 
-								width={800}
-								height={600}
-								class="hero-img main-img"
-								loading="eager"
-							/>
-							<Image 
-								src={herohand}
-								alt="Hand holding premium fabric" 
-								width={400}
-								height={600}
-								class="hero-img hand-img"
-								loading="eager"
-							/>
-						</div>
+		<section
+			class="hidden md:flex hero-section relative"
+			style={`background-image: url('${herobaby.src}'); background-size: cover; background-position: center;`}
+		>
+			<div class="hero-content relative z-20" style="background: linear-gradient(to right, rgba(255,255,255,0.85), rgba(255,255,255,0) 70%);">
+				<div class="hero-gradient"></div>
+				<div class="hero-text">
+					<h1>
+						<span class="headline-regular">Your Partner in</span><br>
+						<span class="headline-bold">Premium Babywear Manufacturing</span>
+					</h1>
+					<p class="hero-desc">
+						Certified organic production, custom designs, and seamless export support. Everything you need to bring your brand to life.
+					</p>
+					<p class="trust-tagline">Loved by babies, trusted by global brands.</p>
+					<div class="hero-cta">
+						<a href="/products" class="button button-primary">
+							Explore Products
+							<span class="arrow" aria-hidden="true">→</span>
+						</a>
+						<a href="/contact" class="button button-secondary">Request a Quote</a>
 					</div>
 				</div>
 			</div>
@@ -225,107 +215,174 @@ const featuredProducts = [
 	}
 
 	/* Hero Section */
-	.hero {
-		padding: var(--spacing-xl) 0;
-		background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+	.hero-section {
+		display: flex;
+		align-items: stretch;
+		min-height: 70vh;
 		position: relative;
+		background: none;
 		overflow: hidden;
 	}
-
-	.container {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 0 var(--spacing-md);
-	}
-
-	.hero-grid {
-		display: grid;
-		grid-template-columns: minmax(300px, 1fr) auto minmax(400px, 1.2fr);
-		gap: var(--spacing-xl);
-		align-items: center;
-		position: relative;
-	}
-
 	.hero-content {
-		max-width: 500px;
-		z-index: 2;
 		position: relative;
-	}
-
-	.hero-divider {
-		width: 4px;
-		height: 100%;
-		background: rgba(255, 255, 255, 0.5);
-		margin: 0 var(--spacing-2xl);
-	}
-
-	.hero-image-wrapper {
-		position: relative;
-		width: 100%;
-		height: 100%;
+		flex: 1 1 50%;
 		display: flex;
+		align-items: center;
 		justify-content: flex-start;
+		z-index: 2;
+		background: none;
+		padding-left: 5vw;
+		padding-right: 0;
+		max-width: none;
 	}
-
-	.hero-images-container {
-		display: flex;
-		gap: var(--spacing-md);
-		align-items: flex-start;
-		position: relative;
-		width: 100%;
-	}
-
-	.hero-img {
-		width: auto;
-		height: auto;
-		max-height: 600px;
-		object-fit: contain;
-	}
-
-	.main-img {
+	.hero-gradient {
+		position: absolute;
+		left: 0; top: 0; bottom: 0; right: 50%;
+		background: linear-gradient(to right, rgba(255,255,255,0.6), rgba(255,255,255,0));
 		z-index: 1;
-		width: 500px;
-		margin-left: -70px;
+		pointer-events: none;
+	}
+	.hero-text {
 		position: relative;
+		z-index: 2;
+		padding: 4rem 3rem 4rem 0;
+		max-width: 600px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		text-align: left;
 	}
-
-	.hand-img {
-		display: none; /* Hide the hand image */
+	.hero-text h1 {
+		font-family: 'Libre Baskerville', serif;
+		font-size: clamp(2rem, 5vw, 3rem);
+		line-height: 1.1;
+		margin-bottom: 1.2rem;
 	}
-
+	.headline-regular {
+		font-weight: 400;
+		color: var(--text-dark, #222);
+	}
+	.headline-bold {
+		font-weight: 700;
+		color: var(--text-dark, #222);
+	}
+	.hero-desc {
+		font-family: 'Inter', sans-serif;
+		font-size: 1.15rem;
+		color: var(--text-light, #444);
+		margin-bottom: 0.7rem;
+		line-height: 1.5;
+	}
+	.trust-tagline {
+		font-size: 0.98rem;
+		font-style: italic;
+		color: #6c7a89;
+		margin-bottom: 2rem;
+		opacity: 0.85;
+	}
 	.hero-cta {
 		display: flex;
-		gap: var(--spacing-md);
-		margin-top: var(--spacing-lg);
+		gap: 1.2rem;
+		margin-top: 0.5rem;
 	}
-
-	/* Update text colors in hero section for better contrast */
-	.hero h1 {
-		color: white;
+	.button {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.75rem 1.5rem;
+		border-radius: 999px;
+		font-weight: 500;
+		font-size: 1rem;
+		text-decoration: none;
+		transition: box-shadow 0.25s cubic-bezier(.4,0,.2,1), transform 0.18s cubic-bezier(.4,0,.2,1), color 0.18s, background 0.18s;
+		cursor: pointer;
+		will-change: transform, box-shadow;
 	}
-
-	.hero p {
-		color: rgba(255, 255, 255, 0.9);
+	.button-primary {
+		background: var(--primary, #007bff);
+		color: #fff;
+		box-shadow: 0 2px 8px rgba(0,123,255,0.08);
+		border: none;
+		position: relative;
 	}
-
-	.hero-cta .button-primary {
-		background: white;
-		color: var(--primary);
+	.button-primary .arrow {
+		display: inline-block;
+		transition: transform 0.25s cubic-bezier(.4,0,.2,1);
+		margin-left: 0.2em;
+		font-size: 1.1em;
 	}
-
-	.hero-cta .button-primary:hover {
-		background: rgba(255, 255, 255, 0.9);
+	.button-primary:hover, .button-primary:focus {
+		background: var(--primary-dark, #0056b3);
+		color: #fff;
+		box-shadow: 0 6px 24px rgba(0,123,255,0.18);
+		transform: translateY(-2px) scale(1.04);
 	}
-
-	.hero-cta .button-secondary {
+	.button-primary:hover .arrow, .button-primary:focus .arrow {
+		transform: translateX(6px);
+	}
+	.button-secondary {
 		background: transparent;
-		color: white;
-		border: 2px solid white;
+		color: var(--primary, #007bff);
+		border: 2px solid var(--primary, #007bff);
 	}
-
-	.hero-cta .button-secondary:hover {
-		background: white;
-		color: var(--primary);
+	.button-secondary:hover, .button-secondary:focus {
+		background: var(--primary, #007bff);
+		color: #fff;
+		box-shadow: 0 6px 24px rgba(0,123,255,0.10);
+		transform: translateY(-2px) scale(1.04);
+	}
+	.hero-image {
+		flex: 1 1 50%;
+		min-height: 400px;
+		position: relative;
+		z-index: 1;
+		animation: hero-img-scale-in 1.6s cubic-bezier(.22,1,.36,1) 0.1s both;
+		background-position: right center;
+		background-size: cover;
+	}
+	@keyframes hero-img-scale-in {
+		from { transform: scale(1.02);}
+		to   { transform: scale(1);}
+	}
+	@media (max-width: 768px) {
+		.hero-section {
+			flex-direction: column;
+			min-height: unset;
+		}
+		.hero-content {
+			justify-content: center;
+			flex: unset;
+			width: 100%;
+			min-height: 0;
+			background: none;
+		}
+		.hero-gradient {
+			right: 0;
+			left: 0;
+			background: linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0));
+			top: 0; bottom: 60%;
+			height: 100%;
+		}
+		.hero-text {
+			padding: 2.2rem 1.2rem 1.5rem 1.2rem;
+			align-items: center;
+			text-align: center;
+			max-width: 100vw;
+		}
+		.hero-image {
+			min-height: 260px;
+			width: 100vw;
+			background-position: center 60%;
+		}
+		.hero-cta {
+			flex-direction: column;
+			gap: 0.7rem;
+			width: 100%;
+		}
+		.button, .button-primary, .button-secondary {
+			width: 100%;
+			justify-content: center;
+		}
 	}
 
 	/* Features Section */
@@ -580,23 +637,92 @@ const featuredProducts = [
 	}
 
 	@media (max-width: 768px) {
-		.hero-content {
-			padding: 0 var(--spacing-md);
+		.hero-bg {
+			min-height: 40vh;
+			background-position: 80% center;
+			/* Stronger, wider gradient overlay for mobile */
+			background-image: linear-gradient(to right, rgba(0,123,255,0.92) 0%, rgba(0,123,255,0.75) 80%, rgba(0,0,0,0.10) 98%, rgba(0,0,0,0) 100%), url('${herobaby.src}');
 		}
-
+		.hero-content-overlay {
+			padding: 2.5rem 1.25rem 2.5rem 1.25rem;
+			align-items: flex-start;
+			background: rgba(0, 123, 255, 0.22);
+			backdrop-filter: blur(8px);
+			border-radius: 1.25rem;
+			box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+			margin: 1.5rem 0 1.5rem 0;
+		}
+		.hero-content-overlay h1,
+		.hero-content-overlay p {
+			color: #fff;
+			text-shadow: 0 2px 12px rgba(0,123,255,0.22), 0 1px 2px rgba(0,0,0,0.18);
+		}
 		.hero-cta {
 			flex-direction: column;
 			align-items: center;
 		}
-
 		.button {
 			width: 100%;
 			text-align: center;
 		}
-
 		.main-img {
 			max-width: 400px;
 		}
+	}
+
+	/* Update .hero-bg and .hero-content-overlay styles for warmth and balance */
+	.hero-bg {
+		position: relative;
+		min-height: 70vh;
+		width: 100vw;
+		left: 50%;
+		right: 50%;
+		margin-left: -50vw;
+		margin-right: -50vw;
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		padding: 0;
+		box-sizing: border-box;
+		z-index: 1;
+	}
+	.hero-content-overlay {
+		position: relative;
+		z-index: 3;
+		max-width: 600px;
+		padding: 4rem 3rem 4rem 5vw;
+		color: #fff;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.hero-content-overlay h1,
+	.hero-content-overlay p {
+		color: #fff;
+		text-shadow: 0 2px 8px rgba(0,123,255,0.12), 0 1px 2px rgba(0,0,0,0.10);
+	}
+	.hero-content-overlay .hero-cta {
+		margin-top: 2rem;
+	}
+	@media (max-width: 1024px) {
+		.hero-bg {
+			min-height: 50vh;
+			background-position: 70% center;
+		}
+		.hero-content-overlay {
+			padding: 3rem 1.5rem 3rem 2vw;
+			max-width: 90vw;
+		}
+	}
+
+	.hero-img-gradient {
+		background: linear-gradient(to right, rgba(255,255,255,0.85), rgba(255,255,255,0) 70%);
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0; left: 0;
+		z-index: 10;
+		pointer-events: none;
 	}
 </style>
 
