@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import { Image } from 'astro:assets';
-import { products } from '../data/products';
+// import { products } from '../data/products';
 
 // Import all product images
 import giftset1 from '/src/assets/products/giftset-1.jpg';
@@ -33,106 +33,110 @@ import twopiece5 from '/src/assets/products/ELDR-56861.jpg';
 import twopiece6 from '/src/assets/products/ELDR-56862.jpg';
 import twopiece7 from '/src/assets/products/ELDR-56863.jpg';
 import twopiece8 from '/src/assets/products/ELDR-56864.jpg';
-import giftset4 from '/src/assets/products/giftset-4.jpg';
 import starter1 from '/src/assets/products/starter1.jpg';
 import starter2 from '/src/assets/products/starter2.jpg';
 import starter3 from '/src/assets/products/starter3.jpg';
 
 
-const products = [
+const productDetails = [
   {
   title: "Dungaree Sets",
-  description: "Classic dungarees paired with soft inner tees — playful style with all-day comfort.",
-  badges: ["Stylish", "Layer Friendly"],
+  description: "Timeless dungarees paired with soft inner tees, playful style with all-day comfort.",
+  badges: ["Easy Diaper Access", "GOTS Factory Certified", "Fast-Moving Inventory"],
   images: [dungaree1, dungaree2, dungaree3, dungaree4],
   slug: "dungaree-sets",
   orientation: "landscape",
   features: [
-    "Adjustable straps and snap buttons",
-    "Includes matching innerwear",
-    "Durable yet soft fabrics",
-    "Size: 0-24 months"
+  "Adjustable shoulder straps and bottom snaps for easy dressing",
+  "Comes with matching inner tee, ready-to-wear outfit",
+  "Soft yet durable cotton-rich fabric, ideal for play",
+  "Size range: 0–24 months"
   ]
 },
 
 {
   title: "Gift Sets",
-  description: "Beautifully packaged babywear sets designed for gifting, featuring coordinated outfits and accessories.",
-  badges: ["Popular", "GOTS Certified", "Gift Box"],
+  description: "Thoughtfully curated babywear sets, beautifully packaged for gifting, complete with coordinated outfits and accessories.",
+  badges: ["Premium Unboxing Experience", "Luxury Feel", "Retailer Favorite"],
   images: [giftset1, giftset2, giftset3, giftset4, giftset5],
   slug: "gift-sets",
   orientation: "landscape",
   features: [
-    "Organic or GOTS-certified cotton",
-    "Ready-to-gift packaging included",
-    "Stylish designs for special occasions",
-    "Size: 0-24 months"
-  ]
+  "Made with organic or GOTS-certified cotton fabrics",
+  "Coordinated outfits and accessories in each set",
+  "Beautifully packaged, perfect for gifting",
+  "Available in sizes 0–24 months"
+]
+
 },
 {
   title: "Rompers & Playsuits",
-  description: "Effortless one-piece outfits for everyday play and comfort — easy to wear, easy to love.",
-  badges: ["Best Seller", "Organic Fabric"],
+  description: "Effortless one-piece outfits for everyday play and comfort, easy to wear, easy to love.",
+  badges: ["12+ Hour Wear Tested", "Hypoallergenic Softness"],
   images: [romper1, romper2, romper3, romper4, romper4, romper6, romper7],
   slug: "rompers-playsuits",
   orientation: "landscape",
   features: [
-    "Snap closures for quick changes",
-    "Soft cotton or cotton blends",
-    "Fun prints and practical design",
-    "Size: 0-36 months"
-  ]
+  "One-piece design with front or bottom snap closures",
+  "Made from soft cotton or cotton blends for extended wear",
+  "Fun, functional prints ideal for active play",
+  "Size range: 0–36 months"
+]
+
 },
 {
   title: "Starter Sets",
-  description: "Complete newborn essentials bundled for convenience — perfect for hospital bags, gifting, or first outfits.",
-  badges: ["Organic Cotton", "Gift Ready", "0-3 Months"],
+  description: "Complete newborn essentials bundled for convenience, perfect for hospital bags, gifting, or first outfits.",
+  badges: ["First 48 Hours Ready", "Gift Ready", "0-3 Months"],
   images: [starter1, starter2, starter3], // Replace with actual starter set image vars
   slug: "starter-sets",
   orientation: "portrait",
   features: [
-    "Available in 4, 6, and 7-piece sets",
-    "Includes sleepsuit, bodysuit, booties, mittens, bib, hat, and blanket (varies by set)",
-    "Coordinated color themes and embroidery",
-    "Soft and breathable fabric",
-    "Packaged for gifting"
-  ]
+  "Offered in 4, 6, or 7-piece newborn bundles",
+  "Includes core essentials like sleepsuit, mittens, hat, bib, and more",
+  "Coordinated colors and embroidery for a cohesive look",
+  "Soft, breathable fabric for newborn comfort",
+  "Gift-ready packaging included"
+]
+
 },
 {
   title: "Pyjama Sets",
   description: "Soft, breathable nightwear designed to keep babies cozy through the night.",
-  badges: ["Nightwear Essential", "Ultra Soft"],
+  badges: ["Nightwear Essential", "Biowashed Softness", "Antibacterial Treated"],
   images: [pyjama1, pyjama2, pyjama3],
   slug: "pyjama-sets",
   orientation: "portrait",
   features: [
-    "100% Organic Cotton",
-    "Long-sleeve tops with matching bottoms",
-    "Designed for restful sleep",
-    "Size: 0-24 months"
-  ]
+  "100% certified organic cotton for skin-safe sleep",
+  "Includes long-sleeve top and matching bottoms",
+  "Biowashed for lasting softness and reduced shrinkage",
+  "Skin-safe antibacterial finish for added nighttime hygiene",
+  "Available in sizes 0–24 months"
+],
+
 },
 {
   title: "Two-Piece Sets",
-  description: "Flexible outfit sets with matching tops and bottoms — perfect for everyday wear or going out.",
-  badges: ["New Arrival", "Mix & Match"],
+  description: "Flexible outfit sets with matching tops and bottoms, perfect for everyday wear or going out.",
+  badges: ["Ready-to-Go Outfit", "Shrink-Resistant Finish", "All-Day Wear Comfort"],
   images: [twopiece1, twopiece2, twopiece3, twopiece4, twopiece5, twopiece6, twopiece7, twopiece8],
   slug: "two-piece-sets",
   orientation: "portrait",
   features: [
-    "Wear together or separately",
-    "Comfortable elastic waistbands",
-    "Easy care cotton or blends",
-    "Size: 0-36 months"
-  ]
-}
+  "Top and bottom designed to wear together as a full outfit",
+  "Comfortable elastic waistband for easy fit",
+  "Machine-washable cotton or cotton blend",
+  "Size range: 0–36 months"
+]
 
+}
 
 
 ];
 
 // Preload critical images for faster navigation
-const preloadImages = products.flatMap(product => 
+const preloadImages = productDetails.flatMap(product => 
   product.images.slice(0, 2).map(img => img.src)
 );
 ---
@@ -158,10 +162,10 @@ const preloadImages = products.flatMap(product =>
     <section class="products">
       <div class="container">
         <div class="products-grid">
-          {products.map(product => (
-            <article class="product-card" data-orientation={product.orientation}>
+          {productDetails.map(product => (
+            <article class="product-card" data-orientation={product.orientation} data-slug={product.slug}>
               <div class="product-image-wrapper">
-                {product.images ? (
+                {product.images && product.images.length > 0 && (
                   <div class="product-gallery">
                     {product.images.map((image, index) => (
                       <Image 
@@ -195,18 +199,6 @@ const preloadImages = products.flatMap(product =>
                       <div class="spinner"></div>
                     </div>
                   </div>
-                ) : (
-                  <Image 
-                    src={product.image} 
-                    alt={product.title}
-                    class="product-image"
-                    loading="lazy"
-                    decoding="async"
-                    width={600}
-                    height={450}
-                    quality={85}
-                    format="webp"
-                  />
                 )}
               </div>
               <div class="product-info">
@@ -221,7 +213,7 @@ const preloadImages = products.flatMap(product =>
                   ))}
                   {product.features.length > 3 && (
                     <li class="feature-more">
-                      <a href={`/products/${product.slug}`}>+{product.features.length - 3} more features</a>
+                      +{product.features.length - 3} more features
                     </li>
                   )}
                 </ul>
@@ -319,6 +311,7 @@ const preloadImages = products.flatMap(product =>
     display: flex;
     flex-direction: column;
     animation: fadeIn 0.5s ease-out;
+    cursor: pointer;
   }
 
   @keyframes fadeIn {
@@ -407,10 +400,7 @@ const preloadImages = products.flatMap(product =>
     font-size: 0.95rem;
     line-height: 1.5;
     margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    min-height: 57px; /* Fallback for ~3 lines */
   }
 
   .product-features {
@@ -438,17 +428,8 @@ const preloadImages = products.flatMap(product =>
   .feature-more {
     font-size: 0.875rem;
     margin-top: 0.25rem;
-  }
-
-  .feature-more a {
     color: var(--primary);
-    text-decoration: none;
     font-weight: 500;
-    transition: color 0.3s ease;
-  }
-
-  .feature-more a:hover {
-    color: var(--primary-dark);
   }
 
   .product-badges {
@@ -709,12 +690,12 @@ const preloadImages = products.flatMap(product =>
   document.addEventListener('DOMContentLoaded', () => {
     // Initialize image galleries with optimized loading
     document.querySelectorAll('.product-gallery').forEach(gallery => {
-      const images = Array.from(gallery.querySelectorAll('.product-image'));
-      const dots = Array.from(gallery.querySelectorAll('.gallery-dot'));
-      const prevBtn = gallery.querySelector('.gallery-prev');
-      const nextBtn = gallery.querySelector('.gallery-next');
-      const zoomBtn = gallery.querySelector('.zoom-button');
-      const loadingIndicator = gallery.querySelector('.loading-indicator');
+      const images = Array.from(gallery.querySelectorAll<HTMLImageElement>('.product-image'));
+      const dots = Array.from(gallery.querySelectorAll<HTMLButtonElement>('.gallery-dot'));
+      const prevBtn = gallery.querySelector<HTMLButtonElement>('.gallery-prev');
+      const nextBtn = gallery.querySelector<HTMLButtonElement>('.gallery-next');
+      const zoomBtn = gallery.querySelector<HTMLButtonElement>('.zoom-button');
+      const loadingIndicator = gallery.querySelector<HTMLElement>('.loading-indicator');
       let currentIndex = 0;
 
       // Preload next and previous images for faster navigation
@@ -724,18 +705,18 @@ const preloadImages = products.flatMap(product =>
         
         // Preload next image
         if (images[nextIndex] && !images[nextIndex].complete) {
-          const nextImg = new Image();
+          const nextImg = new window.Image();
           nextImg.src = images[nextIndex].src;
         }
         
         // Preload previous image
         if (images[prevIndex] && !images[prevIndex].complete) {
-          const prevImg = new Image();
+          const prevImg = new window.Image();
           prevImg.src = images[prevIndex].src;
         }
       }
 
-      function showImage(index) {
+      function showImage(index: number) {
         // Show loading indicator
         if (loadingIndicator) {
           loadingIndicator.style.display = 'flex';
@@ -754,6 +735,8 @@ const preloadImages = products.flatMap(product =>
         
         // Show target image
         const targetImage = images[index];
+        if (!targetImage) return;
+
         targetImage.style.display = 'block';
         
         // Check if image is already loaded
@@ -780,7 +763,9 @@ const preloadImages = products.flatMap(product =>
           }, 1000);
         }
         
-        dots[index].classList.add('active');
+        if (dots[index]) {
+          dots[index].classList.add('active');
+        }
         currentIndex = index;
         
         // Preload adjacent images for next navigation
@@ -788,7 +773,7 @@ const preloadImages = products.flatMap(product =>
       }
 
       if (prevBtn) {
-        prevBtn.onclick = (e) => {
+        prevBtn.onclick = (e: MouseEvent) => {
           e.preventDefault();
           e.stopPropagation();
           const newIndex = (currentIndex - 1 + images.length) % images.length;
@@ -797,7 +782,7 @@ const preloadImages = products.flatMap(product =>
       }
 
       if (nextBtn) {
-        nextBtn.onclick = (e) => {
+        nextBtn.onclick = (e: MouseEvent) => {
           e.preventDefault();
           e.stopPropagation();
           const newIndex = (currentIndex + 1) % images.length;
@@ -806,7 +791,7 @@ const preloadImages = products.flatMap(product =>
       }
 
       dots.forEach((dot, index) => {
-        dot.onclick = (e) => {
+        dot.onclick = (e: MouseEvent) => {
           e.preventDefault();
           e.stopPropagation();
           showImage(index);
@@ -814,10 +799,12 @@ const preloadImages = products.flatMap(product =>
       });
 
       if (zoomBtn) {
-        zoomBtn.onclick = (e) => {
+        zoomBtn.onclick = (e: MouseEvent) => {
           e.preventDefault();
           e.stopPropagation();
-          openModal(images[currentIndex].src, gallery, currentIndex);
+          if (images[currentIndex]) {
+            openModal(images[currentIndex].src, gallery as HTMLElement, currentIndex);
+          }
         };
       }
 
@@ -825,17 +812,33 @@ const preloadImages = products.flatMap(product =>
       showImage(0);
     });
 
+    // Make product cards clickable
+    document.querySelectorAll<HTMLElement>('.product-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        // Don't navigate if a button or an element within the gallery controls was clicked
+        if ((e.target as HTMLElement).closest('button')) {
+          return;
+        }
+
+        const slug = card.dataset.slug;
+        if (slug) {
+          window.location.href = `/products/${slug}`;
+        }
+      });
+    });
+
     // Modal functionality
     const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImage');
+    const modalImg = document.getElementById('modalImage') as HTMLImageElement | null;
     const closeBtn = document.querySelector('.modal-close');
-    const prevBtn = document.querySelector('.modal-prev');
-    const nextBtn = document.querySelector('.modal-next');
+    const modalPrevBtn = document.querySelector('.modal-prev');
+    const modalNextBtn = document.querySelector('.modal-next');
     
-    let currentGallery = null;
+    let currentGallery: HTMLElement | null = null;
     let currentImageIndex = 0;
     
-    function openModal(imageSrc, gallery, index) {
+    function openModal(imageSrc: string, gallery: HTMLElement, index: number) {
+      if (!modal || !modalImg) return;
       modalImg.src = imageSrc;
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -848,48 +851,54 @@ const preloadImages = products.flatMap(product =>
     }
     
     function closeModal() {
+      if (!modal) return;
       modal.classList.remove('active');
       document.body.style.overflow = '';
       currentGallery = null;
-      currentImageIndex = 0;
     }
 
     function showNextImage() {
-      if (!currentGallery) return;
-      const images = currentGallery.querySelectorAll('.product-image');
+      if (!currentGallery || !modalImg) return;
+      const images = currentGallery.querySelectorAll<HTMLImageElement>('.product-image');
       currentImageIndex = (currentImageIndex + 1) % images.length;
-      modalImg.src = images[currentImageIndex].src;
+      if (images[currentImageIndex]) {
+        modalImg.src = images[currentImageIndex].src;
+      }
       updateNavigationButtons();
     }
 
     function showPrevImage() {
-      if (!currentGallery) return;
-      const images = currentGallery.querySelectorAll('.product-image');
+      if (!currentGallery || !modalImg) return;
+      const images = currentGallery.querySelectorAll<HTMLImageElement>('.product-image');
       currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-      modalImg.src = images[currentImageIndex].src;
+      if (images[currentImageIndex]) {
+        modalImg.src = images[currentImageIndex].src;
+      }
       updateNavigationButtons();
     }
 
     function updateNavigationButtons() {
-      if (!currentGallery) return;
+      if (!currentGallery || !modalPrevBtn || !modalNextBtn) return;
       const images = currentGallery.querySelectorAll('.product-image');
-      prevBtn.style.display = images.length > 1 ? 'flex' : 'none';
-      nextBtn.style.display = images.length > 1 ? 'flex' : 'none';
+      (modalPrevBtn as HTMLElement).style.display = images.length > 1 ? 'flex' : 'none';
+      (modalNextBtn as HTMLElement).style.display = images.length > 1 ? 'flex' : 'none';
     }
     
-    closeBtn.addEventListener('click', closeModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
     
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        closeModal();
-      }
-    });
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+    }
     
-    prevBtn.addEventListener('click', showPrevImage);
-    nextBtn.addEventListener('click', showNextImage);
+    if (modalPrevBtn) modalPrevBtn.addEventListener('click', showPrevImage);
+    if (modalNextBtn) modalNextBtn.addEventListener('click', showNextImage);
     
     document.addEventListener('keydown', (e) => {
-      if (!modal.classList.contains('active')) return;
+      if (!modal || !modal.classList.contains('active')) return;
       
       switch(e.key) {
         case 'Escape':
