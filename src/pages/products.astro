@@ -3,140 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import { Image } from 'astro:assets';
-// import { products } from '../data/products';
-
-// Import all product images
-import giftset1 from '/src/assets/products/giftset-1.jpg';
-import giftset2 from '/src/assets/products/giftset-2.jpg';
-import giftset3 from '/src/assets/products/giftset-3.jpg';
-import giftset4 from '/src/assets/products/giftset-4.jpg';
-import giftset5 from '/src/assets/products/giftset-5.jpg';
-import romper1 from '/src/assets/products/romper-1.jpg';
-import romper2 from '/src/assets/products/romper-2.jpg';
-import romper3 from '/src/assets/products/romper-3.jpg';
-import romper4 from '/src/assets/products/romper-4.jpg';
-import romper5 from '/src/assets/products/romper-5.jpg';
-import romper6 from '/src/assets/products/romper-6.jpg';
-import romper7 from '/src/assets/products/romper-7.jpg';
-import pyjama1 from '/src/assets/products/pyjama-1.jpg';
-import pyjama2 from '/src/assets/products/pyjama-2.jpg';
-import pyjama3 from '/src/assets/products/pyjama-3.jpg';
-import dungaree1 from '/src/assets/products/dungaree-1.jpg';
-import dungaree2 from '/src/assets/products/dungaree-2.jpg';
-import dungaree3 from '/src/assets/products/dungaree-3.jpg';
-import dungaree4 from '/src/assets/products/dungaree-4.jpg';
-import twopiece1 from '/src/assets/products/ELCS-56857.jpg';
-import twopiece2 from '/src/assets/products/ELDK-56859.jpg';
-import twopiece3 from '/src/assets/products/ELDR-56858.jpg';
-import twopiece4 from '/src/assets/products/ELDR-56860.jpg';
-import twopiece5 from '/src/assets/products/ELDR-56861.jpg';
-import twopiece6 from '/src/assets/products/ELDR-56862.jpg';
-import twopiece7 from '/src/assets/products/ELDR-56863.jpg';
-import twopiece8 from '/src/assets/products/ELDR-56864.jpg';
-import starter1 from '/src/assets/products/starter1.jpg';
-import starter2 from '/src/assets/products/starter2.jpg';
-import starter3 from '/src/assets/products/starter3.jpg';
-
-
-const productDetails = [
-  {
-  title: "Dungaree Sets",
-  description: "Timeless dungarees paired with soft inner tees, playful style with all-day comfort.",
-  badges: ["Easy Diaper Access", "GOTS Factory Certified", "Fast-Moving Inventory"],
-  images: [dungaree1, dungaree2, dungaree3, dungaree4],
-  slug: "dungaree-sets",
-  orientation: "landscape",
-  features: [
-  "Adjustable shoulder straps and bottom snaps for easy dressing",
-  "Comes with matching inner tee, ready-to-wear outfit",
-  "Soft yet durable cotton-rich fabric, ideal for play",
-  "Size range: 0–24 months"
-  ]
-},
-
-{
-  title: "Gift Sets",
-  description: "Thoughtfully curated babywear sets, beautifully packaged for gifting, complete with coordinated outfits and accessories.",
-  badges: ["Premium Unboxing Experience", "Luxury Feel", "Retailer Favorite"],
-  images: [giftset1, giftset2, giftset3, giftset4, giftset5],
-  slug: "gift-sets",
-  orientation: "landscape",
-  features: [
-  "Made with organic or GOTS-certified cotton fabrics",
-  "Coordinated outfits and accessories in each set",
-  "Beautifully packaged, perfect for gifting",
-  "Available in sizes 0–24 months"
-]
-
-},
-{
-  title: "Rompers & Playsuits",
-  description: "Effortless one-piece outfits for everyday play and comfort, easy to wear, easy to love.",
-  badges: ["12+ Hour Wear Tested", "Hypoallergenic Softness"],
-  images: [romper1, romper2, romper3, romper4, romper4, romper6, romper7],
-  slug: "rompers-playsuits",
-  orientation: "landscape",
-  features: [
-  "One-piece design with front or bottom snap closures",
-  "Made from soft cotton or cotton blends for extended wear",
-  "Fun, functional prints ideal for active play",
-  "Size range: 0–36 months"
-]
-
-},
-{
-  title: "Starter Sets",
-  description: "Complete newborn essentials bundled for convenience, perfect for hospital bags, gifting, or first outfits.",
-  badges: ["First 48 Hours Ready", "Gift Ready", "0-3 Months"],
-  images: [starter1, starter2, starter3], // Replace with actual starter set image vars
-  slug: "starter-sets",
-  orientation: "portrait",
-  features: [
-  "Offered in 4, 6, or 7-piece newborn bundles",
-  "Includes core essentials like sleepsuit, mittens, hat, bib, and more",
-  "Coordinated colors and embroidery for a cohesive look",
-  "Soft, breathable fabric for newborn comfort",
-  "Gift-ready packaging included"
-]
-
-},
-{
-  title: "Pyjama Sets",
-  description: "Soft, breathable nightwear designed to keep babies cozy through the night.",
-  badges: ["Nightwear Essential", "Biowashed Softness", "Antibacterial Treated"],
-  images: [pyjama1, pyjama2, pyjama3],
-  slug: "pyjama-sets",
-  orientation: "portrait",
-  features: [
-  "100% certified organic cotton for skin-safe sleep",
-  "Includes long-sleeve top and matching bottoms",
-  "Biowashed for lasting softness and reduced shrinkage",
-  "Skin-safe antibacterial finish for added nighttime hygiene",
-  "Available in sizes 0–24 months"
-],
-
-},
-{
-  title: "Two-Piece Sets",
-  description: "Flexible outfit sets with matching tops and bottoms, perfect for everyday wear or going out.",
-  badges: ["Ready-to-Go Outfit", "Shrink-Resistant Finish", "All-Day Wear Comfort"],
-  images: [twopiece1, twopiece2, twopiece3, twopiece4, twopiece5, twopiece6, twopiece7, twopiece8],
-  slug: "two-piece-sets",
-  orientation: "portrait",
-  features: [
-  "Top and bottom designed to wear together as a full outfit",
-  "Comfortable elastic waistband for easy fit",
-  "Machine-washable cotton or cotton blend",
-  "Size range: 0–36 months"
-]
-
-}
-
-
-];
+import { products } from '../data/products';
 
 // Preload critical images for faster navigation
-const preloadImages = productDetails.flatMap(product => 
+const preloadImages = products.flatMap(product => 
   product.images.slice(0, 2).map(img => img.src)
 );
 ---
@@ -162,19 +32,19 @@ const preloadImages = productDetails.flatMap(product =>
     <section class="products">
       <div class="container">
         <div class="products-grid">
-          {productDetails.map(product => (
+          {products.map((product, productIndex) => (
             <article class="product-card" data-orientation={product.orientation} data-slug={product.slug}>
               <div class="product-image-wrapper">
                 {product.images && product.images.length > 0 && (
                   <div class="product-gallery">
-                    {product.images.map((image, index) => (
+                    {product.images.map((image, imageIndex) => (
                       <Image 
                         src={image} 
-                        alt={`${product.title} - View ${index + 1}`}
+                        alt={`${product.title} - View ${imageIndex + 1}`}
                         class="product-image"
-                        loading={index < 2 ? "eager" : "lazy"}
+                        loading={productIndex < 3 ? (imageIndex < 2 ? 'eager' : 'lazy') : 'lazy'}
                         decoding="async"
-                        style={`display: ${index === 0 ? 'block' : 'none'}`}
+                        style={`display: ${imageIndex === 0 ? 'block' : 'none'}`}
                         width={600}
                         height={450}
                         quality={85}
@@ -184,11 +54,11 @@ const preloadImages = productDetails.flatMap(product =>
                     <button class="gallery-nav gallery-prev" aria-label="Previous image">←</button>
                     <button class="gallery-nav gallery-next" aria-label="Next image">→</button>
                     <div class="gallery-dots">
-                      {product.images.map((_, index) => (
+                      {product.images.map((_, imageIndex) => (
                         <button 
                           class="gallery-dot" 
-                          aria-label={`View image ${index + 1}`}
-                          data-index={index}
+                          aria-label={`View image ${imageIndex + 1}`}
+                          data-index={imageIndex}
                         ></button>
                       ))}
                     </div>
@@ -284,6 +154,7 @@ const preloadImages = productDetails.flatMap(product =>
   }
 
   .section-title h1 {
+    font-family: 'DM Serif Display', serif;
     font-size: 2.5rem;
     margin-bottom: var(--spacing-sm);
   }

@@ -26,7 +26,7 @@ const values = [
   },
   {
     title: "Our Mission",
-    description: "We’re committed to crafting safe, sustainable, and beautiful infantwear, trusted by families worldwide.",
+    description: "We're committed to crafting safe, sustainable, and beautiful infantwear, trusted by families worldwide.",
     icon: goal,
     type: "image"
   },
@@ -74,7 +74,7 @@ const stats = [
     <section class="hero about-hero">
       <div class="container">
         <div class="section-title">
-          <h1>Built on Trust. Crafted with Care.</h1>
+          <h1>About Kids Kreations</h1>
           <p>For 25 years, we've delivered premium infantwear to global brands and retailers worldwide.</p>
         </div>
       </div>
@@ -267,14 +267,19 @@ const stats = [
 
   /* Hero Section */
   .about-hero {
-    background: linear-gradient(135deg, #fefefe 0%, #f8f9fa 100%);
+    background: linear-gradient(to right, var(--primary-light), var(--background));
     padding: var(--spacing-xl) 0;
     text-align: center;
   }
 
   .section-title {
-    max-width: 900px;
+    max-width: 800px;
     margin: 0 auto;
+  }
+
+  .section-title h1 {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
   }
 
   /* About Content Section */

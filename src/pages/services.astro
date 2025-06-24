@@ -90,11 +90,11 @@ const processSteps = [
   <Navigation />
   
   <main>
-    <section class="hero">
+    <section class="hero services-hero">
       <div class="container">
-        <div class="hero-content">
-          <h1>Manufacturing Excellence</h1>
-          <p>Where innovation meets precision. We transform your infantwear vision into premium products that families trust worldwide.</p>
+        <div class="section-title">
+          <h1>Our Services</h1>
+          <p>From concept to delivery, we offer end-to-end manufacturing solutions.</p>
         </div>
       </div>
     </section>
@@ -202,39 +202,24 @@ const processSteps = [
 </Layout>
 
 <style>
-  .hero {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    padding: 120px 0 80px;
+  .services-hero {
+    background: linear-gradient(to right, var(--primary-light), var(--background));
+    padding: var(--spacing-xl) 0;
     text-align: center;
-    position: relative;
   }
 
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(44,95,155,0.05)"/></svg>') repeat;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
+  .section-title {
     max-width: 800px;
     margin: 0 auto;
   }
 
-  .hero-content h1 {
-    font-size: 4rem;
-    font-weight: 800;
-    color: #1e293b;
-    margin-bottom: 24px;
-    line-height: 1.1;
+  .section-title h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
   }
 
-  .hero-content p {
+  .section-title p {
     font-size: 1.25rem;
     color: #64748b;
     line-height: 1.7;
@@ -593,10 +578,6 @@ const processSteps = [
   }
 
   @media (max-width: 1024px) {
-    .hero-content h1 {
-      font-size: 3rem;
-    }
-    
     .section-header h2 {
       font-size: 2.5rem;
     }
@@ -634,14 +615,6 @@ const processSteps = [
   }
 
   @media (max-width: 768px) {
-    .hero {
-      padding: 80px 0 60px;
-    }
-    
-    .hero-content h1 {
-      font-size: 2.5rem;
-    }
-    
     .section-header h2 {
       font-size: 2rem;
     }
@@ -665,37 +638,27 @@ const processSteps = [
       font-size: 2rem;
     }
   }
+
+  .process-step:last-child .step-connector {
+    display: none;
+  }
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Intersection Observer for fade-in animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
+  // Script to fade in elements on scroll
+  document.addEventListener("DOMContentLoaded", () => {
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          (entry.target as HTMLElement).style.opacity = "1";
+          (entry.target as HTMLElement).style.transform = "translateY(0)";
+          observer.unobserve(entry.target);
         }
       });
-    }, observerOptions);
+    }, { threshold: 0.1 });
 
-    // Observe all fade-in elements
-    document.querySelectorAll('.fade-in').forEach(el => {
+    document.querySelectorAll('.fade-in').forEach((el) => {
       observer.observe(el);
-    });
-
-    // Add staggered animation delay to service cards
-    document.querySelectorAll('.service-card').forEach((card, index) => {
-      card.style.transitionDelay = `${index * 100}ms`;
-    });
-
-    // Add staggered animation delay to process steps
-    document.querySelectorAll('.process-step').forEach((step, index) => {
-      step.style.transitionDelay = `${index * 150}ms`;
     });
   });
 </script> 
