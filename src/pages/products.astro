@@ -450,6 +450,10 @@ const preloadImages = products.flatMap(product =>
       max-width: 500px;
       margin: 0 auto;
     }
+
+    .gallery-nav {
+      display: none;
+    }
   }
 
   .image-modal {
@@ -561,13 +565,49 @@ const preloadImages = products.flatMap(product =>
   document.addEventListener('DOMContentLoaded', () => {
     // Initialize image galleries with optimized loading
     document.querySelectorAll('.product-gallery').forEach(gallery => {
-      const images = Array.from(gallery.querySelectorAll<HTMLImageElement>('.product-image'));
-      const dots = Array.from(gallery.querySelectorAll<HTMLButtonElement>('.gallery-dot'));
-      const prevBtn = gallery.querySelector<HTMLButtonElement>('.gallery-prev');
-      const nextBtn = gallery.querySelector<HTMLButtonElement>('.gallery-next');
-      const zoomBtn = gallery.querySelector<HTMLButtonElement>('.zoom-button');
-      const loadingIndicator = gallery.querySelector<HTMLElement>('.loading-indicator');
+      const images = Array.from((gallery as HTMLElement).querySelectorAll<HTMLImageElement>('.product-image'));
+      const dots = Array.from((gallery as HTMLElement).querySelectorAll<HTMLButtonElement>('.gallery-dot'));
+      const prevBtn = (gallery as HTMLElement).querySelector<HTMLButtonElement>('.gallery-prev');
+      const nextBtn = (gallery as HTMLElement).querySelector<HTMLButtonElement>('.gallery-next');
+      const zoomBtn = (gallery as HTMLElement).querySelector<HTMLButtonElement>('.zoom-button');
+      const loadingIndicator = (gallery as HTMLElement).querySelector<HTMLElement>('.loading-indicator');
       let currentIndex = 0;
+
+      // Swipe functionality for mobile
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchEndX = 0;
+      let touchEndY = 0;
+
+      gallery.addEventListener('touchstart', (event: TouchEvent) => {
+        touchStartX = event.changedTouches[0].screenX;
+        touchStartY = event.changedTouches[0].screenY;
+      }, { passive: true });
+
+      gallery.addEventListener('touchend', (event: TouchEvent) => {
+        touchEndX = event.changedTouches[0].screenX;
+        touchEndY = event.changedTouches[0].screenY;
+        handleSwipe();
+      }, { passive: true });
+
+      function handleSwipe() {
+        const swipeThreshold = 50; // Minimum distance for a swipe
+        const deltaX = touchEndX - touchStartX;
+        const deltaY = touchEndY - touchStartY;
+
+        // Check if it's a horizontal swipe and not a vertical scroll
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+          if (deltaX < -swipeThreshold) {
+            // Swiped left
+            const newIndex = (currentIndex + 1) % images.length;
+            showImage(newIndex);
+          } else if (deltaX > swipeThreshold) {
+            // Swiped right
+            const newIndex = (currentIndex - 1 + images.length) % images.length;
+            showImage(newIndex);
+          }
+        }
+      }
 
       // Preload next and previous images for faster navigation
       function preloadAdjacentImages() {
