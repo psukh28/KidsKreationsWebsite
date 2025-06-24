@@ -15,6 +15,9 @@ import ukFlag from '../assets/flags/uk.svg';
 import nzFlag from '../assets/flags/nz.svg';
 import thailandFlag from '../assets/flags/thailand.svg';
 import indiaFlag from '../assets/flags/india.svg';
+import canadaFlag from '../assets/flags/canada.svg';
+import vietnamFlag from '../assets/flags/vietnam.svg';
+import germanyFlag from '../assets/flags/germany.svg';
 // import canadaFlag from '../assets/flags/canada.svg';
 // import germanyFlag from '../assets/flags/germany.svg';
 // import ukFlag from '../assets/flags/uk.svg';
@@ -32,6 +35,9 @@ const regions = [
   { flag: nzFlag, name: "New Zealand"},
   { flag: thailandFlag, name: "Thailand"},
   { flag: indiaFlag, name: "India"},
+  { flag: canadaFlag, name: "Canada"},
+  { flag: germanyFlag, name: "Germany"},
+  { flag: vietnamFlag, name: "Vietnam"},
 
 ];
 ---
@@ -39,7 +45,7 @@ const regions = [
 <section class="trusted-regions">
   <div class="container">
     <div class="section-header">
-      <h2>Trusted by babywear brands in over 12 countries</h2>
+      <h2>Trusted by babywear brands and retailers in over 12 countries</h2>
     </div>
     <div class="scrolling-wrapper">
       <div class="scrolling-content">
@@ -103,7 +109,7 @@ const regions = [
 
   .section-header {
     text-align: center;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
     position: relative;
     z-index: 1;
   }
@@ -112,7 +118,7 @@ const regions = [
     font-family: 'Libre Baskerville', serif;
     font-size: 1.5rem;
     color: var(--text-dark);
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: 0;
     letter-spacing: -0.02em;
   }
 
@@ -128,7 +134,7 @@ const regions = [
     width: 100%;
     overflow: hidden;
     position: relative;
-    padding: var(--spacing-sm) 0;
+    padding: var(--spacing-xs) 0;
   }
 
   .scrolling-wrapper::before,
