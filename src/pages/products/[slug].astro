@@ -5,31 +5,6 @@ import Footer from '../../components/Footer.astro';
 import { Image } from 'astro:assets';
 import { products } from '../../data/products';
 
-// Import all product images with optimized imports
-import giftset1 from '/src/assets/products/giftset-1.jpg';
-import giftset2 from '/src/assets/products/giftset-2.jpg';
-import giftset3 from '/src/assets/products/giftset-3.jpg';
-import romper1 from '/src/assets/products/romper-1.jpg';
-import romper2 from '/src/assets/products/romper-2.jpg';
-import romper3 from '/src/assets/products/romper-3.jpg';
-import pyjama1 from '/src/assets/products/pyjama-1.jpg';
-import pyjama2 from '/src/assets/products/pyjama-2.jpg';
-import pyjama3 from '/src/assets/products/pyjama-3.jpg';
-import dungaree1 from '/src/assets/products/dungaree-1.jpg';
-import dungaree2 from '/src/assets/products/dungaree-2.jpg';
-import twopiece1 from '/src/assets/products/ELCS-56857.jpg';
-import twopiece2 from '/src/assets/products/ELDK-56859.jpg';
-import twopiece3 from '/src/assets/products/ELDR-56858.jpg';
-import twopiece4 from '/src/assets/products/ELDR-56860.jpg';
-import twopiece5 from '/src/assets/products/ELDR-56861.jpg';
-import twopiece6 from '/src/assets/products/ELDR-56862.jpg';
-import twopiece7 from '/src/assets/products/ELDR-56863.jpg';
-import twopiece8 from '/src/assets/products/ELDR-56864.jpg';
-import giftset4 from '/src/assets/products/giftset-4.jpg';
-import starter1 from '/src/assets/products/starter1.jpg';
-import starter2 from '/src/assets/products/starter2.jpg';
-import starter3 from '/src/assets/products/starter3.jpg';
-
 // Get the slug from the URL
 const { slug } = Astro.params;
 
@@ -67,8 +42,7 @@ const preloadImages = product.images.slice(0, 2).map(img => img.src);
                 decoding="async"
                 width={600}
                 height={600}
-                format="webp"
-                quality={90}
+
               />
               <button class="zoom-button" aria-label="Zoom image">
                 <i class="fas fa-search-plus"></i>

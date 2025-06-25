@@ -3,50 +3,69 @@ import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import { Image } from 'astro:assets';
+import factory3d from '/src/assets/icons/corporate.svg';
+import dummy from '/src/assets/icons/dummy.svg';
+import employee from '/src/assets/icons/employee-have-many-new-ideas.svg';
+import stiching from '/src/assets/icons/stitching-machine.svg';
+import exporticon from '/src/assets/icons/export.svg';
+import orgcotton from '/src/assets/icons/ecogots.svg';
+import isologo from '/src/assets/icons/iso.svg';
+import design1 from '/src/assets/icons/design1.svg';
+import design2 from '/src/assets/icons/design2.svg';
+import strategyicon from '/src/assets/icons/strategy.svg';
+import productionicon from '/src/assets/icons/production.svg';
+import truck1 from '/src/assets/icons/truck1.svg';
+import truck2 from '/src/assets/icons/truck2.svg';
+import gearicon from '/src/assets/icons/gear.svg';
+import packaging from '/src/assets/icons/gift.svg';
 
 const services = [
   {
-    title: "OEM Manufacturing",
+    title: "Your Designs, Our Factory",
+    subhead: "OEM Manufacturing for Custom Infantwear",
     description: "Transform your designs into premium infantwear with our precision manufacturing expertise. Every stitch reflects our commitment to excellence.",
-    icon: "factory",
+    icon: [factory3d],
     features: [
-      "Custom design implementation",
-      "Premium material sourcing",
-      "Scalable production capacity",
-      "Quality assurance & testing"
+      "Production-ready sampling from tech packs or physical references",
+      "Sourcing support for organic, bamboo, or custom-dyed fabrics",
+      "Cut & sew manufacturing with optional embellishments",
+      "Factory-grade QC checks with internal audit tracking"
     ]
   },
   {
-    title: "ODM Development",
+    title: "Bring Your Product to Life",
+    subhead: "ODM Services from Concept to Pre-Production",
     description: "From concept to market-ready products, our design team brings your vision to life with innovative solutions and technical mastery.",
-    icon: "lightbulb",
+    icon: [employee],
     features: [
-      "Design consultation",
-      "Prototype development",
-      "Technical pattern creation",
-      "Cost optimization"
+      "Full product development: sketches, fit samples, labelling",
+      "Pattern making and grading for size accuracy",
+      "Material suggestion and cost balancing based on budget",
+      "Ideal for launching original ideas from scratch"
     ]
   },
   {
-    title: "Private Label",
+    title: "Launch-Ready Collections",
+    subhead: "Private Label Garments, Packaged and Ready to Sell",
     description: "Launch your brand instantly with our curated collections. Premium quality meets rapid deployment for market success.",
-    icon: "tag",
+    icon: [dummy],
     features: [
-      "Ready-to-brand products",
-      "Custom packaging",
-      "Low minimum orders",
-      "Fast turnaround"
+      "Pre-designed infantwear styles with your logo applied",
+      "Flexible MOQs starting at 200 pieces per style",
+      "Pre-set fabric and color combos to reduce lead time",
+      "Fast relabeling and branded packaging options"
     ]
   },
   {
-    title: "Premium Packaging",
+    title: "Packaging That Sells",
+    subhead: "Custom Packaging for Brand Impact",
     description: "Elevate your brand presence with luxury packaging that creates memorable unboxing experiences and drives customer loyalty.",
-    icon: "gift",
+    icon: [packaging],
     features: [
-      "Custom gift boxes",
-      "Premium hang tags",
-      "Eco-friendly options",
-      "Brand integration"
+      "Custom box design for retail, gifting, or DTC",
+      "Organic cotton bag and hangtag sourcing available",
+      "Barcoding and SKU labeling for fulfillment centers",
+      "Sustainable packaging options on request"
     ]
   }
 ];
@@ -54,34 +73,42 @@ const services = [
 const capabilities = [
   {
     title: "ISO 9001:2015 Certified",
-    description: "Internationally recognized quality management system ensuring consistent excellence across every production run."
+    description: "Internationally recognized quality management system ensuring consistent excellence across every production run.",
+    icon: isologo
   },
   {
     title: "OEKO-TEX & GOTS Certified",
-    description: "Safe, organic materials meeting the highest global standards for infant safety and environmental responsibility."
+    description: "Safe, organic materials meeting the highest global standards for infant safety and environmental responsibility.",
+    icon: orgcotton
   },
   {
     title: "Global Export Ready",
-    description: "Seamless logistics and full documentation support for worldwide distribution to 30+ countries."
+    description: "Seamless logistics and full documentation support for worldwide distribution to 30+ countries.",
+    icon: exporticon
   }
 ];
 
 const processSteps = [
   {
     title: "Strategic Consultation",
-    description: "We dive deep into your brand vision, market positioning, and production requirements to craft a tailored manufacturing strategy."
+    description: "Clarify your brand goals and production needs with our manufacturing experts. We'll analyze your market position and create a tailored production strategy.",
+    icon: strategyicon,
+    className: 'strategy-icon-large'
   },
   {
     title: "Design & Development",
-    description: "Our expert team transforms concepts into technical specifications, creating samples that exceed expectations."
+    description: "We turn your vision into tech packs, prototypes, and approval-ready samples. Our design team ensures every detail meets your specifications.",
+    icon: design1
   },
   {
     title: "Precision Production",
-    description: "Advanced manufacturing with real-time quality control ensures every piece meets our exacting standards."
+    description: "Advanced manufacturing with real-time quality control ensures every piece meets our exacting standards. We maintain consistent quality across all production runs.",
+    icon: productionicon
   },
   {
     title: "Global Delivery",
-    description: "Professional packaging and comprehensive logistics ensure your products reach their destination perfectly."
+    description: "Professional packaging and comprehensive logistics ensure your products reach their destination perfectly. We handle all documentation and shipping requirements.",
+    icon: truck1
   }
 ];
 ---
@@ -105,33 +132,41 @@ const processSteps = [
           {services.map(service => (
             <div class="service-card fade-in">
               <div class="service-icon">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  {service.icon === "factory" && (
-                    <path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4M9 9h1M9 13h1M9 17h1M14 13h1M14 17h1"/>
-                  )}
-                  {service.icon === "lightbulb" && (
-                    <path d="M9 21h6M10 21v-4a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4v4M9 3h6M12 3v2M9 7h6M9 11h6"/>
-                  )}
-                  {service.icon === "tag" && (
-                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82zM7 7h.01"/>
-                  )}
-                  {service.icon === "gift" && (
-                    <path d="M20 12v10H4V12M22 7H2v5h20V7zM12 22V7M7 7h10M7 7a2 2 0 0 1-2-2 2 2 0 0 1 2-2c2 0 4 4 6 4s4-4 6-4a2 2 0 0 1 2 2 2 2 0 0 1-2 2"/>
-                  )}
-                </svg>
-              </div>
-              <h3>{service.title}</h3>
-              <p>{service.description}</p>
-              <ul class="service-features">
-                {service.features.map(feature => (
-                  <li>
-                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <polyline points="20,6 9,17 4,12"/>
-                    </svg>
-                    <span>{feature}</span>
-                  </li>
+                {service.icon.map((icon, index) => (
+                  <>
+                    <div class={`icon-wrapper icon-wrapper-${index + 1}`}>
+                      <Image 
+                        src={icon} 
+                        alt={`${service.title} icon ${index + 1}`}
+                        class="icon"
+                        width={48}
+                        height={48}
+                        loading="eager"
+                      />
+                    </div>
+                  </>
                 ))}
-              </ul>
+              </div>
+              <div class="service-content">
+                <h3>{service.title}</h3>
+                <p class="service-subhead">{service.subhead}</p>
+                <p class="service-description">{service.description}</p>
+                <ul class="service-features">
+                  {service.features.map(feature => (
+                    <li>
+                      <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20,6 9,17 4,12"/>
+                      </svg>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div class="service-cta">
+                  <a href="/contact" class="learn-more-link">
+                    Learn More →
+                  </a>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -148,9 +183,13 @@ const processSteps = [
           {capabilities.map(capability => (
             <div class="capability-item fade-in">
               <div class="capability-icon">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
+                <Image 
+                  src={capability.icon} 
+                  alt={`${capability.title} icon`}
+                  width={48}
+                  height={48}
+                  class="cap-icon"
+                />
               </div>
               <h3>{capability.title}</h3>
               <p>{capability.description}</p>
@@ -166,15 +205,21 @@ const processSteps = [
           <h2>Our Partnership Journey</h2>
           <p>A proven process refined over decades of manufacturing excellence</p>
         </div>
-        <div class="process-timeline">
+        <div class="process-grid">
           {processSteps.map((step, index) => (
-            <div class="process-step fade-in" data-step={index + 1}>
-              <div class="step-connector"></div>
-              <div class="step-content">
-                <div class="step-number">{index + 1}</div>
-                <h3>{step.title}</h3>
-                <p>{step.description}</p>
+            <div class="process-card fade-in" data-step={index + 1}>
+              <div class="process-icon">
+                <Image 
+                  src={step.icon} 
+                  alt={`${step.title} icon`}
+                  width={step.className ? 56 : 48}
+                  height={step.className ? 56 : 48}
+                  class={`process-svg ${step.className || ''}`}
+                />
               </div>
+              <div class="process-number">{index + 1}</div>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
             </div>
           ))}
         </div>
@@ -185,7 +230,7 @@ const processSteps = [
       <div class="container">
         <div class="cta-content">
           <h2>Ready to Elevate Your Brand?</h2>
-          <p>Join the ranks of premium infantwear brands who trust us to bring their vision to life. Let's create something extraordinary together.</p>
+          <p>Join the growing list of premium infantwear labels who partner with us to turn bold ideas into beautiful products. Let’s build something exceptional together.</p>
           <a href="/contact" class="button button-primary">
             <span>Start Your Project</span>
             <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -229,7 +274,7 @@ const processSteps = [
 
   .section-header {
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: 60px;
   }
 
   .section-header h2 {
@@ -248,43 +293,45 @@ const processSteps = [
   }
 
   .services {
-    padding: 100px 0;
+    padding: 60px 0;
     background: white;
   }
 
   .services-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
+    gap: 32px;
     max-width: 1200px;
     margin: 0 auto;
   }
 
   .service-card {
     background: white;
-    padding: 48px;
+    padding: 32px;
     border-radius: 16px;
     border: 1px solid #e2e8f0;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
   .service-card::before {
     content: '';
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
-    height: 4px;
+    height: 3px;
     background: linear-gradient(90deg, #2C5F9B, #E8B86D);
     transform: scaleX(0);
     transition: transform 0.3s ease;
   }
 
   .service-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
     border-color: #cbd5e1;
   }
 
@@ -293,36 +340,73 @@ const processSteps = [
   }
 
   .service-icon {
-    width: 64px;
-    height: 64px;
-    background: linear-gradient(135deg, #2C5F9B, #4A7BB8);
+    position: relative;
+    height: 80px;
+    margin-bottom: 24px;
+  }
+
+  .icon-wrapper {
+    position: absolute;
+    top: 0;
+    width: 80px;
+    height: 80px;
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 24px;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease;
   }
 
-  .service-card:hover .service-icon {
-    transform: scale(1.05);
-    background: linear-gradient(135deg, #1A3B5C, #2C5F9B);
+  .icon-wrapper-1 {
+    left: 15%;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+
+  .icon-wrapper-2 {
+    left: 15%;
+    transform: translateX(calc(-50% + 80px + 8px));
+    z-index: 1;
+  }
+
+  .service-card:hover .icon-wrapper {
+    transform: scale(1.05) translateX(-50%);
+  }
+
+  .service-card:hover .icon-wrapper-2 {
+    transform: scale(1.05) translateX(calc(-50% + 80px + 8px));
   }
 
   .icon {
-    width: 32px;
-    height: 32px;
-    color: white;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+  }
+
+  .service-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   .service-card h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.8rem;
+    font-weight: 700;
     color: #1e293b;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
+    line-height: 1.3;
   }
 
-  .service-card p {
+  .service-subhead {
+    font-size: 0.9rem;
+    color: #5a6478;
+    font-weight: 550;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .service-description {
     color: #64748b;
     margin-bottom: 24px;
     line-height: 1.6;
@@ -332,26 +416,51 @@ const processSteps = [
   .service-features {
     list-style: none;
     padding: 0;
+    margin: 0;
+    flex: 1;
   }
 
   .service-features li {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 12px;
     color: #475569;
-    font-weight: 500;
+    font-size: 0.9rem;
+    line-height: 1.5;
   }
 
   .check-icon {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     color: #10b981;
     margin-right: 12px;
     flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .service-cta {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .learn-more-link {
+    color: #2C5F9B;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .learn-more-link:hover {
+    color: #1e40af;
+    transform: translateX(4px);
   }
 
   .capabilities {
-    padding: 100px 0;
+    padding: 60px 0;
     background: #f8fafc;
   }
 
@@ -365,7 +474,7 @@ const processSteps = [
 
   .capability-item {
     text-align: center;
-    padding: 40px 24px;
+    padding: 32px 20px;
     background: white;
     border-radius: 12px;
     border: 1px solid #e2e8f0;
@@ -380,12 +489,17 @@ const processSteps = [
   .capability-icon {
     width: 56px;
     height: 56px;
-    background: linear-gradient(135deg, #E8B86D, #f39c12);
-    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 20px;
+    margin: 0 auto 20px auto;
+  }
+
+  .cap-icon {
+    width: 48px !important;
+    height: 48px !important;
+    object-fit: contain;
+    display: block;
   }
 
   .capability-item h3 {
@@ -402,103 +516,106 @@ const processSteps = [
   }
 
   .process {
-    padding: 100px 0;
+    padding: 60px 0;
     background: white;
   }
 
-  .process-timeline {
-    position: relative;
-    max-width: 1000px;
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    max-width: 1200px;
     margin: 0 auto;
   }
 
-  .process-timeline::before {
+  .process-card {
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .process-card::before {
     content: '';
     position: absolute;
-    top: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: calc(100% - 80px);
-    background: linear-gradient(180deg, #2C5F9B 0%, #E8B86D 100%);
-    opacity: 0.3;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #2C5F9B, #E8B86D);
+    border-radius: 12px 12px 0 0;
   }
 
-  .process-step {
+  .process-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+    border-color: #cbd5e1;
+  }
+
+  .process-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
-    margin-bottom: 60px;
-    position: relative;
+    justify-content: center;
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
   }
 
-  .process-step:nth-child(even) {
-    flex-direction: row-reverse;
+  .process-card:hover .process-icon {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #e3ebf3, #b6c8dd);
   }
 
-  .step-connector {
-    flex: 1;
-    height: 2px;
-    background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e1 100%);
-    position: relative;
+  .process-icon .icon {
+    width: 28px;
+    height: 28px;
+    color: white;
   }
 
-  .process-step:nth-child(odd) .step-connector {
-    margin-right: 40px;
-  }
-
-  .process-step:nth-child(even) .step-connector {
-    margin-left: 40px;
-  }
-
-  .step-number {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #2C5F9B, #E8B86D);
+  .process-number {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #E8B86D, #f39c12);
     color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 0.875rem;
     font-weight: 700;
-    box-shadow: 0 8px 24px rgba(44, 95, 155, 0.2);
-    position: relative;
-    z-index: 2;
-    flex-shrink: 0;
+    border: 2px solid white;
+    box-shadow: 0 4px 12px rgba(232, 184, 109, 0.3);
   }
 
-  .step-content {
-    background: #f8fafc;
-    padding: 32px;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    transition: all 0.3s ease;
-    flex: 1;
-    max-width: 400px;
-  }
-
-  .step-content:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
-  }
-
-  .step-content h3 {
+  .process-card h3 {
     font-size: 1.25rem;
     font-weight: 600;
     color: #1e293b;
     margin-bottom: 12px;
   }
 
-  .step-content p {
+  .process-card p {
     color: #64748b;
     line-height: 1.6;
     font-size: 0.95rem;
+    margin: 0;
   }
 
   .cta {
     background: linear-gradient(135deg, #1e293b 0%, #2C5F9B 50%, #4A7BB8 100%);
     color: white;
-    padding: 100px 0;
+    padding: 80px 0;
     text-align: center;
     position: relative;
   }
@@ -529,7 +646,7 @@ const processSteps = [
 
   .cta p {
     color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 40px;
+    margin-bottom: 32px;
     font-size: 1.125rem;
     line-height: 1.7;
   }
@@ -584,33 +701,28 @@ const processSteps = [
     
     .services-grid {
       grid-template-columns: 1fr;
-      gap: 32px;
+      gap: 24px;
+    }
+    
+    .service-card {
+      padding: 28px;
+    }
+    
+    .service-card h3 {
+      font-size: 1.375rem;
     }
     
     .capabilities-grid {
       grid-template-columns: repeat(2, 1fr);
     }
     
-    .process-step {
-      flex-direction: column;
-      text-align: center;
+    .process-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
     }
     
-    .process-step:nth-child(even) {
-      flex-direction: column;
-    }
-    
-    .process-timeline::before {
-      display: none;
-    }
-    
-    .step-connector {
-      display: none;
-    }
-    
-    .step-content {
-      max-width: none;
-      margin-top: 24px;
+    .process-card {
+      padding: 24px;
     }
   }
 
@@ -623,11 +735,11 @@ const processSteps = [
     .capabilities,
     .process,
     .cta {
-      padding: 60px 0;
+      padding: 40px 0;
     }
     
     .service-card {
-      padding: 32px;
+      padding: 24px;
     }
     
     .capabilities-grid {
@@ -637,10 +749,6 @@ const processSteps = [
     .cta h2 {
       font-size: 2rem;
     }
-  }
-
-  .process-step:last-child .step-connector {
-    display: none;
   }
 </style>
 
