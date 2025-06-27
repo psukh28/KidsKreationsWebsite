@@ -9,6 +9,13 @@ interface Props {
 }
 
 const { title, description = "Premium infantwear OEM/ODM manufacturer in Thailand. 23+ years experience, GOTS certified, ethical production. Partner with 30+ global brands." } = Astro.props;
+
+const fontLinks = [
+  'https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;500;600;700&display=swap',
+  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap',
+  'https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap',
+  'https://fonts.googleapis.com/css2?family=Martel:wght@200;300;400;600;700;800;900&display=swap'
+];
 ---
 
 <!DOCTYPE html>
@@ -18,6 +25,10 @@ const { title, description = "Premium infantwear OEM/ODM manufacturer in Thailan
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>{title}</title>
+      <!-- ✅ Add this -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta name="description" content={description} />
     <meta name="keywords" content="infantwear, OEM, ODM, manufacturing, Thailand, GOTS certified, ethical production, baby clothes, children's wear" />
     <meta name="author" content="Kids Kreations Co." />

@@ -57,6 +57,12 @@ const fontLinks = [
               <a href="https://www.facebook.com/lilsoftbaby" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
               <a href="https://www.instagram.com/lilsoft_baby/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
+            <div class="schedule-meeting-wrapper">
+              <div class="schedule-meeting-info">
+                Prefer a live conversation? Book a video call with our team to discuss your project, get a quote, or ask questions directly.
+              </div>
+              <a class="btn-outline schedule-meeting-btn" href="https://calendar.app.google/Zi9Mo7C2ggxqiDym6" target="_blank" rel="noopener noreferrer">Schedule a Meeting</a>
+            </div>
           </div>
           <div class="card contact-form">
             <h2>Send us a Message</h2>
@@ -173,7 +179,7 @@ const fontLinks = [
   }
 
   h1, h2 {
-    font-family: 'DM Serif Display', serif;
+    font-family: 'Libre Baskerville', serif;
   }
 
   p, label, input, textarea, select, button {
@@ -361,6 +367,13 @@ const fontLinks = [
   .form-group input:invalid,
   .form-group textarea:invalid,
   .form-group select:invalid {
+    /* Only highlight red if .touched is present */
+    border-color: inherit;
+  }
+
+  .form-group input.touched:invalid,
+  .form-group textarea.touched:invalid,
+  .form-group select.touched:invalid {
     border-color: #dc2626;
   }
 
@@ -368,6 +381,39 @@ const fontLinks = [
   .form-group textarea:invalid:focus,
   .form-group select:invalid:focus {
     box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  }
+
+  .schedule-meeting-wrapper {
+    margin-top: 1.5rem;
+    text-align: left;
+  }
+  .schedule-meeting-btn {
+    display: inline-block;
+    border: 2px solid #2563eb;
+    color: #2563eb;
+    padding: 0.9rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    background: white;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+    margin-top: 0.5rem;
+  }
+  .schedule-meeting-btn:hover {
+    background: #f0f4ff;
+    color: #1e40af;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+  }
+
+  .schedule-meeting-info {
+    font-size: 1rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    line-height: 1.5;
   }
 </style>
 
@@ -380,8 +426,13 @@ const fontLinks = [
     if (!form) return;
 
     // Real-time validation
-    form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input[required], textarea[required]').forEach(input => {
+    form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input[required], textarea[required], select[required]').forEach(input => {
       input.addEventListener('input', () => {
+        input.classList.add('touched');
+        validateInput(input);
+      });
+      input.addEventListener('blur', () => {
+        input.classList.add('touched');
         validateInput(input);
       });
     });
