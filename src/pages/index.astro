@@ -78,21 +78,23 @@ const featuredProducts = [
 	<main>
 		<section class="hero-section">
 			<div class="hero-content">
-				<div class="hero-text">
-					<div class="hero-tagline">YOUR TRUSTED OEM PARTNER</div>
-					<h1 class="hero-heading">
-						Premium Babywear <br class="mobile-hide"> Manufacturing
-					</h1>
-					<p class="hero-subtext">
-						From certified organic production to custom designs and global export support, we help brands scale confidently.
-					</p>
-					<p class="hero-note">Loved by babies. Trusted by global brands.</p>
-					<div class="hero-cta">
-						<a class="btn-primary" href="/products">Explore Products →</a>
-						<a class="btn-outline" href="/contact">Request a Quote</a>
+				<div class="cotton-frame">
+					<div class="hero-text text-center max-w-md mx-auto">
+						<div class="hero-tagline">YOUR TRUSTED OEM PARTNER</div>
+						<h1 class="hero-heading leading-tight">
+							Premium Babywear <br class="mobile-hide"> Manufacturing
+						</h1>
+						<p class="hero-subtext">
+							From certified organic production to custom designs and global export support, we help brands scale confidently.
+						</p>
+						<p class="hero-note">Loved by babies. Trusted by global brands.</p>
+						<div class="hero-cta">
+							<a class="btn-primary text-sm font-semibold" href="/products">Explore Products →</a>
+							<a class="btn-outline text-sm font-semibold" href="https://calendar.app.google/Zi9Mo7C2ggxqiDym6" target="_blank" rel="noopener noreferrer">Schedule a Meeting</a>
+						</div>
 					</div>
 				</div>
-				<div class="hero-image-wrapper">
+				<div class="hero-image-wrapper max-w-md mx-auto mt-6">
 					<Image 
 						src={herobaby} 
 						alt="Happy baby in premium infantwear" 
@@ -100,7 +102,7 @@ const featuredProducts = [
 						height={1200} 
 						quality={100} 
 						loading="eager"
-						class="hero-img" 
+						class="hero-img rounded-xl shadow-md" 
 					/>
 				</div>
 			</div>
@@ -126,6 +128,8 @@ const featuredProducts = [
 										width={64}
 										height={64}
 										quality={100}
+										loading="eager"
+										fetchpriority="high"
 										class="feature-icon-img"
 									/>
 								)}
@@ -155,6 +159,8 @@ const featuredProducts = [
 									height={600}
 									quality={80}
 									format="webp"
+									loading="lazy"
+									fetchpriority="auto"
 									class="product-img"
 								/>
 								<span class="product-badge">{product.badge}</span>
@@ -220,19 +226,19 @@ const featuredProducts = [
 	/* Hero Typography */
 	.hero-tagline {
 		font-family: 'Inter', sans-serif;
-		font-size: 0.875rem;
-		letter-spacing: 0.1em;
-		color: #94a3b8;
+		font-size: 0.9rem;
+		letter-spacing: 0.2em;
+		color: #2d6dc6;
 		text-transform: uppercase;
 		font-weight: 500;
 		margin-bottom: 0.5rem;
 	}
 
-	.hero-headline {
+	.hero-heading {
 		font-family: 'Libre Baskerville', serif;
 		font-size: clamp(1.75rem, 4.5vw, 2.75rem);
-		line-height: 1.15;
-		font-weight: 700;
+		line-height: 1.4 !important;
+		font-weight: 600;
 		color: #1e293b;
 		margin-bottom: 1rem;
 	}
@@ -240,7 +246,7 @@ const featuredProducts = [
 	.hero-description {
 		font-family: 'Inter', sans-serif;
 		font-size: 1rem;
-		line-height: 1.6;
+		line-height: 1.7;
 		color: #334155;
 		margin-bottom: 1rem;
 	}
@@ -256,28 +262,36 @@ const featuredProducts = [
 	/* Hero Section */
 	.hero-section {
 		padding: 4rem 2rem;
-		max-width: 1400px;
 		margin: 0 auto;
+		width: 100%;
 	}
 	.hero-content {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		flex-wrap: wrap;
-		gap: 3rem;
+		gap: 6rem; /* Fallback for Safari */
+		gap: clamp(2rem, 5vw, 6rem);
+		max-width: 1400px; /* Fallback for Safari */
+		max-width: clamp(960px, 90vw, 1400px);
+		margin: 0 auto;
+		width: 100%;
 	}
 	.hero-text {
 		flex: 1 1 500px;
 		min-width: 300px;
+		max-width: 600px;
 	}
 	.hero-image-wrapper {
-		flex: 1 1 400px;
+		flex: 1 1 500px;
 		min-width: 300px;
+		max-width: 600px;
 		aspect-ratio: 3 / 4;
 		max-height: 550px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		margin-top: -0.25rem;
 	}
 	.hero-image-wrapper img {
 		width: 100%;
@@ -285,12 +299,77 @@ const featuredProducts = [
 		object-fit: cover;
 		border-radius: 1rem;
 		box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+		animation: fadeInUp 0.8s ease-out;
+	}
+
+	@keyframes fadeInUp {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	/* Utility Classes */
+	.text-center {
+		text-align: center;
+	}
+	
+	.max-w-md {
+		max-width: 28rem;
+	}
+	
+	.mx-auto {
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	.mt-6 {
+		margin-top: 1.5rem;
+	}
+	
+	.mt-4 {
+		margin-top: 1rem;
+	}
+	
+	.leading-tight {
+		line-height: 1.1;
+	}
+	
+	.text-sm {
+		font-size: 0.875rem;
+	}
+	
+	.font-semibold {
+		font-weight: 600;
+	}
+	
+	.rounded-xl {
+		border-radius: 0.75rem;
+	}
+	
+	.shadow-md {
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	}
+	
+	.px-4 {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+	
+	.pt-10 {
+		padding-top: 2.5rem;
 	}
 
 	.hero-cta {
 		display: flex;
 		gap: 1rem;
 		transition: all 0.3s ease;
+		justify-content: center;
+		flex-wrap: wrap;
 	}
 
 	.btn-primary {
@@ -545,6 +624,19 @@ const featuredProducts = [
 	}
 
 	/* Responsive Design */
+	@media (min-width: 1025px) {
+		.hero-content {
+			gap: 6rem;
+			max-width: 1400px;
+		}
+		.hero-text {
+			max-width: 600px;
+		}
+		.hero-image-wrapper {
+			max-width: 600px;
+		}
+	}
+
 	@media (max-width: 1024px) {
 		.hero-section {
 			padding: 2.5rem 1rem;
@@ -556,66 +648,55 @@ const featuredProducts = [
 
 	@media (max-width: 768px) {
 		.hero-section {
-			padding-top: 1.25rem;
-			padding-bottom: 1.25rem;
+			padding: 1.25rem 1rem;
 		}
 		.hero-content {
+			gap: 0;
 			flex-direction: column;
+			max-width: none;
+		}
+		.hero-text {
 			text-align: center;
+			max-width: 28rem;
+			margin: 0 auto;
+			padding: 0 1rem;
 		}
 		.hero-image-wrapper {
-			position: relative;
-			width: 100%;
-			max-width: 360px;
-			margin: 1.5rem auto 0;
-			border-radius: 1rem;
-			overflow: hidden;
-			box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+			margin-top: 1.5rem;
+			max-width: 28rem;
+			margin-left: auto;
+			margin-right: auto;
 		}
-
-		.hero-image-wrapper::before {
-			content: "";
-			position: absolute;
-			inset: 0;
-			background: linear-gradient(to bottom, rgba(255,255,255,0.85), rgba(255,255,255,0.2));
-			backdrop-filter: blur(6px);
-			border-radius: inherit;
-			z-index: 1;
-		}
-
-		.hero-image-wrapper img {
-			width: 100%;
-			height: auto;
-			object-fit: cover;
-			position: relative;
-			z-index: 2;
-			border-radius: inherit;
-		}
-
 		.hero-cta {
-			flex-direction: column;
-			gap: 12px;
-			width: 100%;
-			max-width: 320px;
-			margin: 0 auto;
+			justify-content: center;
+			flex-wrap: wrap;
+			gap: 0.75rem;
 		}
-
 		.btn-primary,
 		.btn-outline {
-			width: 100%;
-			font-size: 1rem;
-			padding: 0.9rem 1.2rem;
-			border-radius: 8px;
+			min-width: 140px;
 		}
 	}
 
 	@media (max-width: 480px) {
 		.hero-section {
-			padding-top: 0.75rem;
-			padding-bottom: 0.75rem;
+			padding: 1rem 0.75rem;
 		}
-		.hero-content {
+		.hero-text {
+			padding: 0 0.5rem;
+		}
+		.hero-image-wrapper {
+			margin-top: 1rem;
+		}
+		.hero-cta {
+			flex-direction: column;
+			align-items: center;
 			gap: 0.75rem;
+		}
+		.btn-primary,
+		.btn-outline {
+			width: 100%;
+			max-width: 200px;
 		}
 	}
 
@@ -695,6 +776,48 @@ const featuredProducts = [
 		top: 0; left: 0;
 		z-index: 10;
 		pointer-events: none;
+	}
+
+	/* Cotton Frame Styling */
+	.cotton-frame {
+		border: 4px dashed #e2e8f0;
+		border-radius: 24px;
+		padding: 2.5rem;
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+		background: linear-gradient(145deg, #f9f9f9, #ffffff);
+		background-size: cover;
+		background-blend-mode: overlay;
+		position: relative;
+		overflow: hidden;
+	}
+
+	/* Add subtle fabric texture effect */
+	.cotton-frame::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-image: 
+			radial-gradient(circle at 20% 80%, rgba(255,255,255,0.8) 0%, transparent 50%),
+			radial-gradient(circle at 80% 20%, rgba(255,255,255,0.6) 0%, transparent 50%),
+			radial-gradient(circle at 40% 40%, rgba(255,255,255,0.4) 0%, transparent 50%);
+		pointer-events: none;
+		z-index: 1;
+	}
+
+	.cotton-frame .hero-text {
+		position: relative;
+		z-index: 2;
+	}
+
+	/* Responsive adjustments for cotton frame */
+	@media (max-width: 768px) {
+		.cotton-frame {
+			padding: 1.5rem;
+			border-width: 2px;
+		}
 	}
 </style>
 
