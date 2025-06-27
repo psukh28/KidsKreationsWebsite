@@ -6,6 +6,8 @@ import palette from '../assets/icons/paintbrush.png';
 import globe from '../assets/icons/international.png';
 
 
+
+
 const menuItems = [
   { href: '/', text: 'Home' },
   { href: '/about', text: 'About' },
@@ -15,6 +17,14 @@ const menuItems = [
 ];
 
 const currentPath = Astro.url.pathname;
+
+const fontLinks = [
+  'https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;500;600;700&display=swap',
+  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap',
+  'https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap',
+  'https://fonts.googleapis.com/css2?family=Martel:wght@200;300;400;600;700;800;900&display=swap'
+];
+
 ---
 
 <header class="header">
@@ -97,8 +107,9 @@ const currentPath = Astro.url.pathname;
   }
 
   .logo-text {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 2rem;
+    font-weight: 600;
     color: var(--primary);
     transition: color 0.3s ease;
   }
