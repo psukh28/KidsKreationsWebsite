@@ -9,7 +9,6 @@ import romper from '/src/assets/products/romper.webp';
 import giftset from '/src/assets/products/giftset.webp';
 import twopiece from '/src/assets/products/2piece.webp';
 import herobaby from '/src/assets/home/hero-baby.jpg';
-import herohand from '/src/assets/home/hero-hand.png';
 import organiclogo from '/src/assets/icons/organic.svg';
 import palette from '/src/assets/icons/paintbrush.svg';
 import globe from '/src/assets/icons/international.svg';
@@ -41,7 +40,7 @@ const features = [
 		description: "Export-ready products meeting global safety and quality standards.",
 		icon: globe,
 		type: "image",
-		color: "var(--info)"
+		color: "var(--primary)"
 	}
 ];
 
@@ -604,7 +603,7 @@ const featuredProducts = [
 		line-height: 1.6;
 		margin-bottom: 0.5rem;
 	}
-	.button.button-text, .view-collection {
+	.button.button-text {
 		color: #2563eb;
 		font-weight: 500;
 		font-size: 1rem;
@@ -618,17 +617,17 @@ const featuredProducts = [
 		padding: 0;
 		cursor: pointer;
 	}
-	.button.button-text::after, .view-collection::after {
+	.button.button-text::after {
 		content: '→';
 		font-weight: 400;
 		transition: transform 0.2s;
 		margin-left: 0.2em;
 	}
-	.button.button-text:hover, .view-collection:hover {
+	.button.button-text:hover {
 		color: #1d4ed8;
 		transform: translateX(2px);
 	}
-	.button.button-text:hover::after, .view-collection:hover::after {
+	.button.button-text:hover::after {
 		transform: translateX(4px);
 	}
 
@@ -835,61 +834,6 @@ const featuredProducts = [
 		}
 	}
 
-	/* Update .hero-bg and .hero-content-overlay styles for warmth and balance */
-	.hero-bg {
-		position: relative;
-		min-height: 70vh;
-		width: 100vw;
-		left: 50%;
-		right: 50%;
-		margin-left: -50vw;
-		margin-right: -50vw;
-		display: flex;
-		align-items: center;
-		justify-content: flex-start;
-		padding: 0;
-		box-sizing: border-box;
-		z-index: 1;
-	}
-	.hero-content-overlay {
-		position: relative;
-		z-index: 3;
-		max-width: 600px;
-		padding: 4rem 3rem 4rem 5vw;
-		color: #fff;
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-	}
-	.hero-content-overlay h1,
-	.hero-content-overlay p {
-		color: #fff;
-		text-shadow: 0 2px 8px rgba(0,123,255,0.12), 0 1px 2px rgba(0,0,0,0.10);
-	}
-	.hero-content-overlay .hero-cta {
-		margin-top: 2rem;
-	}
-	@media (max-width: 1024px) {
-		.hero-bg {
-			min-height: 50vh;
-			background-position: 70% center;
-		}
-		.hero-content-overlay {
-			padding: 3rem 1.5rem 3rem 2vw;
-			max-width: 90vw;
-		}
-	}
-
-	.hero-img-gradient {
-		background: linear-gradient(to right, rgba(255,255,255,0.85), rgba(255,255,255,0) 70%);
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0; left: 0;
-		z-index: 10;
-		pointer-events: none;
-	}
-
 	/* Cotton Frame Styling */
 	.cotton-frame {
 		border: 4px dashed #a1c8f9;
@@ -949,15 +893,5 @@ const featuredProducts = [
 		document.querySelectorAll('[data-aos]').forEach(element => {
 			observer.observe(element);
 		});
-
-		// Add smooth scroll behavior for the scroll indicator
-		const scrollIndicator = document.querySelector('.scroll-indicator');
-		const trustedRegions = document.querySelector('.trusted-regions');
-		
-		if (scrollIndicator && trustedRegions) {
-			scrollIndicator.addEventListener('click', () => {
-				trustedRegions.scrollIntoView({ behavior: 'smooth' });
-			});
-		}
 	});
 </script>

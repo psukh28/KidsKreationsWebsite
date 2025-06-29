@@ -223,12 +223,34 @@ const preloadImages = products.flatMap(product =>
     --aspect-ratio: 4/3;
   }
 
+  .product-gallery {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    touch-action: pan-y pinch-zoom; /* Allow vertical scrolling but optimize for horizontal swipes */
+    cursor: grab;
+    transition: transform 0.1s ease;
+  }
+
+  .product-gallery:active {
+    cursor: grabbing;
+  }
+
+  .product-gallery.swiping {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
   .product-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 12px;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
   }
 
   .product-card:hover .product-image {
@@ -555,6 +577,37 @@ const preloadImages = products.flatMap(product =>
     .gallery-nav {
       display: none;
     }
+
+    /* Add swipe indicator for mobile */
+    .product-gallery::after {
+      content: '← Swipe →';
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 25;
+    }
+
+    .product-card:hover .product-gallery::after {
+      opacity: 1;
+    }
+
+    .product-gallery.show-swipe-hint::after {
+      opacity: 1;
+    }
+
+    /* Improve touch feedback */
+    .product-gallery {
+      touch-action: pan-y pinch-zoom;
+    }
   }
 
   @media (max-width: 480px) {
@@ -756,31 +809,72 @@ const preloadImages = products.flatMap(product =>
       let touchStartY = 0;
       let touchEndX = 0;
       let touchEndY = 0;
+      let isSwiping = false;
+      let touchStartTime = 0;
 
       gallery.addEventListener('touchstart', (event: TouchEvent) => {
         touchStartX = event.changedTouches[0].screenX;
         touchStartY = event.changedTouches[0].screenY;
-      }, { passive: true });
+        touchStartTime = Date.now();
+        isSwiping = false;
+      }, { passive: false });
+
+      gallery.addEventListener('touchmove', (event: TouchEvent) => {
+        if (!touchStartX || !touchStartY) return;
+        
+        const currentX = event.changedTouches[0].screenX;
+        const currentY = event.changedTouches[0].screenY;
+        const deltaX = Math.abs(currentX - touchStartX);
+        const deltaY = Math.abs(currentY - touchStartY);
+        
+        // If we've moved horizontally more than vertically, prevent scroll
+        if (deltaX > deltaY && deltaX > 10) {
+          event.preventDefault();
+          isSwiping = true;
+          gallery.classList.add('swiping');
+        }
+      }, { passive: false });
 
       gallery.addEventListener('touchend', (event: TouchEvent) => {
+        if (!touchStartX || !touchStartY) return;
+        
+        const touchEndTime = Date.now();
+        const touchDuration = touchEndTime - touchStartTime;
+        
         touchEndX = event.changedTouches[0].screenX;
         touchEndY = event.changedTouches[0].screenY;
-        handleSwipe();
-      }, { passive: true });
+        
+        // Remove swiping class
+        gallery.classList.remove('swiping');
+        
+        // Only process swipe if it was a quick gesture (less than 500ms) and we detected swiping
+        if (isSwiping && touchDuration < 500) {
+          event.preventDefault();
+          handleSwipe();
+        }
+        
+        // Reset touch state
+        touchStartX = 0;
+        touchStartY = 0;
+        touchEndX = 0;
+        touchEndY = 0;
+        touchStartTime = 0;
+        isSwiping = false;
+      }, { passive: false });
 
       function handleSwipe() {
-        const swipeThreshold = 50; // Minimum distance for a swipe
+        const swipeThreshold = 80; // Increased threshold for more reliable detection
         const deltaX = touchEndX - touchStartX;
         const deltaY = touchEndY - touchStartY;
 
         // Check if it's a horizontal swipe and not a vertical scroll
-        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > swipeThreshold) {
           if (deltaX < -swipeThreshold) {
-            // Swiped left
+            // Swiped left - next image
             const newIndex = (currentIndex + 1) % images.length;
             showImage(newIndex);
           } else if (deltaX > swipeThreshold) {
-            // Swiped right
+            // Swiped right - previous image
             const newIndex = (currentIndex - 1 + images.length) % images.length;
             showImage(newIndex);
           }
@@ -899,6 +993,16 @@ const preloadImages = products.flatMap(product =>
 
       // Initialize first image
       showImage(0);
+      
+      // Show swipe indicator briefly on mobile
+      if (window.innerWidth <= 768) {
+        setTimeout(() => {
+          gallery.classList.add('show-swipe-hint');
+          setTimeout(() => {
+            gallery.classList.remove('show-swipe-hint');
+          }, 2000);
+        }, 1000);
+      }
     });
 
     // Make product cards clickable
