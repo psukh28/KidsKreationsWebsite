@@ -36,7 +36,7 @@ export const products = [
     title: "Dungaree Sets",
     description: "Timeless dungarees paired with soft inner tees, playful style with all-day comfort.",
     badges: ["Easy Diaper Access", "GOTS Factory Certified", "Fast-Moving Inventory"],
-    images: [dungaree1, dungaree2, dungaree3, dungaree4],
+    images: [dungaree1, dungaree2, dungaree3],
     slug: "dungaree-sets",
     orientation: "landscape",
     features: [
