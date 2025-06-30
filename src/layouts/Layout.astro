@@ -114,6 +114,127 @@ const fontLinks = [
   </head>
   <body>
     <slot />
+    <script>
+    /**
+     * Cookie Consent Banner
+     * - Shows only on first visit (checks for 'cookieConsent' cookie)
+     * - Sets cookieConsent=accepted or declined for 180 days
+     * - Auto-hides after 15 seconds if no action
+     * - Slide-up animation, modern dark style
+     */
+    (function() {
+      // Helper: Get cookie by name
+      function getCookie(name: any) {
+        return document.cookie.split('; ').find(row => row.startsWith(name + '='))?.split('=')[1];
+      }
+
+      // Helper: Set cookie with expiration in days
+      function setCookie(name: any, value: any, days: any) {
+        const expires = new Date(Date.now() + days*24*60*60*1000).toUTCString();
+        document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax`;
+      }
+
+      // Only show if cookieConsent not set
+      if (getCookie('cookieConsent')) return;
+
+      // Create banner
+      const banner = document.createElement('div');
+      banner.id = 'cookie-consent-banner';
+      banner.innerHTML = `
+        <div class="cookie-content">
+          <span>We use cookies to improve your experience and analyze site traffic. You can accept or decline below.</span>
+          <div class="cookie-actions">
+            <button id="cookie-accept">Accept</button>
+            <button id="cookie-decline">Decline</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(banner);
+
+      // Slide-up animation
+      setTimeout(() => banner.classList.add('cookie-visible'), 100);
+
+      // Handle Accept/Decline
+      function handleChoice(choice: any) {
+        setCookie('cookieConsent', choice, 180);
+        banner.classList.remove('cookie-visible');
+        setTimeout(() => banner.remove(), 500);
+      }
+      const acceptBtn = document.getElementById('cookie-accept');
+      const declineBtn = document.getElementById('cookie-decline');
+      if (acceptBtn) acceptBtn.onclick = () => handleChoice('accepted');
+      if (declineBtn) declineBtn.onclick = () => handleChoice('declined');
+
+      // Auto-hide after 15s
+      setTimeout(() => {
+        if (!getCookie('cookieConsent')) {
+          handleChoice('auto-hide');
+        }
+      }, 15000);
+
+      // Styles
+      const style = document.createElement('style');
+      style.textContent = `
+        #cookie-consent-banner {
+          position: fixed;
+          left: 0; right: 0; bottom: 0;
+          z-index: 9999;
+          display: flex;
+          justify-content: center;
+          pointer-events: none;
+        }
+        #cookie-consent-banner .cookie-content {
+          background: #222c36;
+          color: #fff;
+          border-radius: 1rem;
+          box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+          padding: 1.2rem 2rem;
+          margin: 1.5rem;
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 1rem;
+          opacity: 0;
+          transform: translateY(100%);
+          transition: opacity 0.4s cubic-bezier(.4,0,.2,1), transform 0.5s cubic-bezier(.4,0,.2,1);
+          pointer-events: auto;
+        }
+        #cookie-consent-banner.cookie-visible .cookie-content {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .cookie-actions {
+          display: flex;
+          gap: 0.75rem;
+        }
+        .cookie-actions button {
+          background: #fff;
+          color: #222c36;
+          border: none;
+          border-radius: 0.5rem;
+          padding: 0.5rem 1.2rem;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .cookie-actions button:hover {
+          background: #0074D9;
+          color: #fff;
+        }
+        @media (max-width: 600px) {
+          #cookie-consent-banner .cookie-content {
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    })();
+    </script>
   </body>
 </html>
 
