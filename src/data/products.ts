@@ -4,6 +4,8 @@ import giftset2 from '../assets/products/giftset-2.jpg';
 import giftset3 from '../assets/products/giftset-3.jpg';
 import giftset4 from '../assets/products/giftset-4.jpg';
 import giftset5 from '../assets/products/giftset-5.jpg';
+import giftset6 from '../assets/products/giftset-6.jpg';
+import giftset7 from '../assets/products/giftset-7.jpg';
 import romper1 from '../assets/products/romper-1.jpg';
 import romper2 from '../assets/products/romper-2.jpg';
 import romper3 from '../assets/products/romper-3.jpg';
@@ -57,7 +59,7 @@ export const products = [
     title: "Gift Sets",
     description: "Thoughtfully curated babywear sets, beautifully packaged for gifting, complete with coordinated outfits and accessories.",
     badges: ["Premium Unboxing Experience", "Luxury Feel", "Retailer Favorite"],
-    images: [giftset1, giftset2, giftset3, giftset4, giftset5],
+    images: [giftset1, giftset2, giftset3, giftset4, giftset5, giftset6, giftset7],
     slug: "gift-sets",
     orientation: "landscape",
     features: [
