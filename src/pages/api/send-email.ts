@@ -232,6 +232,26 @@ export const POST: APIRoute = async ({ request }) => {
     const info = await transporter.sendMail(mailOptions);
     console.log('Email sent successfully:', info);
 
+        // Send confirmation email to the user
+    const confirmationMailOptions = {
+      from: `"Kids Kreations" <${process.env.EMAIL_USER}>`,
+      to: sanitizedData.email,
+      subject: "We've received your message!",
+      html: `
+        <div style="font-family: Arial, sans-serif; color: #333;">
+          <h2>Thank you for contacting Kids Kreations!</h2>
+          <p>Hi ${sanitizedData.name},</p>
+          <p>We've received your message and will get back to you within 24 hours.</p>
+          <p><b>Your message:</b></p>
+          <blockquote style="background:#f9f9f9; padding:10px; border-left:3px solid #2563eb;">
+            ${sanitizedData.message}
+          </blockquote>
+          <p>Best regards,<br>Kids Kreations Team</p>
+        </div>
+      `
+    };
+    await transporter.sendMail(confirmationMailOptions);
+
     return new Response(JSON.stringify({
       message: 'Email sent successfully'
     }), {
