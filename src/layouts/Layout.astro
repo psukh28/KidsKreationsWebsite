@@ -22,18 +22,25 @@ const fontLinks = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>{title}</title>
-      <!-- ✅ Add this -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <meta name="description" content={description} />
-    <meta name="keywords" content="infantwear, OEM, ODM, manufacturing, Thailand, GOTS certified, ethical production, baby clothes, children's wear" />
-    <meta name="author" content="Kids Kreations Co." />
+    <title>{title ?? 'Kids Kreations Company Limited – Trusted Babywear Manufacturer Since 2000'}</title>
+    <meta name="description" content={description ?? 'Manufacturer of premium baby gift sets and infant garments based in Thailand. Trusted OEM & ODM supplier for brands worldwide since 2000.'} />
     <meta name="robots" content="index, follow" />
-    <meta name="language" content="English" />
-    <meta name="revisit-after" content="7 days" />
-    <meta name="generator" content="Kids Kreations Co., Ltd." />
+    <link rel="canonical" href="https://kidskreationsco.com/" />
+
+    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kidskreationsco.com/" />
+    <meta property="og:title" content="Kids Kreations Company Limited – Trusted Babywear Manufacturer Since 2000" />
+    <meta property="og:description" content="OEM/ODM baby garments and gift sets crafted in Thailand. Supplying brands across North America, Europe, and the Middle East." />
+    <meta property="og:image" content="https://kidskreationsco.com/images/og-image.png" />
+    <meta property="og:site_name" content="Kids Kreations Co." />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kids Kreations Company Limited – Trusted Babywear Manufacturer Since 2000" />
+    <meta name="twitter:description" content="Explore our wide range of infant apparel and curated gift sets, designed and manufactured in Thailand." />
+    <meta name="twitter:image" content="https://kidskreationsco.com/images/og-image.png" />
 
     <!-- Performance Optimizations -->
     <PerformanceOptimizer 
@@ -44,59 +51,26 @@ const fontLinks = [
     <!-- Performance Monitoring -->
     <PerformanceMonitor />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://new.kidskreationsco.com/" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content="https://new.kidskreationsco.com/images/og-image.png" />
-    <meta property="og:site_name" content="Kids Kreations Co., Ltd." />
-    <meta property="og:locale" content="en_US" />
+    <!-- Technical and Favicon -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <html lang="en" />
 
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://new.kidskreationsco.com/" />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content="https://new.kidskreationsco.com/images/og-image.png" />
-
-    <!-- External CSS with optimized loading -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'" />
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.png" />
-    <link rel="icon" type="image/x-icon" href="/assets/icons/logokkpng.ico" />
-    <link rel="icon" type="image/png" href="/assets/icons/logokkpng.png" />
-    <link rel="icon" type="image/svg+xml" href="/assets/icons/logokk.svg" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/logokkpng.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#ffffff" />
-
-    <!-- Schema.org markup -->
+    <!-- Organization Structured Data -->
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Kids Kreations Co.",
-        "url": "https://new.kidskreationsco.com",
-        "logo": "https://new.kidskreationsco.com/images/logokkpng.png",
-        "description": "Premium infantwear OEM/ODM manufacturer in Thailand with 23+ years experience.",
-        "address": {
-          "@type": "PostalAddress",
-          "addressCountry": "TH"
-        },
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": "+66-XX-XXX-XXXX",
-          "contactType": "customer service"
-        },
-        "sameAs": [
-          "https://www.linkedin.com/company/kids-kreations",
-          "https://www.facebook.com/kidskreations"
-        ]
-      }
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Kids Kreations Company Limited",
+      "url": "https://kidskreationsco.com/",
+      "logo": "https://kidskreationsco.com/images/logokkpng.png",
+      "sameAs": [
+        "https://www.facebook.com/kidskreationsth",
+        "https://www.instagram.com/kidskreations/"
+      ],
+      "description": "OEM/ODM babywear manufacturer based in Thailand since 2000. Specializing in infant gift sets and apparel."
+    }
     </script>
 
     <!-- Service Worker Registration -->
