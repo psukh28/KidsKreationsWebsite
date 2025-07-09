@@ -126,7 +126,8 @@ const processSteps = [
       <div class="container">
         <div class="services-grid">
           {services.map(service => (
-            <div class="service-card fade-in">
+            <div class="service-card fade-in" tabindex="0">
+              <div class="spotlight"></div>
               <div class="service-icon">
                 {service.icon.map((icon, index) => (
                   <>
@@ -334,6 +335,18 @@ const processSteps = [
 
   .service-card:hover::before {
     transform: scaleX(1);
+  }
+
+  .service-card {
+    position: relative;
+  }
+  .spotlight {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: 1;
   }
 
   .service-icon {
@@ -752,18 +765,49 @@ const processSteps = [
 <script>
   // Script to fade in elements on scroll
   document.addEventListener("DOMContentLoaded", () => {
+    // Fade-in animation
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          (entry.target as HTMLElement).style.opacity = "1";
-          (entry.target as HTMLElement).style.transform = "translateY(0)";
+          const el = entry.target as HTMLElement;
+          el.style.opacity = "1";
+          el.style.transform = "translateY(0)";
           observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
-
     document.querySelectorAll('.fade-in').forEach((el) => {
       observer.observe(el);
+    });
+
+    // Spotlight effect
+    document.querySelectorAll('.service-card').forEach(card => {
+      const spotlight = card.querySelector('.spotlight') as HTMLElement | null;
+      card.addEventListener('mousemove', (e) => {
+        if (!spotlight) return;
+        const event = e as MouseEvent;
+        const rect = card.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(44,95,155,0.15), transparent 80%)`;
+        spotlight.style.opacity = '0.6';
+      });
+      card.addEventListener('mouseenter', () => {
+        if (!spotlight) return;
+        spotlight.style.opacity = '0.6';
+      });
+      card.addEventListener('mouseleave', () => {
+        if (!spotlight) return;
+        spotlight.style.opacity = '0';
+      });
+      card.addEventListener('focus', () => {
+        if (!spotlight) return;
+        spotlight.style.opacity = '0.6';
+      });
+      card.addEventListener('blur', () => {
+        if (!spotlight) return;
+        spotlight.style.opacity = '0';
+      });
     });
   });
 </script> 
