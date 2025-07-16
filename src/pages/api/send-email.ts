@@ -145,7 +145,7 @@ export const POST: APIRoute = async ({ request }) => {
     // Email content with professional HTML template
     const mailOptions = {
       from: `"Kids Kreations Contact Form" <${process.env.EMAIL_USER}>`,
-      to: ['pranav@kidskreationsco.com'],
+      to: ['pranav@kidskreationsco.com', 'lilsoft@kidskreationsco.com'],
       subject: `New Contact Form Submission: ${sanitizedData.type} from ${sanitizedData.name}`,
       html: `
         <!DOCTYPE html>
