@@ -105,13 +105,21 @@ const fontLinks = [
     font-family: 'Libre Baskerville', serif;
     font-size: clamp(1.5rem, 2vw, 2.25rem);
     font-weight: 600;
-    color: rgb(5, 5, 77);
-    transition: color 0.3s ease;
+    color: var(--text-dark);
+    transition: all 0.3s ease;
     letter-spacing: 0.01em;
+    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .logo:hover .logo-text {
-    color: var(--primary-dark);
+    background: linear-gradient(135deg, #334155 0%, #64748b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transform: translateY(-1px);
   }
 
   .nav-menu {
@@ -229,20 +237,20 @@ const fontLinks = [
     }
 
     .nav-link:hover {
-      color: #2563eb;
+      color: var(--primary);
     }
 
     .nav-link:hover::before {
-      background-color: #2563eb;
+      background-color: var(--primary);
     }
 
     .nav-link.active {
       font-weight: 600;
-      color: #2563eb;
+      color: var(--primary);
     }
 
     .nav-link.active::before {
-      background-color: #2563eb;
+      background-color: var(--primary);
     }
 
     .nav-link:active {
