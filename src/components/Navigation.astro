@@ -32,7 +32,7 @@ const currentPath = Astro.url.pathname;
           <span class="logo-text">Kids Kreations</span>
         </a>
 
-        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu" type="button">
           <span></span>
           <span></span>
           <span></span>
@@ -68,7 +68,6 @@ const currentPath = Astro.url.pathname;
     box-shadow: 0 20px 40px rgba(30, 41, 59, 0.08);
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
-    overflow: hidden;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
@@ -137,6 +136,8 @@ const currentPath = Astro.url.pathname;
     max-width: 1400px;
     margin: 0 auto;
     width: 100%;
+    position: relative;
+    z-index: 100;
   }
 
   .logo {
@@ -227,21 +228,43 @@ const currentPath = Astro.url.pathname;
     gap: 6px;
     background: none;
     border: none;
-    padding: 4px;
+    padding: 8px;
     cursor: pointer;
+    z-index: 101; /* Ensure it's above the menu */
+    margin-right: 5px;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .mobile-menu-toggle span {
     display: block;
     width: 24px;
-    height: 2px;
-    background: var(--text-dark);
+    height: 3px;
+    background: #1e293b;
     transition: 0.3s;
+    border-radius: 2px;
+    margin: 2px 0;
   }
 
   @media (max-width: 768px) {
     .mobile-menu-toggle {
       display: flex;
+      position: relative;
+      z-index: 101;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Add animation for the hamburger menu */
+    .mobile-menu-toggle.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    
+    .mobile-menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .mobile-menu-toggle.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
     }
 
     .nav-menu {
@@ -255,22 +278,23 @@ const currentPath = Astro.url.pathname;
       gap: 1.6rem;
       transform: translateY(-100%);
       opacity: 0;
-      visibility: hidden;
+      pointer-events: none;
       transition: all 0.3s ease;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-      animation: fadeIn 0.3s ease;
       height: calc(100vh - 80px);
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       margin-left: 0;
       padding-left: 1.5rem;
+      z-index: 99; /* Ensure it's above other content */
     }
 
     .nav-menu.active {
       transform: translateY(0);
       opacity: 1;
-      visibility: visible;
+      pointer-events: auto;
+      z-index: 99;
     }
 
     .nav-link {
@@ -345,37 +369,58 @@ const currentPath = Astro.url.pathname;
 </style>
 
 <script>
-  // Mobile menu toggle
-  const menuToggle = document.querySelector(".mobile-menu-toggle");
-  const navMenu = document.querySelector(".nav-menu");
-
-  menuToggle?.addEventListener("click", () => {
-    navMenu?.classList.toggle("active");
-    menuToggle.setAttribute(
-      "aria-expanded",
-      menuToggle.getAttribute("aria-expanded") === "true" ? "false" : "true",
-    );
-  });
-
-  // Close menu when clicking outside
-  document.addEventListener("click", (e) => {
-    const target = e.target as Element;
-    if (!navMenu?.contains(target) && !menuToggle?.contains(target)) {
-      navMenu?.classList.remove("active");
-      menuToggle?.setAttribute("aria-expanded", "false");
+  // Wait for DOM to be fully loaded
+  document.addEventListener("DOMContentLoaded", function() {
+    // Add padding to body for fixed header
+    document.body.style.paddingTop = "80px";
+    
+    // Get elements
+    const menuToggle = document.querySelector(".mobile-menu-toggle");
+    const navMenu = document.querySelector(".nav-menu");
+    
+    // Set up mobile menu toggle
+    if (menuToggle && navMenu) {
+      // Initialize aria-expanded attribute
+      menuToggle.setAttribute("aria-expanded", "false");
+      
+      // Add click event with debugging
+      menuToggle.addEventListener("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Toggle menu visibility
+        const isActive = navMenu.classList.contains("active");
+        
+        if (isActive) {
+          navMenu.classList.remove("active");
+          menuToggle.classList.remove("active");
+          menuToggle.setAttribute("aria-expanded", "false");
+        } else {
+          navMenu.classList.add("active");
+          menuToggle.classList.add("active");
+          menuToggle.setAttribute("aria-expanded", "true");
+        }
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener("click", function(e) {
+        const target = e.target;
+        if (navMenu.classList.contains("active") && 
+            !navMenu.contains(target) && 
+            !menuToggle.contains(target)) {
+          navMenu.classList.remove("active");
+          menuToggle.classList.remove("active");
+          menuToggle.setAttribute("aria-expanded", "false");
+        }
+      });
     }
-  });
-
-  // Handle active state
-  const currentPath = window.location.pathname;
-  document.querySelectorAll(".nav-link").forEach((link) => {
-    if (link.getAttribute("href") === currentPath) {
-      link.classList.add("active");
-    }
-  });
-
-  // Add fixed padding to body based on header height
-  document.addEventListener("DOMContentLoaded", () => {
-    document.body.style.paddingTop = "80px"; // Fixed height to match the header
+    
+    // Handle active state for current page
+    const currentPath = window.location.pathname;
+    document.querySelectorAll(".nav-link").forEach(function(link) {
+      if (link.getAttribute("href") === currentPath) {
+        link.classList.add("active");
+      }
+    });
   });
 </script>
