@@ -433,7 +433,9 @@ const featuredProducts = [
 		width: 115%;
 		height: 115%;
 		object-fit: contain;
-		animation: fadeInUpAndScale 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+		animation: 
+			fadeInUpAndScale 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards,
+			floatAnimation 4s ease-in-out infinite 1.2s;
 		filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.05));
 		margin: -7.5% 0 0 -7.5%;
 		will-change: transform, opacity;
@@ -451,6 +453,15 @@ const featuredProducts = [
 		100% {
 			opacity: 1;
 			transform: translateY(0) scale(1.1);
+		}
+	}
+	
+	@keyframes floatAnimation {
+		0%, 100% {
+			transform: translateY(0) scale(1.1);
+		}
+		50% {
+			transform: translateY(-15px) scale(1.1);
 		}
 	}
 
