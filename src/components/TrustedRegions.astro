@@ -342,7 +342,7 @@ const regions = [
       carousel.style.transform = `translateZ(-550px) rotateY(${currentAngle}deg)`;
 
       // Update selected index based on current angle
-      const normalizedAngle = ((currentAngle % 360) + 360) % 360;
+      const normalizedAngle = ((-currentAngle % 360) + 360) % 360;
       const estimatedIndex =
         Math.round(normalizedAngle / rotationAngle) % cellCount;
       if (estimatedIndex !== selectedIndex) {
@@ -382,9 +382,9 @@ const regions = [
         const snapAngle = Math.round(angle / rotationAngle) * rotationAngle;
         angle = snapAngle;
         selectedIndex =
-          (((snapAngle / rotationAngle) % cellCount) + cellCount) % cellCount;
+          (((-snapAngle / rotationAngle) % cellCount) + cellCount) % cellCount;
         updateCarousel();
-        startAutoRotate();
+        resetAutoRotate(); // Use resetAutoRotate instead of startAutoRotate
       }
     }
 
@@ -402,9 +402,10 @@ const regions = [
           const snapAngle = Math.round(angle / rotationAngle) * rotationAngle;
           angle = snapAngle;
           selectedIndex =
-            (((snapAngle / rotationAngle) % cellCount) + cellCount) % cellCount;
+            (((-snapAngle / rotationAngle) % cellCount) + cellCount) %
+            cellCount;
           updateCarousel();
-          startAutoRotate();
+          resetAutoRotate(); // Use resetAutoRotate instead of startAutoRotate
           return;
         }
 
@@ -413,10 +414,10 @@ const regions = [
         currentVelocity *= friction;
 
         // Update carousel
-        carousel.style.transform = `translateZ(-600px) rotateY(${angle}deg)`;
+        carousel.style.transform = `translateZ(-550px) rotateY(${angle}deg)`;
 
         // Update selected index
-        const normalizedAngle = ((angle % 360) + 360) % 360;
+        const normalizedAngle = ((-angle % 360) + 360) % 360;
         const estimatedIndex =
           Math.round(normalizedAngle / rotationAngle) % cellCount;
         if (estimatedIndex !== selectedIndex) {
@@ -440,16 +441,37 @@ const regions = [
 
     // Go to specific cell
     function goToCell(index) {
-      const diff = normalizeIndex(index - selectedIndex);
-      const shortestPath = ((diff + cellCount / 2) % cellCount) - cellCount / 2;
+      // Clear any ongoing animations
+      clearInterval(autoRotateInterval);
+      cancelAnimationFrame(rafId);
+
+      // Calculate the shortest path to the target
+      const diff = index - selectedIndex;
+      let shortestPath = diff;
+
+      // Find the shortest rotation direction
+      if (Math.abs(diff) > cellCount / 2) {
+        shortestPath = diff > 0 ? diff - cellCount : diff + cellCount;
+      }
+
+      // Update angle and selected index
       angle -= rotationAngle * shortestPath;
       selectedIndex = index;
+
+      // Apply smooth transition
+      carousel.style.transition =
+        "transform 1s cubic-bezier(0.215, 0.610, 0.355, 1.000)";
       updateCarousel();
+
+      // Restart auto-rotation after animation
+      setTimeout(() => {
+        resetAutoRotate();
+      }, 1000);
     }
 
     // Update carousel position and active states
     function updateCarousel() {
-      carousel.style.transform = `translateZ(-600px) rotateY(${angle}deg)`;
+      carousel.style.transform = `translateZ(-550px) rotateY(${angle}deg)`;
       updateActiveDot();
       updateActiveCell();
     }
@@ -482,16 +504,22 @@ const regions = [
     }
 
     // Auto-rotate carousel
+    const rotationInterval = 3000; // Consistent rotation interval
     function startAutoRotate() {
+      // Clear any existing interval first to be safe
+      clearInterval(autoRotateInterval);
       autoRotateInterval = setInterval(() => {
         rotateCarousel(1);
-      }, 3000);
+      }, rotationInterval);
     }
 
-    // Reset auto-rotation timer
+    // Reset auto-rotation timer with delay to ensure animations complete
     function resetAutoRotate() {
       clearInterval(autoRotateInterval);
-      startAutoRotate();
+      // Add a delay before restarting to ensure any ongoing animations complete
+      setTimeout(() => {
+        startAutoRotate();
+      }, rotationInterval); // Use the same interval as rotation for consistency
     }
 
     // Initialize carousel if elements exist
