@@ -1,281 +1,1187 @@
 ---
-import { Image } from 'astro:assets';
-import australiaFlag from '../assets/flags/australia.svg';
-import usaFlag from '../assets/flags/usa.svg';
-import swissFlag from '../assets/flags/switzerland.svg';
-import belgFlag from '../assets/flags/belgium.svg';
-import uaeFlag from '../assets/flags/uae.svg';
-import malayFlag from '../assets/flags/malaysia.svg';
-import ukFlag from '../assets/flags/uk.svg';
-import nzFlag from '../assets/flags/nz.svg';
-import thailandFlag from '../assets/flags/thailand.svg';
-import indiaFlag from '../assets/flags/india.svg';
-import canadaFlag from '../assets/flags/canada.svg';
-import vietnamFlag from '../assets/flags/vietnam.svg';
-import germanyFlag from '../assets/flags/germany.svg';
+import { Image } from "astro:assets";
+import australiaFlag from "../assets/flags/australia.svg";
+import usaFlag from "../assets/flags/usa.svg";
+import swissFlag from "../assets/flags/switzerland.svg";
+import belgFlag from "../assets/flags/belgium.svg";
+import uaeFlag from "../assets/flags/uae.svg";
+import malayFlag from "../assets/flags/malaysia.svg";
+import ukFlag from "../assets/flags/uk.svg";
+import nzFlag from "../assets/flags/nz.svg";
+import thailandFlag from "../assets/flags/thailand.svg";
+import indiaFlag from "../assets/flags/india.svg";
+import canadaFlag from "../assets/flags/canada.svg";
+import vietnamFlag from "../assets/flags/vietnam.svg";
+import germanyFlag from "../assets/flags/germany.svg";
 
 const regions = [
   { flag: australiaFlag, name: "Australia" },
   { flag: usaFlag, name: "United States" },
   { flag: swissFlag, name: "Switzerland" },
-  { flag: uaeFlag, name: "United Arab Emirates" },
+  { flag: uaeFlag, name: "UAE" },
   { flag: ukFlag, name: "United Kingdom" },
   { flag: belgFlag, name: "Belgium" },
   { flag: malayFlag, name: "Malaysia" },
-  { flag: nzFlag, name: "New Zealand"},
-  { flag: thailandFlag, name: "Thailand"},
-  { flag: indiaFlag, name: "India"},
-  { flag: canadaFlag, name: "Canada"},
-  { flag: germanyFlag, name: "Germany"},
-  { flag: vietnamFlag, name: "Vietnam"},
-
+  { flag: nzFlag, name: "New Zealand" },
+  { flag: thailandFlag, name: "Thailand" },
+  { flag: indiaFlag, name: "India" },
+  { flag: canadaFlag, name: "Canada" },
+  { flag: germanyFlag, name: "Germany" },
+  { flag: vietnamFlag, name: "Vietnam" },
 ];
 ---
 
 <section class="trusted-regions">
+  <div class="background-elements">
+    <div class="globe"></div>
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    <div class="grid-lines"></div>
+  </div>
+
   <div class="container">
-    <div class="section-header">
-      <h2>Trusted by babywear brands and retailers in over 15 countries</h2>
+    <div class="section-header" data-aos="fade-up">
+      <h2>Global Presence</h2>
+      <p>Trusted by premium babywear brands and retailers across the world</p>
     </div>
-    <div class="scrolling-wrapper">
-      <div class="scrolling-content">
-        {regions.map(region => (
-          <div class="region-item">
-            <div class="flag-wrapper">
-              <Image 
-                src={region.flag} 
-                alt={`${region.name} flag`}
-                width={48}
-                height={36}
-                class="flag"
-                fetchpriority="high"
-                loading="eager"
-              />
-            </div>
-            <span class="name">{region.name}</span>
+
+    <div class="carousel-wrapper" data-aos="fade-up" data-aos-delay="200">
+      <div class="carousel-container">
+        <div class="carousel-scene">
+          <div class="carousel">
+            {
+              regions.map((region, index) => (
+                <div class="carousel-cell" data-index={index}>
+                  <div class="carousel-card">
+                    <div class="card-content">
+                      <div class="flag-wrapper">
+                        <Image
+                          src={region.flag}
+                          alt={`${region.name} flag`}
+                          width={100}
+                          height={75}
+                          class="flag"
+                          loading="eager"
+                        />
+                        <div class="flag-reflection" />
+                      </div>
+                      <h3 class="country-name">{region.name}</h3>
+                    </div>
+                    <div class="card-glow" />
+                  </div>
+                </div>
+              ))
+            }
           </div>
-        ))}
-        {/* Duplicate items for seamless loop */}
-        {regions.map(region => (
-          <div class="region-item">
-            <div class="flag-wrapper">
-              <Image 
-                src={region.flag} 
-                alt={`${region.name} flag`}
-                width={48}
-                height={36}
-                class="flag"
-                fetchpriority="high"
-                loading="eager"
-              />
-            </div>
-            <span class="name">{region.name}</span>
+        </div>
+      </div>
+
+      <div class="carousel-indicator">
+        {
+          regions.map((_, index) => (
+            <button
+              class="indicator-dot"
+              data-index={index}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="stats-container" data-aos="fade-up" data-aos-delay="300">
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><circle cx="12" cy="12" r="10"></circle><path
+                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+              ></path><path d="M2 12h20"></path></svg
+            >
           </div>
-        ))}
+          <div class="stat-number">
+            <span class="counter" data-target="15">0</span>+
+          </div>
+          <div class="stat-label">Countries</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path
+                d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
+              ></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg
+            >
+          </div>
+          <div class="stat-number">
+            <span class="counter" data-target="30">0</span>+
+          </div>
+          <div class="stat-label">Global Brands</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+              ></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg
+            >
+          </div>
+          <div class="stat-number">
+            <span class="counter" data-target="5">0</span>
+          </div>
+          <div class="stat-label">Continents</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // 3D Carousel functionality
+    const carousel = document.querySelector(".carousel");
+    const cells = document.querySelectorAll(".carousel-cell");
+    // Arrow buttons removed
+    const dots = document.querySelectorAll(".indicator-dot");
+
+    const cellCount = cells.length;
+    let selectedIndex = 0;
+    let autoRotateInterval;
+    const rotationAngle = 360 / cellCount;
+    let angle = 0;
+
+    // Variables for drag functionality
+    let isDragging = false;
+    let startX = 0;
+    let startAngle = 0;
+    let currentAngle = 0;
+    let velocity = 0;
+    let lastDragTime = 0;
+    let lastDragX = 0;
+    let rafId = null;
+
+    // Set initial positions
+    function initCarousel() {
+      // Set carousel transform
+      carousel.style.transform = `translateZ(-550px) rotateY(0deg)`; // Adjusted Z distance for optimal spacing
+
+      // Position cells in 3D space
+      cells.forEach((cell, i) => {
+        const cellAngle = rotationAngle * i;
+        cell.style.transform = `rotateY(${cellAngle}deg) translateZ(550px)`; // Adjusted Z distance for optimal spacing
+      });
+
+      // Set first dot as active
+      updateActiveDot();
+
+      // Start auto-rotation
+      startAutoRotate();
+
+      // Arrow button event listeners removed
+
+      // Indicator dots
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          goToCell(index);
+          resetAutoRotate();
+        });
+      });
+
+      // Pause rotation on hover
+      carousel.parentElement.addEventListener("mouseenter", () => {
+        clearInterval(autoRotateInterval);
+      });
+
+      carousel.parentElement.addEventListener("mouseleave", () => {
+        if (!isDragging) {
+          startAutoRotate();
+        }
+      });
+
+      // Click and drag functionality - attach to scene for wider drag area
+      const carouselScene = document.querySelector(".carousel-scene");
+      carouselScene.addEventListener("mousedown", handleDragStart);
+      window.addEventListener("mousemove", handleDragMove);
+      window.addEventListener("mouseup", handleDragEnd);
+
+      // Touch events for mobile - attach to scene for wider touch area
+      carouselScene.addEventListener("touchstart", handleTouchStart, {
+        passive: true,
+      });
+      carouselScene.addEventListener("touchmove", handleTouchMove, {
+        passive: true,
+      });
+      carouselScene.addEventListener("touchend", handleTouchEnd);
+
+      // Add 3D perspective mouse movement with throttling for smoother effect
+      const scene = document.querySelector(".carousel-scene");
+      let tiltTimeout;
+      let lastMoveTime = 0;
+      const throttleDelay = 10; // ms between updates for smoother performance
+
+      scene.addEventListener("mousemove", (e) => {
+        const now = Date.now();
+        if (now - lastMoveTime < throttleDelay) return;
+        lastMoveTime = now;
+
+        if (!isDragging) {
+          handleMouseMove(e);
+        }
+      });
+
+      function handleMouseMove(e) {
+        clearTimeout(tiltTimeout);
+
+        // Calculate tilt based on mouse position relative to scene center
+        const rect = scene.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        // Normalize coordinates (-1 to 1 range)
+        const normalizedX = (e.clientX - centerX) / (rect.width / 2);
+        const normalizedY = (e.clientY - centerY) / (rect.height / 2);
+
+        // Apply tilt with damping factor for subtler effect
+        const maxTilt = 5; // Maximum tilt in degrees
+        const xTilt = normalizedY * maxTilt; // Inverted for natural feel
+        const yTilt = -normalizedX * maxTilt;
+
+        // Apply with easing
+        scene.style.transform = `rotateX(${xTilt}deg) rotateY(${yTilt}deg)`;
+        scene.style.transition = "transform 0.1s ease-out";
+      }
+
+      scene.addEventListener("mouseleave", () => {
+        tiltTimeout = setTimeout(() => {
+          scene.style.transform = "rotateX(0deg) rotateY(0deg)";
+          scene.style.transition = "transform 0.6s ease-out";
+        }, 100);
+      });
+    }
+
+    // Drag handlers
+    function handleDragStart(e) {
+      if (e.button !== 0) return; // Only left mouse button
+
+      clearInterval(autoRotateInterval);
+      cancelAnimationFrame(rafId);
+
+      isDragging = true;
+      startX = e.clientX || e.touches[0].clientX;
+      startAngle = currentAngle || angle;
+      velocity = 0;
+      lastDragTime = Date.now();
+      lastDragX = startX;
+
+      carousel.style.transition = "none";
+      document.body.style.cursor = "grabbing";
+
+      e.preventDefault();
+    }
+
+    function handleTouchStart(e) {
+      clearInterval(autoRotateInterval);
+      cancelAnimationFrame(rafId);
+
+      isDragging = true;
+      startX = e.touches[0].clientX;
+      startAngle = currentAngle || angle;
+      velocity = 0;
+      lastDragTime = Date.now();
+      lastDragX = startX;
+
+      carousel.style.transition = "none";
+    }
+
+    function handleDragMove(e) {
+      if (!isDragging) return;
+
+      const x = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+      const deltaX = x - startX;
+      const sensitivity = 0.3; // Adjust for desired drag sensitivity
+
+      // Calculate current angle based on drag distance
+      currentAngle = startAngle + deltaX * sensitivity;
+
+      // Calculate velocity for momentum
+      const now = Date.now();
+      const elapsed = now - lastDragTime;
+      if (elapsed > 0) {
+        velocity = (x - lastDragX) / elapsed;
+      }
+      lastDragTime = now;
+      lastDragX = x;
+
+      // Apply rotation
+      carousel.style.transform = `translateZ(-550px) rotateY(${currentAngle}deg)`;
+
+      // Update selected index based on current angle
+      const normalizedAngle = ((currentAngle % 360) + 360) % 360;
+      const estimatedIndex =
+        Math.round(normalizedAngle / rotationAngle) % cellCount;
+      if (estimatedIndex !== selectedIndex) {
+        selectedIndex = estimatedIndex;
+        updateActiveDot();
+        updateActiveCell();
+      }
+
+      e.preventDefault();
+    }
+
+    function handleTouchMove(e) {
+      if (!isDragging) return;
+      handleDragMove(e);
+    }
+
+    function handleDragEnd(e) {
+      if (!isDragging) return;
+
+      isDragging = false;
+      document.body.style.cursor = "";
+
+      // Apply momentum with damping
+      const momentumFactor = 20; // Adjust for desired momentum effect
+      const initialVelocity = velocity * momentumFactor;
+
+      // Snap to nearest cell with momentum
+      angle = currentAngle;
+      carousel.style.transition =
+        "transform 1s cubic-bezier(0.215, 0.610, 0.355, 1.000)";
+
+      // Apply momentum and then snap
+      if (Math.abs(initialVelocity) > 0.1) {
+        applyMomentum(initialVelocity);
+      } else {
+        // Snap to nearest cell
+        const snapAngle = Math.round(angle / rotationAngle) * rotationAngle;
+        angle = snapAngle;
+        selectedIndex =
+          (((snapAngle / rotationAngle) % cellCount) + cellCount) % cellCount;
+        updateCarousel();
+        startAutoRotate();
+      }
+    }
+
+    function handleTouchEnd(e) {
+      handleDragEnd(e);
+    }
+
+    function applyMomentum(initialVelocity) {
+      let currentVelocity = initialVelocity;
+      const friction = 0.95; // Adjust for desired friction
+
+      function animateMomentum() {
+        if (Math.abs(currentVelocity) < 0.1) {
+          // When almost stopped, snap to nearest cell
+          const snapAngle = Math.round(angle / rotationAngle) * rotationAngle;
+          angle = snapAngle;
+          selectedIndex =
+            (((snapAngle / rotationAngle) % cellCount) + cellCount) % cellCount;
+          updateCarousel();
+          startAutoRotate();
+          return;
+        }
+
+        // Apply velocity with friction
+        angle += currentVelocity;
+        currentVelocity *= friction;
+
+        // Update carousel
+        carousel.style.transform = `translateZ(-600px) rotateY(${angle}deg)`;
+
+        // Update selected index
+        const normalizedAngle = ((angle % 360) + 360) % 360;
+        const estimatedIndex =
+          Math.round(normalizedAngle / rotationAngle) % cellCount;
+        if (estimatedIndex !== selectedIndex) {
+          selectedIndex = estimatedIndex;
+          updateActiveDot();
+          updateActiveCell();
+        }
+
+        rafId = requestAnimationFrame(animateMomentum);
+      }
+
+      rafId = requestAnimationFrame(animateMomentum);
+    }
+
+    // Rotate carousel
+    function rotateCarousel(direction) {
+      angle -= rotationAngle * direction;
+      selectedIndex = normalizeIndex(selectedIndex + direction);
+      updateCarousel();
+    }
+
+    // Go to specific cell
+    function goToCell(index) {
+      const diff = normalizeIndex(index - selectedIndex);
+      const shortestPath = ((diff + cellCount / 2) % cellCount) - cellCount / 2;
+      angle -= rotationAngle * shortestPath;
+      selectedIndex = index;
+      updateCarousel();
+    }
+
+    // Update carousel position and active states
+    function updateCarousel() {
+      carousel.style.transform = `translateZ(-600px) rotateY(${angle}deg)`;
+      updateActiveDot();
+      updateActiveCell();
+    }
+
+    // Update active indicator dot
+    function updateActiveDot() {
+      dots.forEach((dot, index) => {
+        if (index === selectedIndex) {
+          dot.classList.add("active");
+        } else {
+          dot.classList.remove("active");
+        }
+      });
+    }
+
+    // Update active cell
+    function updateActiveCell() {
+      cells.forEach((cell, index) => {
+        if (index === selectedIndex) {
+          cell.classList.add("active");
+        } else {
+          cell.classList.remove("active");
+        }
+      });
+    }
+
+    // Normalize index to stay within bounds
+    function normalizeIndex(index) {
+      return (index + cellCount) % cellCount;
+    }
+
+    // Auto-rotate carousel
+    function startAutoRotate() {
+      autoRotateInterval = setInterval(() => {
+        rotateCarousel(1);
+      }, 3000);
+    }
+
+    // Reset auto-rotation timer
+    function resetAutoRotate() {
+      clearInterval(autoRotateInterval);
+      startAutoRotate();
+    }
+
+    // Initialize carousel if elements exist
+    if (carousel && cells.length > 0) {
+      initCarousel();
+    }
+
+    // Counter animation
+    const counters = document.querySelectorAll(".counter");
+    const speed = 200;
+
+    const animateCounter = (counter) => {
+      const target = +counter.getAttribute("data-target");
+      let count = 0;
+      const updateCount = () => {
+        const increment = target / speed;
+        if (count < target) {
+          count += increment;
+          counter.innerText = Math.ceil(count);
+          setTimeout(updateCount, 1);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      updateCount();
+    };
+
+    // Start counter animation when element is in viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const counter = entry.target;
+            animateCounter(counter);
+            observer.unobserve(counter);
+          }
+        });
+      },
+      { threshold: 0.5 },
+    );
+
+    counters.forEach((counter) => {
+      observer.observe(counter);
+    });
+
+    // Add parallax effect to background elements
+    const backgroundElements = document.querySelectorAll(
+      ".gradient-orb, .globe",
+    );
+
+    window.addEventListener("mousemove", (e) => {
+      const mouseX = e.clientX / window.innerWidth;
+      const mouseY = e.clientY / window.innerHeight;
+
+      backgroundElements.forEach((element, index) => {
+        const depth = (index + 1) * 20;
+        const moveX = (mouseX - 0.5) * depth;
+        const moveY = (mouseY - 0.5) * depth;
+
+        element.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      });
+    });
+  });
+</script>
+
 <style>
   .trusted-regions {
-    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);
-    padding: var(--spacing-xl) 0;
+    padding: 5rem 0; /* Reduced from 8rem */
     position: relative;
     overflow: hidden;
+    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);
+    min-height: auto; /* Changed from 100vh */
+    display: flex;
+    align-items: center;
   }
 
-  .trusted-regions::before {
-    content: '';
+  /* Background elements */
+  .background-elements {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('/images/pattern.svg') repeat;
-    opacity: 0.05;
-    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
   }
 
+  .globe {
+    position: absolute;
+    width: 1000px;
+    height: 1000px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%23475569' stroke-width='1'%3E%3Ccircle cx='400' cy='400' r='380'/%3E%3Ccircle cx='400' cy='400' r='300'/%3E%3Ccircle cx='400' cy='400' r='200'/%3E%3Cpath d='M400,20 v760 M20,400 h760 M100,100 L700,700 M700,100 L100,700'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: contain;
+    opacity: 0.05;
+    animation: rotate 120s linear infinite;
+    transition: transform 0.2s ease-out;
+  }
+
+  .gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    transition: transform 0.2s ease-out;
+  }
+
+  .orb-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(
+      circle,
+      rgba(56, 189, 248, 0.8) 0%,
+      rgba(56, 189, 248, 0) 70%
+    );
+    top: -100px;
+    left: -100px;
+  }
+
+  .orb-2 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(
+      circle,
+      rgba(99, 102, 241, 0.8) 0%,
+      rgba(99, 102, 241, 0) 70%
+    );
+    bottom: -200px;
+    right: -200px;
+  }
+
+  .orb-3 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(
+      circle,
+      rgba(244, 63, 94, 0.8) 0%,
+      rgba(244, 63, 94, 0) 70%
+    );
+    top: 60%;
+    left: 10%;
+  }
+
+  .grid-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(
+        to right,
+        rgba(226, 232, 240, 0.1) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(226, 232, 240, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.3;
+  }
+
+  @keyframes rotate {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  /* Section header styling */
   .section-header {
     text-align: center;
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: 4rem;
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 
   .section-header h2 {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.5rem;
-    color: var(--text-dark);
-    margin-bottom: 0;
+    font-family: "Libre Baskerville", serif;
+    font-size: 2.25rem; /* Reduced from 3.5rem */
+    margin-bottom: 0.75rem; /* Reduced from 1rem */
+    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     letter-spacing: -0.02em;
+    line-height: 1.1;
   }
 
   .section-header p {
     color: var(--text-light);
-    font-size: 1.125rem;
-    max-width: 600px;
+    font-size: 1.3rem; /* Reduced from 1.5rem */
+    max-width: 600px; /* Reduced from 700px */
     margin: 0 auto;
-    line-height: 1.6;
+    line-height: 1.5; /* Reduced from 1.6 */
   }
 
-  .scrolling-wrapper {
-    width: 100%;
-    overflow: hidden;
+  /* 3D Carousel */
+  .carousel-wrapper {
+    margin: 0 auto 3rem;
+    max-width: 1200px;
     position: relative;
-    padding: var(--spacing-xs) 0;
   }
 
-  .scrolling-wrapper::before,
-  .scrolling-wrapper::after {
-    content: '';
+  .carousel-container {
+    position: relative;
+    height: 350px; /* Further reduced from 400px */
+    perspective: 1200px;
+    margin: 0 auto;
+  }
+
+  .carousel-scene {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(5deg);
+    transition: transform 0.5s ease;
+  }
+
+  .carousel {
+    width: 100%;
+    height: 100%;
     position: absolute;
+    transform-style: preserve-3d;
+    transition: transform 1s cubic-bezier(0.215, 0.61, 0.355, 1);
+    cursor: grab;
+  }
+
+  .carousel:active {
+    cursor: grabbing;
+  }
+
+  .carousel-cell {
+    position: absolute;
+    width: 200px; /* Further reduced from 240px */
+    height: 250px; /* Further reduced from 300px */
+    left: 50%;
+    top: 50%;
+    margin: -125px 0 0 -100px; /* Adjusted for new dimensions */
+    transform-style: preserve-3d;
+    transition:
+      transform 1s,
+      opacity 1s;
+  }
+
+  .carousel-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.08),
+      0 0 0 1px rgba(226, 232, 240, 0.8) inset;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    transform-style: preserve-3d;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    overflow: hidden;
+    backface-visibility: hidden;
+  }
+
+  .carousel-cell.active .carousel-card {
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.12),
+      0 0 0 2px rgba(99, 102, 241, 0.3) inset,
+      0 0 30px rgba(99, 102, 241, 0.1);
+    transform: translateZ(50px);
+  }
+
+  .card-content {
+    position: relative;
+    z-index: 2;
+    transform-style: preserve-3d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .card-glow {
+    position: absolute;
+    top: 0;
     left: 0;
     right: 0;
-    height: 1px;
-    background: linear-gradient(to right, 
-      transparent,
-      var(--border) 20%,
-      var(--border) 80%,
-      transparent
+    bottom: 0;
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(255, 255, 255, 0) 70%
     );
-    z-index: 2;
-  }
-
-  .scrolling-wrapper::before {
-    top: 0;
-  }
-
-  .scrolling-wrapper::after {
-    bottom: 0;
-  }
-
-  .scrolling-wrapper::before,
-  .scrolling-wrapper::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 100px;
-    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.6s ease;
     pointer-events: none;
   }
 
-  .scrolling-wrapper::before {
-    left: 0;
-    background: linear-gradient(to right, var(--background-alt), transparent);
-  }
-
-  .scrolling-wrapper::after {
-    right: 0;
-    background: linear-gradient(to left, var(--background-alt), transparent);
-  }
-
-  .scrolling-content {
-    display: inline-flex;
-    gap: var(--spacing-xl);
-    animation: scroll 30s linear infinite;
-    white-space: nowrap;
-    padding: var(--spacing-md) 0;
-    will-change: transform;
-  }
-
-  .scrolling-content:hover {
-    animation-play-state: paused;
-  }
-
-  .region-item {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-    padding: var(--spacing-md) var(--spacing-xl);
-    background: white;
-    border-radius: var(--radius-full);
-    box-shadow: var(--shadow-sm);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid var(--border);
-    backdrop-filter: blur(8px);
-    flex-shrink: 0;
-    min-width: max-content;
-  }
-
-  .region-item:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--primary-light);
-    background: linear-gradient(135deg, white 0%, var(--background) 100%);
+  .carousel-cell.active .card-glow {
+    opacity: 1;
   }
 
   .flag-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 36px;
-    border-radius: 4px;
+    width: 120px; /* Reduced from 160px */
+    height: 90px; /* Reduced from 120px */
+    border-radius: 8px; /* Reduced from 10px */
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12); /* Reduced shadow */
+    margin-bottom: 1rem; /* Reduced from 1.5rem */
+    transform-style: preserve-3d;
+    transform: translateZ(30px);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
   }
 
-  .region-item:hover .flag-wrapper {
-    transform: scale(1.05);
+  .carousel-cell.active .flag-wrapper {
+    transform: translateZ(80px) scale(1.05);
   }
 
   .flag {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transform-style: preserve-3d;
   }
 
-  .name {
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-dark);
-    letter-spacing: 0.01em;
+  .flag-reflection {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.3) 30%,
+      rgba(255, 255, 255, 0) 50%
+    );
+    transform: translateY(-50%);
+    animation: reflection 3s ease-in-out infinite;
+    pointer-events: none;
   }
 
-  @keyframes scroll {
-    from {
-      transform: translateX(0);
+  @keyframes reflection {
+    0%,
+    100% {
+      transform: translateY(-100%);
     }
-    to {
-      transform: translateX(-50%);
+    50% {
+      transform: translateY(100%);
+    }
+  }
+
+  .country-name {
+    font-family: "Libre Baskerville", serif;
+    font-size: 1.25rem; /* Reduced from 1.75rem */
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 0;
+    text-align: center;
+    transform: translateZ(20px);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .carousel-cell.active .country-name {
+    transform: translateZ(60px);
+  }
+
+  .carousel-controls {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+    z-index: 10;
+    pointer-events: none; /* Make container transparent to clicks */
+  }
+
+  .carousel-control {
+    background: rgba(255, 255, 255, 0.7);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+    z-index: 10;
+    pointer-events: auto; /* Re-enable clicks on buttons */
+  }
+
+  .carousel-control:hover {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .carousel-control:active {
+    transform: translateY(0);
+  }
+
+  /* Carousel indicator */
+  .carousel-indicator {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .indicator-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(203, 213, 225, 0.5);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .indicator-dot.active {
+    background: var(--primary);
+    transform: scale(1.3);
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+  }
+
+  /* Stats container */
+  .stats-container {
+    position: relative;
+    z-index: 2;
+    margin-top: 0.1rem;
+  }
+
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 4rem; /* Reduced from 6rem */
+    margin: 0 auto;
+    max-width: 800px; /* Reduced from 1000px */
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 16px; /* Reduced from 20px */
+    padding: 2rem; /* Reduced from 3rem */
+    box-shadow:
+      0 15px 30px rgba(0, 0, 0, 0.05),
+      /* Reduced shadow */ 0 0 0 1px rgba(226, 232, 240, 0.8) inset;
+  }
+
+  .stat-item {
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-item::after {
+    content: "";
+    position: absolute;
+    top: 10%;
+    right: -3rem;
+    height: 80%;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(203, 213, 225, 0.5),
+      transparent
+    );
+  }
+
+  .stat-item:last-child::after {
+    display: none;
+  }
+
+  .stat-icon {
+    margin-bottom: 0.75rem; /* Reduced from 1rem */
+    color: var(--primary);
+    background: rgba(99, 102, 241, 0.1);
+    width: 50px; /* Reduced from 70px */
+    height: 50px; /* Reduced from 70px */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 16px rgba(99, 102, 241, 0.08); /* Reduced shadow */
+  }
+
+  .stat-number {
+    font-family: "Libre Baskerville", serif;
+    font-size: 2.5rem; /* Reduced from 3.5rem */
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.4rem; /* Reduced from 0.5rem */
+    background: linear-gradient(
+      135deg,
+      var(--primary) 0%,
+      var(--primary-dark) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-label {
+    font-size: 0.7rem; /* Reduced from 1.125rem */
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  /* Responsive styles */
+  @media (max-width: 1024px) {
+    .trusted-regions {
+      padding: 6rem 0;
+    }
+
+    .section-header h2 {
+      font-size: 2.75rem;
+    }
+
+    .section-header p {
+      font-size: 1.25rem;
+    }
+
+    .carousel-container {
+      height: 450px;
+    }
+
+    .carousel-cell {
+      width: 240px;
+      height: 300px;
+      margin: -150px 0 0 -120px;
+    }
+
+    .flag-wrapper {
+      width: 160px;
+      height: 120px;
+    }
+
+    .stats-row {
+      gap: 4rem;
+      padding: 2.5rem;
+    }
+
+    .stat-item::after {
+      right: -2rem;
+    }
+
+    .stat-number {
+      font-size: 3rem;
     }
   }
 
   @media (max-width: 768px) {
     .trusted-regions {
-      padding: var(--spacing-lg) 0;
+      padding: 5rem 0;
+      min-height: auto;
     }
 
     .section-header h2 {
-      font-size: 1.75rem;
+      font-size: 2.25rem;
+    }
+
+    .section-header p {
+      font-size: 1.1rem;
+    }
+
+    .carousel-container {
+      height: 400px;
+    }
+
+    .carousel-cell {
+      width: 200px;
+      height: 250px;
+      margin: -125px 0 0 -100px;
+    }
+
+    .flag-wrapper {
+      width: 140px;
+      height: 105px;
+      margin-bottom: 1.5rem;
+    }
+
+    .country-name {
+      font-size: 1.5rem;
+    }
+
+    .carousel-control {
+      width: 50px;
+      height: 50px;
+    }
+
+    .stats-row {
+      flex-direction: column;
+      gap: 3rem;
+      padding: 2rem;
+    }
+
+    .stat-item::after {
+      display: none;
+    }
+
+    .stat-icon {
+      width: 60px;
+      height: 60px;
+    }
+
+    .stat-number {
+      font-size: 2.75rem;
+    }
+
+    .stat-label {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .trusted-regions {
+      padding: 4rem 0;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
     }
 
     .section-header p {
       font-size: 1rem;
     }
 
-    .region-item {
-      padding: var(--spacing-sm) var(--spacing-lg);
-      gap: var(--spacing-sm);
+    .carousel-container {
+      height: 350px;
+    }
+
+    .carousel-cell {
+      width: 180px;
+      height: 220px;
+      margin: -110px 0 0 -90px;
     }
 
     .flag-wrapper {
-      width: 36px;
-      height: 27px;
+      width: 120px;
+      height: 90px;
+      margin-bottom: 1rem;
     }
 
-    .name {
+    .country-name {
+      font-size: 1.25rem;
+    }
+
+    .carousel-controls {
+      padding: 0 1rem;
+    }
+
+    .carousel-control {
+      width: 40px;
+      height: 40px;
+    }
+
+    .stats-row {
+      padding: 1.5rem;
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+    }
+
+    .stat-label {
       font-size: 0.875rem;
     }
-
-    .scrolling-wrapper::before,
-    .scrolling-wrapper::after {
-      width: 75px;
-    }
   }
-</style> 
+</style>

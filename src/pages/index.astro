@@ -13,12 +13,6 @@ import palette from '../assets/icons/paintbrush.svg';
 import globe from '../assets/icons/international.svg';
 
 
-// Import Google Fonts
-const fontLinks = [
-	'https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;500;600;700&display=swap',
-	'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap'
-];
-
 const features = [
 	{
 		title: "Certified Organic Fabrics",
@@ -69,9 +63,7 @@ const featuredProducts = [
 <Layout title="Kids Kreations - Premium Infantwear Manufacturing">
 	<Navigation />
 	
-	{fontLinks.map(link => (
-		<link rel="stylesheet" href={link} />
-	))}
+	{/* Font links are now handled in the Layout component */}
 	
 	<main>
 		<section class="hero-section">

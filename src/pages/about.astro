@@ -1,85 +1,89 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navigation from '../components/Navigation.astro';
-import Footer from '../components/Footer.astro';
-import { Image } from 'astro:assets';
+import Layout from "../layouts/Layout.astro";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+import { Image } from "astro:assets";
 
 // Import images
-import factoryMain from '../assets/factory/IMG_1799-edited-removed-BSCI-2048x1365.jpg';
-import autoCutter from '../assets/factory/autocutter2.jpeg';
-import sewMachine from '../assets/factory/sewmachine2.jpeg';
-import fabricSpreader from '../assets/factory/spreader2.jpeg';
-import readingBook from '../assets/icons/reading-book.svg';
-import goal from '../assets/icons/goal.svg';
-import trust from '../assets/icons/trust.svg';
-import chronometer from '../assets/icons/chronometer.svg';
-import global from '../assets/icons/global.svg';
-import quality from '../assets/icons/quality.svg';
-import international from '../assets/icons/international2.svg';
-
+import factoryMain from "../assets/factory/IMG_1799-edited-removed-BSCI-2048x1365.jpg";
+import autoCutter from "../assets/factory/autocutter2.jpeg";
+import sewMachine from "../assets/factory/sewmachine2.jpeg";
+import fabricSpreader from "../assets/factory/spreader2.jpeg";
+import readingBook from "../assets/icons/reading-book.svg";
+import goal from "../assets/icons/goal.svg";
+import trust from "../assets/icons/trust.svg";
+import chronometer from "../assets/icons/chronometer.svg";
+import global from "../assets/icons/global.svg";
+import quality from "../assets/icons/quality.svg";
+import international from "../assets/icons/international2.svg";
 
 const values = [
   {
     title: "Our Story",
-    description: "Starting with a single sewing line in 2000, we now partner with over 30 international brands.",
+    description:
+      "Starting with a single sewing line in 2000, we now partner with over 30 international brands.",
     icon: readingBook,
-    type: "image"
+    type: "image",
   },
   {
     title: "Our Mission",
-    description: "We're committed to crafting safe, sustainable, and beautiful infantwear, trusted by families worldwide.",
+    description:
+      "We're committed to crafting safe, sustainable, and beautiful infantwear, trusted by families worldwide.",
     icon: goal,
-    type: "image"
+    type: "image",
   },
   {
     title: "Why Brands Trust Us",
-    description: "Certified materials, low MOQs, and rigorous quality checks, everything brands need to scale confidently.",
+    description:
+      "Certified materials, low MOQs, and rigorous quality checks, everything brands need to scale confidently.",
     icon: trust,
-    type: "image"
-  }
+    type: "image",
+  },
 ];
-
 
 const stats = [
   {
     number: "23+",
     label: "Years of Experience",
     icon: chronometer,
-    type: "image"
+    type: "image",
   },
   {
     number: "30+",
     label: "Global Brands",
     icon: global,
-    type: "image"
+    type: "image",
   },
   {
     number: "100%",
     label: "Quality Guarantee",
     icon: quality,
-    type: "image"
+    type: "image",
   },
   {
     number: "50+",
     label: "Countries Served",
     icon: international,
-    type: "image"
-  }
+    type: "image",
+  },
 ];
 ---
 
-<Layout 
+<Layout
   title="About Kids Kreations – Trusted Babywear Manufacturer in Thailand"
   description="Discover the story, mission, and values of Kids Kreations, a leading OEM/ODM babywear manufacturer in Thailand since 2000. Learn why global brands trust us for premium infant garments and gift sets."
 >
   <Navigation />
-  
+
   <main>
     <section class="hero about-hero">
       <div class="container">
         <div class="section-title">
           <h1>About Kids Kreations</h1>
-          <p>For 25 years, we've delivered premium infantwear to global brands and retailers worldwide.</p>
+          <p>
+            For 25 years, we've delivered premium infantwear to global brands
+            and retailers worldwide.
+          </p>
         </div>
       </div>
     </section>
@@ -90,8 +94,14 @@ const stats = [
           <div class="about-text">
             <div class="card about-card">
               <h2>Our Journey</h2>
-              <p>Founded in 2000, Kids Kreations has grown from a humble sewing line into a trusted partner for 30+ global brands and retailers. We specialize in premium infantwear, built on a foundation of ethical craftsmanship, certified materials, and sustainable manufacturing.</p>
-              
+              <p>
+                Founded in 2000, Kids Kreations has grown from a humble sewing
+                line into a trusted partner for 30+ global brands and retailers.
+                We specialize in premium infantwear, built on a foundation of
+                ethical craftsmanship, certified materials, and sustainable
+                manufacturing.
+              </p>
+
               <div class="feature-list">
                 <div class="feature-item">
                   <i class="fas fa-check-circle"></i>
@@ -123,7 +133,7 @@ const stats = [
           <div class="about-images">
             <div class="image-card main-image">
               <figure>
-                <Image 
+                <Image
                   src={factoryMain}
                   alt="Kids Kreations manufacturing facility"
                   width={2048}
@@ -132,13 +142,15 @@ const stats = [
                   class="main-factory-img"
                   loading="eager"
                 />
-                <figcaption>Our Bangkok facility: where craftsmanship meets care</figcaption>
+                <figcaption>
+                  Our Bangkok facility: where craftsmanship meets care
+                </figcaption>
               </figure>
             </div>
             <div class="image-grid">
               <div class="image-card">
                 <figure>
-                  <Image 
+                  <Image
                     src={autoCutter}
                     alt="auto cutter machine"
                     width={800}
@@ -147,12 +159,14 @@ const stats = [
                     class="factory-img"
                     loading="eager"
                   />
-                  <figcaption>Automatic fabric cutter for precise and efficient cutting</figcaption>
+                  <figcaption>
+                    Automatic fabric cutter for precise and efficient cutting
+                  </figcaption>
                 </figure>
               </div>
               <div class="image-card">
                 <figure>
-                  <Image 
+                  <Image
                     src={sewMachine}
                     alt="sewing machine"
                     width={800}
@@ -161,12 +175,15 @@ const stats = [
                     class="factory-img"
                     loading="eager"
                   />
-                  <figcaption>High-quality stitching of baby garments using industrial sewing machines</figcaption>
+                  <figcaption>
+                    High-quality stitching of baby garments using industrial
+                    sewing machines
+                  </figcaption>
                 </figure>
               </div>
               <div class="image-card">
                 <figure>
-                  <Image 
+                  <Image
                     src={fabricSpreader}
                     alt="Fabric Spreader"
                     width={800}
@@ -175,7 +192,10 @@ const stats = [
                     class="factory-img"
                     loading="eager"
                   />
-                  <figcaption>Even and efficient fabric spreading to prepare for accurate cutting</figcaption>
+                  <figcaption>
+                    Even and efficient fabric spreading to prepare for accurate
+                    cutting
+                  </figcaption>
                 </figure>
               </div>
             </div>
@@ -187,22 +207,24 @@ const stats = [
     <section class="about-values">
       <div class="container">
         <div class="values-grid">
-          {values.map(value => (
-            <div class="value-card" data-aos="fade-up">
-              <div class="value-icon">
-                <Image 
-                  src={value.icon}
-                  alt={value.title}
-                  width={64}
-                  height={64}
-                  quality={100}
-                  class="value-icon-img"
-                />
+          {
+            values.map((value) => (
+              <div class="value-card" data-aos="fade-up">
+                <div class="value-icon">
+                  <Image
+                    src={value.icon}
+                    alt={value.title}
+                    width={64}
+                    height={64}
+                    quality={100}
+                    class="value-icon-img"
+                  />
+                </div>
+                <h3>{value.title}</h3>
+                <p>{value.description}</p>
               </div>
-              <h3>{value.title}</h3>
-              <p>{value.description}</p>
-            </div>
-          ))}
+            ))
+          }
         </div>
       </div>
     </section>
@@ -210,7 +232,8 @@ const stats = [
     <section class="quote">
       <div class="container">
         <blockquote>
-          "We don't just manufacture clothes. We help brands grow through craftsmanship, care, and consistency."
+          "We don't just manufacture clothes. We help brands grow through
+          craftsmanship, care, and consistency."
         </blockquote>
       </div>
     </section>
@@ -218,24 +241,26 @@ const stats = [
     <section class="stats">
       <div class="container">
         <div class="stats-grid">
-          {stats.map(stat => (
-            <div class="stat-card" data-aos="fade-up">
-              {stat.type === 'fa' ? (
-                <i class={`fas ${stat.icon}`}></i>
-              ) : (
-                <Image 
-                  src={stat.icon}
-                  alt={stat.label}
-                  width={50}
-                  height={50}
-                  quality={100}
-                  class="stat-icon-img"
-                />
-              )}
-              <div class="stat-number">{stat.number}</div>
-              <p>{stat.label}</p>
-            </div>
-          ))}
+          {
+            stats.map((stat) => (
+              <div class="stat-card" data-aos="fade-up">
+                {stat.type === "fa" ? (
+                  <i class={`fas ${stat.icon}`} />
+                ) : (
+                  <Image
+                    src={stat.icon}
+                    alt={stat.label}
+                    width={50}
+                    height={50}
+                    quality={100}
+                    class="stat-icon-img"
+                  />
+                )}
+                <div class="stat-number">{stat.number}</div>
+                <p>{stat.label}</p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
@@ -247,27 +272,36 @@ const stats = [
 <style>
   /* Typography */
   h1 {
-    font-family: 'Libre Baskerville', serif;
+    font-family: "Libre Baskerville", serif;
     font-size: clamp(1.7rem, 5vw, 4rem);
     line-height: 1.2;
     color: var(--text-dark);
     margin-bottom: var(--spacing-md);
   }
-  
+
   .logo-text {
-    font-family: 'Libre Baskerville', serif;
+    font-family: "Libre Baskerville", serif;
     font-size: 2rem;
     font-weight: 600;
-    color: rgb(5, 5, 77);
-    transition: color 0.3s ease;
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+    letter-spacing: 0.01em;
+    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .logo:hover .logo-text {
-    color: var(--primary-dark);
+    background: linear-gradient(135deg, #334155 0%, #64748b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transform: translateY(-1px);
   }
 
   h2 {
-    font-family: 'Libre Baskerville', serif;
+    font-family: "Libre Baskerville", serif;
     font-size: clamp(1.3rem, 4vw, 2.5rem);
     line-height: 1.3;
     color: var(--text-dark);
@@ -275,7 +309,7 @@ const stats = [
   }
 
   p {
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(1rem, 2vw, 1.25rem);
     line-height: 1.6;
     color: var(--text-light);
@@ -283,7 +317,12 @@ const stats = [
 
   /* Hero Section */
   .about-hero {
-    background: linear-gradient(135deg, var(--primary-light) 0%, var(--background) 50%, var(--background-alt) 100%);
+    background: linear-gradient(
+      135deg,
+      var(--primary-light) 0%,
+      var(--background) 50%,
+      var(--background-alt) 100%
+    );
     padding: var(--spacing-xl) 0;
     text-align: center;
     position: relative;
@@ -291,7 +330,7 @@ const stats = [
   }
 
   .about-hero::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -453,7 +492,7 @@ const stats = [
   blockquote {
     max-width: 800px;
     margin: 0 auto;
-    font-family: 'DM Serif Display', serif;
+    font-family: "DM Serif Display", serif;
     font-size: clamp(1.5rem, 3vw, 2.5rem);
     line-height: 1.4;
     color: var(--text-dark);
@@ -500,20 +539,20 @@ const stats = [
   }
 
   .stat-number {
-    font-family: 'DM Serif Display', serif;
+    font-family: "DM Serif Display", serif;
     font-size: 3.5rem;
     font-weight: 500;
-    color: #2C3E50;
+    color: #2c3e50;
     margin-bottom: var(--spacing-sm);
     line-height: 1;
   }
 
   .stat-card p {
-    color: #4A5568;
+    color: #4a5568;
     font-size: 1.1rem;
     font-weight: 550;
     margin: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
   }
 
   @media (max-width: 1024px) {
@@ -584,19 +623,23 @@ const stats = [
 
 <script>
   // Initialize AOS (Animate On Scroll)
-  document.addEventListener('DOMContentLoaded', () => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, {
-      threshold: 0.1
-    });
+  document.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+      },
+    );
 
-    document.querySelectorAll('[data-aos]').forEach(element => {
+    document.querySelectorAll("[data-aos]").forEach((element) => {
       observer.observe(element);
     });
   });
-</script> 
+</script>
+
