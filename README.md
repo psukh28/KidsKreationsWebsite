@@ -2,7 +2,6 @@
 
 A modern, responsive website for Kids Kreations, a premium infantwear OEM/ODM manufacturer based in Thailand. Built with Astro and deployed on Vercel.
 
-testi
 ## Features
 
 - 🎨 Modern, responsive design
