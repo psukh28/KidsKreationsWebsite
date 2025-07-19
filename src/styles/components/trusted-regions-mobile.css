@@ -1,0 +1,204 @@
+/* Mobile-specific overrides for TrustedRegions component */
+
+@media (max-width: 768px) {
+  .trusted-regions {
+    padding: 2rem 0 2.5rem !important;
+    min-height: auto !important;
+  }
+
+  .section-header h2 {
+    font-size: 1.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .section-header p {
+    font-size: 1rem !important;
+    max-width: 90% !important;
+    line-height: 1.4 !important;
+  }
+
+  .section-header {
+    margin-bottom: 2rem !important;
+  }
+
+  .carousel-container {
+    height: 250px !important;
+    perspective: 800px !important;
+  }
+
+  .carousel-cell {
+    width: 140px !important;
+    height: 180px !important;
+    margin: -90px 0 0 -70px !important;
+  }
+
+  .carousel-card {
+    padding: 1rem !important;
+    border-radius: 12px !important;
+  }
+
+  .flag-wrapper {
+    width: 80px !important;
+    height: 60px !important;
+    margin-bottom: 0.75rem !important;
+    border-radius: 6px !important;
+  }
+
+  .country-name {
+    font-size: 0.9rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .carousel-indicator {
+    margin-top: 1.5rem !important;
+    gap: 0.5rem !important;
+  }
+
+  .indicator-dot {
+    width: 8px !important;
+    height: 8px !important;
+  }
+
+  .stats-container {
+    margin-top: 1.5rem !important;
+  }
+
+  .stats-row {
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    padding: 1.5rem !important;
+    border-radius: 12px !important;
+    max-width: 90% !important;
+  }
+
+  .stat-item::after {
+    display: none !important;
+  }
+
+  .stat-icon {
+    width: 40px !important;
+    height: 40px !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .stat-icon svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .stat-number {
+    font-size: 1.75rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .stat-label {
+    font-size: 0.75rem !important;
+  }
+
+  /* Reduce background elements on mobile */
+  .globe {
+    width: 600px !important;
+    height: 600px !important;
+    opacity: 0.03 !important;
+  }
+
+  .gradient-orb {
+    filter: blur(40px) !important;
+    opacity: 0.08 !important;
+  }
+
+  .orb-1 {
+    width: 200px !important;
+    height: 200px !important;
+  }
+
+  .orb-2 {
+    width: 300px !important;
+    height: 300px !important;
+  }
+
+  .orb-3 {
+    width: 150px !important;
+    height: 150px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .trusted-regions {
+    padding: 1.5rem 0 2rem !important;
+  }
+
+  .section-header h2 {
+    font-size: 1.5rem !important;
+  }
+
+  .section-header p {
+    font-size: 0.9rem !important;
+  }
+
+  .carousel-container {
+    height: 220px !important;
+  }
+
+  .carousel-cell {
+    width: 120px !important;
+    height: 160px !important;
+    margin: -80px 0 0 -60px !important;
+  }
+
+  .flag-wrapper {
+    width: 70px !important;
+    height: 50px !important;
+  }
+
+  .country-name {
+    font-size: 0.8rem !important;
+  }
+
+  .stats-row {
+    padding: 1.25rem !important;
+    gap: 1.25rem !important;
+  }
+
+  .stat-number {
+    font-size: 1.5rem !important;
+  }
+
+  .stat-label {
+    font-size: 0.7rem !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .section-header {
+    padding: 0 1rem !important;
+  }
+
+  .carousel-container {
+    height: 200px !important;
+  }
+
+  .carousel-cell {
+    width: 100px !important;
+    height: 140px !important;
+    margin: -70px 0 0 -50px !important;
+  }
+
+  .carousel-card {
+    padding: 0.75rem !important;
+  }
+
+  .flag-wrapper {
+    width: 60px !important;
+    height: 45px !important;
+  }
+
+  .country-name {
+    font-size: 0.75rem !important;
+  }
+
+  .stats-row {
+    padding: 1rem !important;
+    margin: 0 1rem !important;
+  }
+}

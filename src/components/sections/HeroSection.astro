@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+	heroImage: ImageMetadata;
+	title: string;
+	subtitle: string;
+	description: string;
+	note: string;
+}
+
+const { heroImage, title, subtitle, description, note } = Astro.props;
+---
+
+<section class="hero-section">
+	<div class="hero-content">
+		<div class="cotton-frame">
+			<div class="hero-text text-center max-w-md mx-auto">
+				<div class="hero-tagline">{subtitle}</div>
+				<h1 class="hero-heading leading-tight" set:html={title}></h1>
+				<p class="hero-subtext">{description}</p>
+				<p class="hero-note">{note}</p>
+				<div class="hero-cta">
+					<a
+						class="btn-primary text-sm font-semibold"
+						href="/products">Explore Products →</a
+					>
+					<a
+						class="btn-outline text-sm font-semibold"
+						href="https://calendar.app.google/Zi9Mo7C2ggxqiDym6"
+						target="_blank"
+						rel="noopener noreferrer">Schedule a Meeting</a
+					>
+				</div>
+			</div>
+		</div>
+		<div class="hero-image-wrapper max-w-md mx-auto mt-6">
+			<Image
+				src={heroImage}
+				alt="Happy baby in premium infantwear"
+				width={2200}
+				height={2200}
+				loading="eager"
+				class="hero-img"
+			/>
+		</div>
+	</div>
+</section>

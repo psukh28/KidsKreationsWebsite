@@ -1,0 +1,55 @@
+---
+import { Image } from "astro:assets";
+
+interface Product {
+	title: string;
+	description: string;
+	image: ImageMetadata;
+	badge: string;
+	url: string;
+}
+
+interface Props {
+	products: Product[];
+}
+
+const { products } = Astro.props;
+---
+
+<section class="featured-products">
+	<div class="container">
+		<div class="section-header">
+			<h2>Featured Products</h2>
+			<p>Explore our premium infantwear collection</p>
+		</div>
+		<div class="products-grid">
+			{
+				products.map((product) => (
+					<div class="product-card" data-aos="fade-up">
+						<div class="product-image">
+							<Image
+								src={product.image}
+								alt={product.title}
+								width={600}
+								height={600}
+								quality={80}
+								format="webp"
+								loading="lazy"
+								fetchpriority="auto"
+								class="product-img"
+							/>
+							<span class="product-badge">{product.badge}</span>
+						</div>
+						<div class="product-info">
+							<h3>{product.title}</h3>
+							<p>{product.description}</p>
+							<a href={product.url} class="button button-text">
+								View Collection
+							</a>
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>

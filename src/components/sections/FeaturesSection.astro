@@ -1,0 +1,54 @@
+---
+import { Image } from "astro:assets";
+
+interface Feature {
+	title: string;
+	description: string;
+	icon: ImageMetadata | string;
+	type: "image" | "fa";
+	color: string;
+}
+
+interface Props {
+	features: Feature[];
+}
+
+const { features } = Astro.props;
+---
+
+<section class="features">
+	<div class="container">
+		<div class="section-header">
+			<h2>Why Choose Us</h2>
+			<p>Premium manufacturing solutions for your infantwear brand</p>
+		</div>
+		<div class="features-grid">
+			{
+				features.map((feature) => (
+					<div class="feature-card" data-aos="fade-up">
+						<div
+							class="feature-icon"
+							style={`--icon-color: ${feature.color}`}
+						>
+							{feature.type === "fa" ? (
+								<i class={`fas ${feature.icon}`} />
+							) : (
+								<Image
+									src={feature.icon as ImageMetadata}
+									alt={feature.title}
+									width={64}
+									height={64}
+									quality={100}
+									loading="lazy"
+									class="feature-icon-img"
+								/>
+							)}
+						</div>
+						<h3>{feature.title}</h3>
+						<p>{feature.description}</p>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
