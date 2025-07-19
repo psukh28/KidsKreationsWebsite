@@ -310,7 +310,11 @@ const featuredProducts = [
 	main {
 		position: relative;
 		background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-		overflow: hidden;
+		overflow-y: visible;
+		overflow-x: hidden;
+		width: 100%;
+		max-width: 100vw;
+		box-sizing: border-box;
 	}
 
 	/* Single subtle pattern for entire page */
@@ -390,11 +394,13 @@ const featuredProducts = [
 
 	/* Hero Section - No separate background */
 	.hero-section {
-		padding: 2rem 2rem 3rem;
+		padding: 2rem 0 3rem;
 		margin: 0 auto;
 		width: 100%;
 		position: relative;
-		overflow: visible;
+		overflow-y: visible;
+		overflow-x: hidden;
+		box-sizing: border-box;
 	}
 	.hero-content {
 		display: flex;
@@ -405,6 +411,9 @@ const featuredProducts = [
 		max-width: 1600px; /* Increased max-width */
 		margin: 0 auto;
 		width: 100%;
+		padding: 0 1rem;
+		box-sizing: border-box;
+		overflow-x: hidden;
 	}
 	.hero-text {
 		flex: 1 1 500px;
@@ -1272,31 +1281,50 @@ const featuredProducts = [
 
 	@media (max-width: 480px) {
 		.hero-section {
-			padding: 0.75rem 0.75rem 1.5rem;
+			padding: 0.75rem 0 1.5rem;
 		}
 		.hero-text {
 			padding: 0 0.5rem;
+			width: 100%;
+			max-width: 100%;
 		}
 		.hero-image-wrapper {
 			margin-top: 1rem;
+			width: 100%;
+			max-width: 100%;
+			padding: 0 0.5rem;
 		}
 		.hero-cta {
 			flex-direction: column;
 			align-items: center;
 			gap: 0.75rem;
+			width: 100%;
 		}
 		.btn-primary,
 		.btn-outline {
 			width: 100%;
 			max-width: 200px;
 		}
+		.hero-content {
+			padding: 0;
+			width: 100%;
+			max-width: 100%;
+		}
 	}
 
 	/* Extra small mobile devices */
 	@media (max-width: 360px) {
 		.hero-text {
-			padding: 1.25rem 0.75rem;
-			max-width: 98%;
+			padding: 1.25rem 0.5rem;
+			max-width: 100%;
+			width: 100%;
+			box-sizing: border-box;
+		}
+		.hero-image-wrapper {
+			padding: 0 0.5rem;
+			width: 100%;
+			max-width: 100%;
+			box-sizing: border-box;
 		}
 
 		.hero-heading {
