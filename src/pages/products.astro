@@ -1,30 +1,31 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navigation from '../components/Navigation.astro';
-import Footer from '../components/Footer.astro';
-import { Image } from 'astro:assets';
-import { products } from '../data/products';
+import Layout from "../layouts/Layout.astro";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+import { Image } from "astro:assets";
+import { products } from "../data/products";
 
 // Preload critical images for faster navigation
-const preloadImages = products.flatMap(product => 
-  product.images.slice(0, 2).map(img => img.src)
+const preloadImages = products.flatMap((product) =>
+  product.images.slice(0, 2).map((img) => img.src),
 );
 ---
 
 <Layout title="Products - Kids Kreations">
   <!-- Preload critical images for faster navigation -->
-  {preloadImages.map(src => (
-    <link rel="preload" as="image" href={src} />
-  ))}
-  
+  {preloadImages.map((src) => <link rel="preload" as="image" href={src} />)}
+
   <Navigation />
-  
+
   <main>
     <section class="hero product-hero">
       <div class="container">
         <div class="section-title">
           <h1>Explore Our Infantwear Collection</h1>
-          <p>Flexible MOQs, GOTS-certified materials, custom packaging, and export-ready babywear.</p>
+          <p>
+            Flexible MOQs, GOTS-certified materials, custom packaging, and
+            export-ready babywear.
+          </p>
         </div>
       </div>
     </section>
@@ -32,64 +33,93 @@ const preloadImages = products.flatMap(product =>
     <section class="products">
       <div class="container">
         <div class="products-grid">
-          {products.map((product, productIndex) => (
-            <article class="product-card" data-orientation={product.orientation} data-slug={product.slug}>
-              <div class="product-image-wrapper">
-                {product.images && product.images.length > 0 && (
-                  <div class="product-gallery">
-                    {product.images.map((image, imageIndex) => (
-                      <Image 
-                        src={image} 
-                        alt={`${product.title} - View ${imageIndex + 1}`}
-                        class="product-image"
-                        loading={productIndex < 3 ? (imageIndex < 2 ? 'eager' : 'lazy') : 'lazy'}
-                        decoding="async"
-                        style={`display: ${imageIndex === 0 ? 'block' : 'none'}`}
-                        width={600}
-                        height={450}
-                        quality={85}
-                        format="webp"
-                      />
-                    ))}
-                    <button class="gallery-nav gallery-prev" aria-label="Previous image">←</button>
-                    <button class="gallery-nav gallery-next" aria-label="Next image">→</button>
-                    <div class="gallery-dots">
-                      {product.images.map((_, imageIndex) => (
-                        <button 
-                          class="gallery-dot" 
-                          aria-label={`View image ${imageIndex + 1}`}
-                          data-index={imageIndex}
-                        ></button>
+          {
+            products.map((product, productIndex) => (
+              <article
+                class="product-card"
+                data-orientation={product.orientation}
+                data-slug={product.slug}
+              >
+                <div class="product-image-wrapper">
+                  {product.images && product.images.length > 0 && (
+                    <div class="product-gallery">
+                      {product.images.map((image, imageIndex) => (
+                        <Image
+                          src={image}
+                          alt={`${product.title} - View ${imageIndex + 1}`}
+                          class="product-image"
+                          loading={
+                            productIndex < 3
+                              ? imageIndex < 2
+                                ? "eager"
+                                : "lazy"
+                              : "lazy"
+                          }
+                          decoding="async"
+                          style={`display: ${imageIndex === 0 ? "block" : "none"}`}
+                          width={600}
+                          height={450}
+                          quality={85}
+                          format="webp"
+                        />
                       ))}
+                      <button
+                        class="gallery-nav gallery-prev"
+                        aria-label="Previous image"
+                      >
+                        ←
+                      </button>
+                      <button
+                        class="gallery-nav gallery-next"
+                        aria-label="Next image"
+                      >
+                        →
+                      </button>
+                      <div class="gallery-dots">
+                        {product.images.map((_, imageIndex) => (
+                          <button
+                            class="gallery-dot"
+                            aria-label={`View image ${imageIndex + 1}`}
+                            data-index={imageIndex}
+                          />
+                        ))}
+                      </div>
+                      <button class="zoom-button" aria-label="Zoom image">
+                        <i class="fas fa-search-plus" />
+                      </button>
+                      <div class="loading-indicator" style="display: none;">
+                        <div class="spinner" />
+                      </div>
                     </div>
-                    <button class="zoom-button" aria-label="Zoom image">
-                      <i class="fas fa-search-plus"></i>
-                    </button>
-                    <div class="loading-indicator" style="display: none;">
-                      <div class="spinner"></div>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div class="product-info">
-                <h3 class="product-title">{product.title}</h3>
-                <p class="product-description">{product.description}</p>
-                <ul class="product-features">
-                  {product.features.map(feature => (
-                    <li class="feature-item">
-                      <i class="fas fa-check"></i>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                {/* BADGE ROTATOR START */}
-                <div class="badge-rotator" id={`badge-rotator-${productIndex}`} data-badges={JSON.stringify(product.badges)}>
-                  <span class="badge badge-animated" id={`rotatingBadge-${productIndex}`}></span>
+                  )}
                 </div>
-                {/* BADGE ROTATOR END */}
-              </div>
-            </article>
-          ))}
+                <div class="product-info">
+                  <h3 class="product-title">{product.title}</h3>
+                  <p class="product-description">{product.description}</p>
+                  <ul class="product-features">
+                    {product.features.map((feature) => (
+                      <li class="feature-item">
+                        <i class="fas fa-check" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  {/* BADGE ROTATOR START */}
+                  <div
+                    class="badge-rotator"
+                    id={`badge-rotator-${productIndex}`}
+                    data-badges={JSON.stringify(product.badges)}
+                  >
+                    <span
+                      class="badge badge-animated"
+                      id={`rotatingBadge-${productIndex}`}
+                    />
+                  </div>
+                  {/* BADGE ROTATOR END */}
+                </div>
+              </article>
+            ))
+          }
         </div>
       </div>
     </section>
@@ -98,7 +128,10 @@ const preloadImages = products.flatMap(product =>
       <div class="container">
         <div class="cta-content">
           <h2>Interested in Our Products?</h2>
-          <p>Contact us to discuss your specific requirements and get a custom quote</p>
+          <p>
+            Contact us to discuss your specific requirements and get a custom
+            quote
+          </p>
           <a href="/contact" class="button button-primary">Request Quote</a>
         </div>
       </div>
@@ -106,15 +139,22 @@ const preloadImages = products.flatMap(product =>
   </main>
 
   <!-- Image Modal -->
-  <div id="imageModal" class="image-modal" role="dialog" aria-modal="true" aria-label="Product image viewer">
+  <div
+    id="imageModal"
+    class="image-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Product image viewer"
+  >
     <div class="modal-content">
       <button class="modal-close" aria-label="Close modal">×</button>
-      <button class="modal-nav modal-prev" aria-label="Previous image">←</button>
+      <button class="modal-nav modal-prev" aria-label="Previous image">←</button
+      >
       <button class="modal-nav modal-next" aria-label="Next image">→</button>
       <div class="modal-image-container">
-        <img 
-          id="modalImage" 
-          src="" 
+        <img
+          id="modalImage"
+          src=""
           alt="Product image"
           class="modal-image"
           loading="lazy"
@@ -134,7 +174,7 @@ const preloadImages = products.flatMap(product =>
     text-align: center;
     position: relative;
   }
-  
+
   .product-hero::before {
     content: "";
     position: absolute;
@@ -162,7 +202,7 @@ const preloadImages = products.flatMap(product =>
   }
 
   .section-title h1 {
-    font-family: 'Libre Baskerville', serif;
+    font-family: "Libre Baskerville", serif;
     font-size: 2.5rem;
     margin-bottom: var(--spacing-sm);
     background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
@@ -170,7 +210,7 @@ const preloadImages = products.flatMap(product =>
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  
+
   .section-title h1::after {
     content: "";
     display: block;
@@ -187,7 +227,7 @@ const preloadImages = products.flatMap(product =>
     background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);
     position: relative;
   }
-  
+
   .products::before {
     content: "";
     position: absolute;
@@ -358,8 +398,12 @@ const preloadImages = products.flatMap(product =>
   }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
   .product-info {
@@ -390,7 +434,7 @@ const preloadImages = products.flatMap(product =>
   }
 
   .product-title {
-    font-family: 'Libre Baskerville', serif;
+    font-family: "Libre Baskerville", serif;
     font-size: 1.375rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
@@ -465,7 +509,7 @@ const preloadImages = products.flatMap(product =>
   }
 
   .feature-more::after {
-    content: '↓';
+    content: "↓";
     font-size: 0.8rem;
     transition: transform 0.2s ease;
   }
@@ -647,7 +691,7 @@ const preloadImages = products.flatMap(product =>
       align-items: center;
       text-align: center;
     }
-    
+
     .product-info::before {
       left: 1.5rem;
       right: 1.5rem;
@@ -681,7 +725,7 @@ const preloadImages = products.flatMap(product =>
 
     /* Add swipe indicator for mobile */
     .product-gallery::after {
-      content: '← Swipe →';
+      content: "← Swipe →";
       position: absolute;
       bottom: 8px;
       left: 50%;
@@ -862,38 +906,42 @@ const preloadImages = products.flatMap(product =>
     min-width: 90px;
     max-width: 280px;
     text-align: center;
-    box-shadow: 
+    box-shadow:
       0 4px 12px rgba(30, 41, 59, 0.25),
       0 0 0 1px rgba(255, 255, 255, 0.1) inset;
     text-transform: uppercase;
     letter-spacing: 0.02em;
     backdrop-filter: blur(10px);
   }
-  
+
   .product-card:hover .badge-animated {
     transform: translateY(-2px);
-    box-shadow: 
+    box-shadow:
       0 6px 20px rgba(30, 41, 59, 0.35),
       0 0 0 1px rgba(255, 255, 255, 0.15) inset;
   }
-  .badge-animated.fade-out { opacity: 0; }
+  .badge-animated.fade-out {
+    opacity: 0;
+  }
 </style>
 
 <script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.badge-rotator').forEach(rotator => {
-      const badgeEl = rotator.querySelector('.badge-animated');
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".badge-rotator").forEach((rotator) => {
+      const badgeEl = rotator.querySelector(".badge-animated");
       let badges;
       try {
-        badges = JSON.parse(rotator.getAttribute('data-badges'));
-      } catch { badges = []; }
+        badges = JSON.parse(rotator.getAttribute("data-badges"));
+      } catch {
+        badges = [];
+      }
       if (!badgeEl || !badges.length) return;
       let current = 0;
       function showBadge(idx) {
-        badgeEl.classList.add('fade-out');
+        badgeEl.classList.add("fade-out");
         setTimeout(() => {
           badgeEl.textContent = badges[idx];
-          badgeEl.classList.remove('fade-out');
+          badgeEl.classList.remove("fade-out");
         }, 400);
       }
       setInterval(() => {
@@ -907,223 +955,253 @@ const preloadImages = products.flatMap(product =>
 </script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener("DOMContentLoaded", () => {
     // Initialize image galleries with optimized loading
-    document.querySelectorAll<HTMLElement>('.product-gallery').forEach(gallery => {
-      const images = Array.from(gallery.querySelectorAll<HTMLImageElement>('.product-image'));
-      const dots = Array.from(gallery.querySelectorAll<HTMLButtonElement>('.gallery-dot'));
-      const prevBtn = gallery.querySelector<HTMLButtonElement>('.gallery-prev');
-      const nextBtn = gallery.querySelector<HTMLButtonElement>('.gallery-next');
-      const zoomBtn = gallery.querySelector<HTMLButtonElement>('.zoom-button');
-      const loadingIndicator = gallery.querySelector<HTMLElement>('.loading-indicator');
-      let currentIndex = 0;
+    document
+      .querySelectorAll<HTMLElement>(".product-gallery")
+      .forEach((gallery) => {
+        const images = Array.from(
+          gallery.querySelectorAll<HTMLImageElement>(".product-image"),
+        );
+        const dots = Array.from(
+          gallery.querySelectorAll<HTMLButtonElement>(".gallery-dot"),
+        );
+        const prevBtn =
+          gallery.querySelector<HTMLButtonElement>(".gallery-prev");
+        const nextBtn =
+          gallery.querySelector<HTMLButtonElement>(".gallery-next");
+        const zoomBtn =
+          gallery.querySelector<HTMLButtonElement>(".zoom-button");
+        const loadingIndicator =
+          gallery.querySelector<HTMLElement>(".loading-indicator");
+        let currentIndex = 0;
 
-      // Swipe functionality for mobile
-      let touchStartX = 0;
-      let touchStartY = 0;
-      let touchEndX = 0;
-      let touchEndY = 0;
-      let isSwiping = false;
-      let touchStartTime = 0;
+        // Swipe functionality for mobile
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+        let isSwiping = false;
+        let touchStartTime = 0;
 
-      gallery.addEventListener('touchstart', (event: TouchEvent) => {
-        touchStartX = event.changedTouches[0].screenX;
-        touchStartY = event.changedTouches[0].screenY;
-        touchStartTime = Date.now();
-        isSwiping = false;
-      }, { passive: false });
+        gallery.addEventListener(
+          "touchstart",
+          (event: TouchEvent) => {
+            touchStartX = event.changedTouches[0].screenX;
+            touchStartY = event.changedTouches[0].screenY;
+            touchStartTime = Date.now();
+            isSwiping = false;
+          },
+          { passive: false },
+        );
 
-      gallery.addEventListener('touchmove', (event: TouchEvent) => {
-        if (!touchStartX || !touchStartY) return;
-        
-        const currentX = event.changedTouches[0].screenX;
-        const currentY = event.changedTouches[0].screenY;
-        const deltaX = Math.abs(currentX - touchStartX);
-        const deltaY = Math.abs(currentY - touchStartY);
-        
-        // If we've moved horizontally more than vertically, prevent scroll
-        if (deltaX > deltaY && deltaX > 10) {
-          event.preventDefault();
-          isSwiping = true;
-          gallery.classList.add('swiping');
+        gallery.addEventListener(
+          "touchmove",
+          (event: TouchEvent) => {
+            if (!touchStartX || !touchStartY) return;
+
+            const currentX = event.changedTouches[0].screenX;
+            const currentY = event.changedTouches[0].screenY;
+            const deltaX = Math.abs(currentX - touchStartX);
+            const deltaY = Math.abs(currentY - touchStartY);
+
+            // If we've moved horizontally more than vertically, prevent scroll
+            if (deltaX > deltaY && deltaX > 10) {
+              event.preventDefault();
+              isSwiping = true;
+              gallery.classList.add("swiping");
+            }
+          },
+          { passive: false },
+        );
+
+        gallery.addEventListener(
+          "touchend",
+          (event: TouchEvent) => {
+            if (!touchStartX || !touchStartY) return;
+
+            const touchEndTime = Date.now();
+            const touchDuration = touchEndTime - touchStartTime;
+
+            touchEndX = event.changedTouches[0].screenX;
+            touchEndY = event.changedTouches[0].screenY;
+
+            // Remove swiping class
+            gallery.classList.remove("swiping");
+
+            // Only process swipe if it was a quick gesture (less than 500ms) and we detected swiping
+            if (isSwiping && touchDuration < 500) {
+              event.preventDefault();
+              handleSwipe();
+            }
+
+            // Reset touch state
+            touchStartX = 0;
+            touchStartY = 0;
+            touchEndX = 0;
+            touchEndY = 0;
+            touchStartTime = 0;
+            isSwiping = false;
+          },
+          { passive: false },
+        );
+
+        function handleSwipe() {
+          const swipeThreshold = 80; // Increased threshold for more reliable detection
+          const deltaX = touchEndX - touchStartX;
+          const deltaY = touchEndY - touchStartY;
+
+          // Check if it's a horizontal swipe and not a vertical scroll
+          if (
+            Math.abs(deltaX) > Math.abs(deltaY) &&
+            Math.abs(deltaX) > swipeThreshold
+          ) {
+            if (deltaX < -swipeThreshold) {
+              // Swiped left - next image
+              const newIndex = (currentIndex + 1) % images.length;
+              showImage(newIndex);
+            } else if (deltaX > swipeThreshold) {
+              // Swiped right - previous image
+              const newIndex =
+                (currentIndex - 1 + images.length) % images.length;
+              showImage(newIndex);
+            }
+          }
         }
-      }, { passive: false });
 
-      gallery.addEventListener('touchend', (event: TouchEvent) => {
-        if (!touchStartX || !touchStartY) return;
-        
-        const touchEndTime = Date.now();
-        const touchDuration = touchEndTime - touchStartTime;
-        
-        touchEndX = event.changedTouches[0].screenX;
-        touchEndY = event.changedTouches[0].screenY;
-        
-        // Remove swiping class
-        gallery.classList.remove('swiping');
-        
-        // Only process swipe if it was a quick gesture (less than 500ms) and we detected swiping
-        if (isSwiping && touchDuration < 500) {
-          event.preventDefault();
-          handleSwipe();
+        // Preload next and previous images for faster navigation
+        function preloadAdjacentImages() {
+          const nextIndex = (currentIndex + 1) % images.length;
+          const prevIndex = (currentIndex - 1 + images.length) % images.length;
+
+          // Preload next image
+          if (images[nextIndex] && !images[nextIndex].complete) {
+            const nextImg = new window.Image();
+            nextImg.src = images[nextIndex].src;
+          }
+
+          // Preload previous image
+          if (images[prevIndex] && !images[prevIndex].complete) {
+            const prevImg = new window.Image();
+            prevImg.src = images[prevIndex].src;
+          }
         }
-        
-        // Reset touch state
-        touchStartX = 0;
-        touchStartY = 0;
-        touchEndX = 0;
-        touchEndY = 0;
-        touchStartTime = 0;
-        isSwiping = false;
-      }, { passive: false });
 
-      function handleSwipe() {
-        const swipeThreshold = 80; // Increased threshold for more reliable detection
-        const deltaX = touchEndX - touchStartX;
-        const deltaY = touchEndY - touchStartY;
+        function showImage(index: number) {
+          // Show loading indicator
+          if (loadingIndicator) {
+            loadingIndicator.style.display = "flex";
+          }
 
-        // Check if it's a horizontal swipe and not a vertical scroll
-        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > swipeThreshold) {
-          if (deltaX < -swipeThreshold) {
-            // Swiped left - next image
-            const newIndex = (currentIndex + 1) % images.length;
-            showImage(newIndex);
-          } else if (deltaX > swipeThreshold) {
-            // Swiped right - previous image
+          // Hide all images
+          images.forEach((img) => {
+            img.style.display = "none";
+            img.style.opacity = "0";
+          });
+
+          // Update dots
+          dots.forEach((dot) => {
+            dot.classList.remove("active");
+          });
+
+          // Show target image
+          const targetImage = images[index];
+          if (!targetImage) return;
+
+          targetImage.style.display = "block";
+
+          // Check if image is already loaded
+          if (targetImage.complete && targetImage.naturalHeight !== 0) {
+            targetImage.style.opacity = "1";
+            if (loadingIndicator) {
+              loadingIndicator.style.display = "none";
+            }
+          } else {
+            // Wait for image to load
+            targetImage.onload = () => {
+              targetImage.style.opacity = "1";
+              if (loadingIndicator) {
+                loadingIndicator.style.display = "none";
+              }
+            };
+
+            // Fallback in case onload doesn't fire
+            setTimeout(() => {
+              targetImage.style.opacity = "1";
+              if (loadingIndicator) {
+                loadingIndicator.style.display = "none";
+              }
+            }, 1000);
+          }
+
+          if (dots[index]) {
+            dots[index].classList.add("active");
+          }
+          currentIndex = index;
+
+          // Preload adjacent images for next navigation
+          setTimeout(preloadAdjacentImages, 100);
+        }
+
+        if (prevBtn) {
+          prevBtn.onclick = (e: MouseEvent) => {
+            e.preventDefault();
+            e.stopPropagation();
             const newIndex = (currentIndex - 1 + images.length) % images.length;
             showImage(newIndex);
-          }
-        }
-      }
-
-      // Preload next and previous images for faster navigation
-      function preloadAdjacentImages() {
-        const nextIndex = (currentIndex + 1) % images.length;
-        const prevIndex = (currentIndex - 1 + images.length) % images.length;
-        
-        // Preload next image
-        if (images[nextIndex] && !images[nextIndex].complete) {
-          const nextImg = new window.Image();
-          nextImg.src = images[nextIndex].src;
-        }
-        
-        // Preload previous image
-        if (images[prevIndex] && !images[prevIndex].complete) {
-          const prevImg = new window.Image();
-          prevImg.src = images[prevIndex].src;
-        }
-      }
-
-      function showImage(index: number) {
-        // Show loading indicator
-        if (loadingIndicator) {
-          loadingIndicator.style.display = 'flex';
+          };
         }
 
-        // Hide all images
-        images.forEach(img => {
-          img.style.display = 'none';
-          img.style.opacity = '0';
+        if (nextBtn) {
+          nextBtn.onclick = (e: MouseEvent) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const newIndex = (currentIndex + 1) % images.length;
+            showImage(newIndex);
+          };
+        }
+
+        dots.forEach((dot, index) => {
+          dot.onclick = (e: MouseEvent) => {
+            e.preventDefault();
+            e.stopPropagation();
+            showImage(index);
+          };
         });
-        
-        // Update dots
-        dots.forEach(dot => {
-          dot.classList.remove('active');
-        });
-        
-        // Show target image
-        const targetImage = images[index];
-        if (!targetImage) return;
 
-        targetImage.style.display = 'block';
-        
-        // Check if image is already loaded
-        if (targetImage.complete && targetImage.naturalHeight !== 0) {
-          targetImage.style.opacity = '1';
-          if (loadingIndicator) {
-            loadingIndicator.style.display = 'none';
-          }
-        } else {
-          // Wait for image to load
-          targetImage.onload = () => {
-            targetImage.style.opacity = '1';
-            if (loadingIndicator) {
-              loadingIndicator.style.display = 'none';
+        if (zoomBtn) {
+          zoomBtn.onclick = (e: MouseEvent) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (images[currentIndex]) {
+              openModal(
+                images[currentIndex].src,
+                gallery as HTMLElement,
+                currentIndex,
+              );
             }
           };
-          
-          // Fallback in case onload doesn't fire
+        }
+
+        // Initialize first image
+        showImage(0);
+
+        // Show swipe indicator briefly on mobile
+        if (window.innerWidth <= 768) {
           setTimeout(() => {
-            targetImage.style.opacity = '1';
-            if (loadingIndicator) {
-              loadingIndicator.style.display = 'none';
-            }
+            gallery.classList.add("show-swipe-hint");
+            setTimeout(() => {
+              gallery.classList.remove("show-swipe-hint");
+            }, 2000);
           }, 1000);
         }
-        
-        if (dots[index]) {
-          dots[index].classList.add('active');
-        }
-        currentIndex = index;
-        
-        // Preload adjacent images for next navigation
-        setTimeout(preloadAdjacentImages, 100);
-      }
-
-      if (prevBtn) {
-        prevBtn.onclick = (e: MouseEvent) => {
-          e.preventDefault();
-          e.stopPropagation();
-          const newIndex = (currentIndex - 1 + images.length) % images.length;
-          showImage(newIndex);
-        };
-      }
-
-      if (nextBtn) {
-        nextBtn.onclick = (e: MouseEvent) => {
-          e.preventDefault();
-          e.stopPropagation();
-          const newIndex = (currentIndex + 1) % images.length;
-          showImage(newIndex);
-        };
-      }
-
-      dots.forEach((dot, index) => {
-        dot.onclick = (e: MouseEvent) => {
-          e.preventDefault();
-          e.stopPropagation();
-          showImage(index);
-        };
       });
 
-      if (zoomBtn) {
-        zoomBtn.onclick = (e: MouseEvent) => {
-          e.preventDefault();
-          e.stopPropagation();
-          if (images[currentIndex]) {
-            openModal(images[currentIndex].src, gallery as HTMLElement, currentIndex);
-          }
-        };
-      }
-
-      // Initialize first image
-      showImage(0);
-      
-      // Show swipe indicator briefly on mobile
-      if (window.innerWidth <= 768) {
-        setTimeout(() => {
-          gallery.classList.add('show-swipe-hint');
-          setTimeout(() => {
-            gallery.classList.remove('show-swipe-hint');
-          }, 2000);
-        }, 1000);
-      }
-    });
-
     // Make product cards clickable
-    document.querySelectorAll<HTMLElement>('.product-card').forEach(card => {
-      card.addEventListener('click', (e) => {
+    document.querySelectorAll<HTMLElement>(".product-card").forEach((card) => {
+      card.addEventListener("click", (e) => {
         // Don't navigate if a button or an element within the gallery controls was clicked
-        if ((e.target as HTMLElement).closest('button')) {
+        if ((e.target as HTMLElement).closest("button")) {
           return;
         }
 
@@ -1135,38 +1213,41 @@ const preloadImages = products.flatMap(product =>
     });
 
     // Modal functionality
-    const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImage') as HTMLImageElement | null;
-    const closeBtn = document.querySelector('.modal-close');
-    const modalPrevBtn = document.querySelector('.modal-prev');
-    const modalNextBtn = document.querySelector('.modal-next');
-    
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById(
+      "modalImage",
+    ) as HTMLImageElement | null;
+    const closeBtn = document.querySelector(".modal-close");
+    const modalPrevBtn = document.querySelector(".modal-prev");
+    const modalNextBtn = document.querySelector(".modal-next");
+
     let currentGallery: HTMLElement | null = null;
     let currentImageIndex = 0;
-    
+
     function openModal(imageSrc: string, gallery: HTMLElement, index: number) {
       if (!modal || !modalImg) return;
       modalImg.src = imageSrc;
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
+      modal.classList.add("active");
+      document.body.style.overflow = "hidden";
       currentGallery = gallery;
       currentImageIndex = index;
       updateNavigationButtons();
-      
+
       // Trap focus within modal
       modal.focus();
     }
-    
+
     function closeModal() {
       if (!modal) return;
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
+      modal.classList.remove("active");
+      document.body.style.overflow = "";
       currentGallery = null;
     }
 
     function showNextImage() {
       if (!currentGallery || !modalImg) return;
-      const images = currentGallery.querySelectorAll<HTMLImageElement>('.product-image');
+      const images =
+        currentGallery.querySelectorAll<HTMLImageElement>(".product-image");
       currentImageIndex = (currentImageIndex + 1) % images.length;
       if (images[currentImageIndex]) {
         modalImg.src = images[currentImageIndex].src;
@@ -1176,8 +1257,10 @@ const preloadImages = products.flatMap(product =>
 
     function showPrevImage() {
       if (!currentGallery || !modalImg) return;
-      const images = currentGallery.querySelectorAll<HTMLImageElement>('.product-image');
-      currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+      const images =
+        currentGallery.querySelectorAll<HTMLImageElement>(".product-image");
+      currentImageIndex =
+        (currentImageIndex - 1 + images.length) % images.length;
       if (images[currentImageIndex]) {
         modalImg.src = images[currentImageIndex].src;
       }
@@ -1186,38 +1269,40 @@ const preloadImages = products.flatMap(product =>
 
     function updateNavigationButtons() {
       if (!currentGallery || !modalPrevBtn || !modalNextBtn) return;
-      const images = currentGallery.querySelectorAll('.product-image');
-      (modalPrevBtn as HTMLElement).style.display = images.length > 1 ? 'flex' : 'none';
-      (modalNextBtn as HTMLElement).style.display = images.length > 1 ? 'flex' : 'none';
+      const images = currentGallery.querySelectorAll(".product-image");
+      (modalPrevBtn as HTMLElement).style.display =
+        images.length > 1 ? "flex" : "none";
+      (modalNextBtn as HTMLElement).style.display =
+        images.length > 1 ? "flex" : "none";
     }
-    
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    
+
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
     if (modal) {
-      modal.addEventListener('click', (e) => {
+      modal.addEventListener("click", (e) => {
         if (e.target === modal) {
           closeModal();
         }
       });
     }
-    
-    if (modalPrevBtn) modalPrevBtn.addEventListener('click', showPrevImage);
-    if (modalNextBtn) modalNextBtn.addEventListener('click', showNextImage);
-    
-    document.addEventListener('keydown', (e) => {
-      if (!modal || !modal.classList.contains('active')) return;
-      
-      switch(e.key) {
-        case 'Escape':
+
+    if (modalPrevBtn) modalPrevBtn.addEventListener("click", showPrevImage);
+    if (modalNextBtn) modalNextBtn.addEventListener("click", showNextImage);
+
+    document.addEventListener("keydown", (e) => {
+      if (!modal || !modal.classList.contains("active")) return;
+
+      switch (e.key) {
+        case "Escape":
           closeModal();
           break;
-        case 'ArrowLeft':
+        case "ArrowLeft":
           showPrevImage();
           break;
-        case 'ArrowRight':
+        case "ArrowRight":
           showNextImage();
           break;
       }
     });
   });
-</script> 
+</script>
