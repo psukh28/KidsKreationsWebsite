@@ -2,140 +2,136 @@
 
 /* Typography */
 h1 {
-	font-family: "Libre Baskerville", serif;
-	font-size: clamp(1.75rem, 4.5vw, 2.75rem);
-	line-height: 1.15;
-	color: var(--text-dark);
-	margin-bottom: var(--spacing-md);
+    font-family: "Libre Baskerville", serif;
+    font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+    line-height: 1.15;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-md);
 }
 
 h2 {
-	font-family: "Libre Baskerville", serif;
-	font-size: clamp(1.75rem, 4vw, 2.3rem);
-	line-height: 1.3;
-	color: var(--text-dark);
-	margin-bottom: var(--spacing-sm);
+    font-family: "Libre Baskerville", serif;
+    font-size: clamp(1.75rem, 4vw, 2.3rem);
+    line-height: 1.3;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-sm);
 }
 
 h3 {
-	font-family: "Inter", serif;
-	font-size: clamp(1.25rem, 3vw, 1.75rem);
-	line-height: 1.4;
-	color: var(--text-dark);
-	margin-bottom: var(--spacing-sm);
+    font-family: "Inter", serif;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    line-height: 1.4;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-sm);
 }
 
 p {
-	font-family: "Inter", sans-serif;
-	font-size: clamp(1rem, 2vw, 1.25rem);
-	line-height: 1.6;
-	color: var(--text-light);
+    font-family: "Inter", sans-serif;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--text-light);
 }
 
 /* Main Layout */
 main {
-	position: relative;
-	background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-	width: 100%;
-	max-width: 100vw;
-	box-sizing: border-box;
+    position: relative;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
 }
 
 /* Single subtle pattern for entire page */
 main::before {
-	content: "";
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23cbd5e1' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-	opacity: 0.4;
-	z-index: -1;
-	pointer-events: none;
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23cbd5e1' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.4;
+    z-index: -1;
+    pointer-events: none;
 }
 
 /* Consistent section styling with no visual breaks */
 section {
-	position: relative;
-	padding: 4rem 0;
-	z-index: 1;
-	background: transparent;
+    position: relative;
+    padding: 4rem 0;
+    z-index: 1;
+    background: transparent;
 }
 
 /* Create a continuous flow between sections with elegant dividers */
 section:not(.cta):not(.hero-section) {
-	position: relative;
+    position: relative;
 }
 
 /* Elegant divider with gradient line */
 section:not(.cta):not(.hero-section)::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 15%;
-	right: 15%;
-	height: 1px;
-	background: linear-gradient(
-		90deg,
-		transparent 0%,
-		rgba(148, 163, 184, 0.05) 20%,
-		rgba(148, 163, 184, 0.15) 50%,
-		rgba(148, 163, 184, 0.05) 80%,
-		transparent 100%
-	);
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 15%;
+    right: 15%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(148, 163, 184, 0.05) 20%,
+            rgba(148, 163, 184, 0.15) 50%,
+            rgba(148, 163, 184, 0.05) 80%,
+            transparent 100%);
 }
 
 /* Add subtle decorative element at section transitions */
 section:not(.cta):not(.hero-section)::after {
-	content: "";
-	position: absolute;
-	top: -2px;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 60px;
-	height: 4px;
-	border-radius: 2px;
-	background: linear-gradient(
-		90deg,
-		transparent,
-		rgba(148, 163, 184, 0.2),
-		transparent
-	);
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(148, 163, 184, 0.2),
+            transparent);
 }
 
 /* Add subtle depth with box-shadow instead of borders */
 .container {
-	position: relative;
-	z-index: 2;
+    position: relative;
+    z-index: 2;
 }
 
 .section-connector {
-	height: 1px;
-	margin: -1rem 0 -1rem;
+    height: 1px;
+    margin: -1rem 0 -1rem;
 }
 
 /* Section Headers */
 .section-header {
-	text-align: center;
-	max-width: 800px;
-	margin: 0 auto 4rem;
-	position: relative;
-	z-index: 2;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+    position: relative;
+    z-index: 2;
 }
 
 .section-header h2 {
-	color: #1e293b;
-	font-size: clamp(2rem, 4vw, 2.5rem);
-	margin-bottom: 1rem;
-	background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
+    color: #1e293b;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .section-header p {
-	color: #64748b;
-	font-size: 1.1rem;
-	line-height: 1.6;
+    color: #64748b;
+    font-size: 1.1rem;
+    line-height: 1.6;
 }

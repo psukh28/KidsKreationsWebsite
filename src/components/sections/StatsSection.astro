@@ -1,0 +1,104 @@
+---
+import { Image } from "astro:assets";
+
+// Import required styles
+import "../../styles/base/variables.css";
+
+interface Stat {
+    title?: string;
+    number: string;
+    label: string;
+    icon: ImageMetadata;
+    description?: string;
+}
+
+interface Props {
+    title: string;
+    description: string;
+    stats: Stat[];
+    backgroundClass?: string;
+}
+
+const {
+    title,
+    description,
+    stats,
+    backgroundClass = "stats-default",
+} = Astro.props;
+---
+
+<section class={`stats ${backgroundClass}`}>
+    <div class="container">
+        {
+            (title || description) && (
+                <div class="section-header">
+                    {title && <h2>{title}</h2>}
+                    {description && <p>{description}</p>}
+                </div>
+            )
+        }
+        <div class="stats-grid">
+            {
+                stats.map((stat) => (
+                    <div class="stat-card fade-in">
+                        <Image
+                            src={stat.icon}
+                            alt={stat.title || stat.label}
+                            width={50}
+                            height={50}
+                            quality={100}
+                            class="stat-icon"
+                        />
+                        <div class="stat-number">{stat.number}</div>
+                        <p class="stat-label">{stat.label}</p>
+                        {stat.description && (
+                            <p class="stat-description">{stat.description}</p>
+                        )}
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .stats {
+        padding: var(--spacing-xl, 3rem) 0;
+    }
+
+    .stats .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .stats-default {
+        background: linear-gradient(180deg, #ffffff 0%, #e1f2ff 100%);
+    }
+
+    .stats-capabilities {
+        background: #f8fafc;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--spacing-lg, 2rem);
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .stat-description {
+        font-size: 0.95rem;
+        color: var(--text-light, #64748b);
+        margin-top: var(--spacing-xs, 0.5rem);
+        line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+            max-width: 450px;
+        }
+    }
+</style>

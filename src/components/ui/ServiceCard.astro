@@ -1,0 +1,226 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  title: string;
+  subhead: string;
+  description: string;
+  features: string[];
+  icons: ImageMetadata[];
+  ctaText?: string;
+  ctaUrl?: string;
+}
+
+const { 
+  title, 
+  subhead, 
+  description, 
+  features, 
+  icons, 
+  ctaText = "Learn More →", 
+  ctaUrl = "/contact" 
+} = Astro.props;
+---
+
+<div class="service-card fade-in" tabindex="0">
+  <div class="spotlight"></div>
+  <div class="service-icon">
+    {icons.map((icon, index) => (
+      <div class={`icon-wrapper icon-wrapper-${index + 1}`}>
+        <Image 
+          src={icon} 
+          alt={`${title} icon ${index + 1}`}
+          class="icon"
+          width={48}
+          height={48}
+          loading="eager"
+        />
+      </div>
+    ))}
+  </div>
+  <div class="service-content">
+    <h3>{title}</h3>
+    <p class="service-subhead">{subhead}</p>
+    <p class="service-description">{description}</p>
+    <ul class="service-features">
+      {features.map(feature => (
+        <li>
+          <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20,6 9,17 4,12"/>
+          </svg>
+          <span>{feature}</span>
+        </li>
+      ))}
+    </ul>
+    <div class="service-cta">
+      <a href={ctaUrl} class="learn-more-link">
+        {ctaText}
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .service-card {
+    background: white;
+    padding: 32px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #2C5F9B, #E8B86D);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    border-color: #cbd5e1;
+  }
+
+  .service-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .spotlight {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: 1;
+  }
+
+  .service-icon {
+    position: relative;
+    height: 80px;
+    margin-bottom: 24px;
+  }
+
+  .icon-wrapper {
+    position: absolute;
+    top: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+  }
+
+  .icon-wrapper-1 {
+    left: 15%;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+
+  .icon-wrapper-2 {
+    left: 15%;
+    transform: translateX(calc(-50% + 80px + 8px));
+    z-index: 1;
+  }
+
+  .service-card:hover .icon-wrapper {
+    transform: scale(1.05) translateX(-50%);
+  }
+
+  .service-card:hover .icon-wrapper-2 {
+    transform: scale(1.05) translateX(calc(-50% + 80px + 8px));
+  }
+
+  .icon {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+  }
+
+  .service-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .service-card h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .service-subhead {
+    font-size: 0.9rem;
+    color: #5a6478;
+    font-weight: 550;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .service-description {
+    color: #64748b;
+    margin-bottom: 24px;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+
+  .service-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+  }
+
+  .service-features li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    color: #475569;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .check-icon {
+    width: 16px;
+    height: 16px;
+    color: #10b981;
+    margin-right: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .service-cta {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .learn-more-link {
+    color: #2C5F9B;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .learn-more-link:hover {
+    color: #1e40af;
+    transform: translateX(4px);
+  }
+</style>

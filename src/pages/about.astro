@@ -2,7 +2,15 @@
 import Layout from "../layouts/Layout.astro";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
+import PageHero from "../components/sections/PageHero.astro";
+import StatsSection from "../components/sections/StatsSection.astro";
 import { Image } from "astro:assets";
+
+// Import styles
+import "../styles/base/variables.css";
+import "../styles/base/typography.css";
+import "../styles/ui/cards.css";
+import "../styles/utils/animations.css";
 
 // Import images
 import factoryMain from "../assets/factory/IMG_1799-edited-removed-BSCI-2048x1365.jpg";
@@ -76,17 +84,11 @@ const stats = [
   <Navigation />
 
   <main>
-    <section class="hero about-hero">
-      <div class="container">
-        <div class="section-title">
-          <h1>About Kids Kreations</h1>
-          <p>
-            For 25 years, we've delivered premium infantwear to global brands
-            and retailers worldwide.
-          </p>
-        </div>
-      </div>
-    </section>
+    <PageHero
+      title="About Kids Kreations"
+      description="For 25 years, we've delivered premium infantwear to global brands and retailers worldwide."
+      backgroundClass="about-hero"
+    />
 
     <section class="about-content">
       <div class="container">
@@ -204,12 +206,36 @@ const stats = [
       </div>
     </section>
 
+    <section class="presentation-section">
+      <div class="container">
+        <div class="presentation-container">
+          <h2>Our Company Profile</h2>
+          <div class="presentation-wrapper">
+            <iframe 
+              src="/documents/KidsKreations_CompanyProfile.pdf#view=FitH" 
+              width="100%" 
+              height="600px" 
+              frameborder="0"
+              allowfullscreen>
+              Your browser does not support PDFs. Please download the PDF to view it: 
+              <a href="/documents/KidsKreations_CompanyProfile.pdf">Download PDF</a>
+            </iframe>
+          </div>
+          <div class="download-link">
+            <a href="/documents/KidsKreations_CompanyProfile.pdf" download class="btn btn-primary">
+              <i class="fas fa-download"></i> Download Company Profile
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="about-values">
       <div class="container">
         <div class="values-grid">
           {
             values.map((value) => (
-              <div class="value-card" data-aos="fade-up">
+              <div class="value-card fade-in" data-aos="fade-up">
                 <div class="value-icon">
                   <Image
                     src={value.icon}
@@ -243,21 +269,17 @@ const stats = [
         <div class="stats-grid">
           {
             stats.map((stat) => (
-              <div class="stat-card" data-aos="fade-up">
-                {stat.type === "fa" ? (
-                  <i class={`fas ${stat.icon}`} />
-                ) : (
-                  <Image
-                    src={stat.icon}
-                    alt={stat.label}
-                    width={50}
-                    height={50}
-                    quality={100}
-                    class="stat-icon-img"
-                  />
-                )}
+              <div class="stat-card fade-in" data-aos="fade-up">
+                <Image
+                  src={stat.icon}
+                  alt={stat.label}
+                  width={50}
+                  height={50}
+                  quality={100}
+                  class="stat-icon"
+                />
                 <div class="stat-number">{stat.number}</div>
-                <p>{stat.label}</p>
+                <p class="stat-label">{stat.label}</p>
               </div>
             ))
           }
@@ -270,90 +292,72 @@ const stats = [
 </Layout>
 
 <style>
-  /* Typography */
-  h1 {
-    font-family: "Libre Baskerville", serif;
-    font-size: clamp(1.7rem, 5vw, 4rem);
-    line-height: 1.2;
-    color: var(--text-dark);
-    margin-bottom: var(--spacing-md);
+  /* Presentation Section */
+  .presentation-section {
+    padding: 4rem 0;
+    background: linear-gradient(180deg, #ffffff 0%, #e1f2ff 100%);
   }
 
-  .logo-text {
-    font-family: "Libre Baskerville", serif;
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    transition: all 0.3s ease;
-    letter-spacing: 0.01em;
-    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .logo:hover .logo-text {
-    background: linear-gradient(135deg, #334155 0%, #64748b 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    transform: translateY(-1px);
-  }
-
-  h2 {
-    font-family: "Libre Baskerville", serif;
-    font-size: clamp(1.3rem, 4vw, 2.5rem);
-    line-height: 1.3;
-    color: var(--text-dark);
-    margin-bottom: var(--spacing-sm);
-  }
-
-  p {
-    font-family: "Inter", sans-serif;
-    font-size: clamp(1rem, 2vw, 1.25rem);
-    line-height: 1.6;
-    color: var(--text-light);
-  }
-
-  /* Hero Section */
-  .about-hero {
-    background: linear-gradient(
-      135deg,
-      var(--primary-light) 0%,
-      var(--background) 50%,
-      var(--background-alt) 100%
-    );
-    padding: var(--spacing-xl) 0;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .about-hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23cbd5e1' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.6;
-    z-index: 1;
-  }
-
-  .section-title {
-    position: relative;
-    z-index: 2;
-  }
-
-  .section-title {
-    max-width: 800px;
+  .presentation-container {
+    max-width: 1000px;
     margin: 0 auto;
+    text-align: center;
   }
 
-  .section-title h1 {
-    font-size: 2.5rem;
-    margin-bottom: var(--spacing-sm);
+  .presentation-container h2 {
+    margin-bottom: 2rem;
+    color: #2c3e50;
+    font-size: 2.2rem;
+  }
+
+  .presentation-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: white;
+    padding: 1rem;
+  }
+
+  .presentation-wrapper iframe {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+  }
+
+  .download-link {
+    margin-top: 1.5rem;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #3498db;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #2980b9;
+  }
+
+  /* Page-specific styles only */
+  
+  /* Stats Section */
+  .stats {
+    padding: var(--spacing-xl, 3rem) 0;
+    background: linear-gradient(180deg, #ffffff 0%, #e1f2ff 100%);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg, 2rem);
   }
 
   /* About Content Section */
@@ -457,32 +461,6 @@ const stats = [
     gap: var(--spacing-lg);
   }
 
-  .value-card {
-    background: white;
-    padding: var(--spacing-xl);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    transition: all 0.3s ease;
-    text-align: center;
-  }
-
-  .value-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-  }
-
-  .value-icon {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto var(--spacing-md);
-  }
-
-  .value-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
   /* Quote Section */
   .quote {
     padding: var(--spacing-xl) 0;
@@ -498,61 +476,6 @@ const stats = [
     color: var(--text-dark);
     text-align: center;
     font-style: italic;
-  }
-
-  /* Stats Section */
-  .stats {
-    padding: var(--spacing-xl) 0;
-    background: linear-gradient(180deg, #ffffff 0%, #e1f2ff 100%);
-  }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--spacing-lg);
-  }
-
-  .stat-card {
-    background: white;
-    padding: var(--spacing-lg);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    text-align: center;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-  }
-
-  .stat-icon-img {
-    width: 50px;
-    height: 50px;
-    margin-bottom: var(--spacing-sm);
-    object-fit: contain;
-    display: block;
-    opacity: 0.9;
-  }
-
-  .stat-number {
-    font-family: "DM Serif Display", serif;
-    font-size: 3.5rem;
-    font-weight: 500;
-    color: #2c3e50;
-    margin-bottom: var(--spacing-sm);
-    line-height: 1;
-  }
-
-  .stat-card p {
-    color: #4a5568;
-    font-size: 1.1rem;
-    font-weight: 550;
-    margin: 0;
-    font-family: "Inter", sans-serif;
   }
 
   @media (max-width: 1024px) {
@@ -642,4 +565,3 @@ const stats = [
     });
   });
 </script>
-

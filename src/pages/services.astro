@@ -1,224 +1,200 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navigation from '../components/Navigation.astro';
-import Footer from '../components/Footer.astro';
-import { Image } from 'astro:assets';
-import factory3d from '../assets/icons/corporate.svg';
-import dummy from '../assets/icons/dummy.svg';
-import employee from '../assets/icons/employee-have-many-new-ideas.svg';
-import exporticon from '../assets/icons/export.svg';
-import orgcotton from '../assets/icons/ecogots.svg';
-import isologo from '../assets/icons/iso9001.svg';
-import design1 from '../assets/icons/design1.svg';
-import strategyicon from '../assets/icons/strategy.svg';
-import productionicon from '../assets/icons/production.svg';
-import truck1 from '../assets/icons/truck1.svg';
-import packaging from '../assets/icons/gift.svg';
+import Layout from "../layouts/Layout.astro";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/sections/PageHero.astro";
+import StatsSection from "../components/sections/StatsSection.astro";
+import ServiceCard from "../components/ui/ServiceCard.astro";
+import { Image } from "astro:assets";
+
+// Import styles
+import "../styles/base/variables.css";
+import "../styles/base/typography.css";
+import "../styles/ui/cards.css";
+import "../styles/utils/animations.css";
+import factory3d from "../assets/icons/corporate.svg";
+import dummy from "../assets/icons/dummy.svg";
+import employee from "../assets/icons/employee-have-many-new-ideas.svg";
+import exporticon from "../assets/icons/export.svg";
+import orgcotton from "../assets/icons/ecogots.svg";
+import isologo from "../assets/icons/iso9001.svg";
+import design1 from "../assets/icons/design1.svg";
+import strategyicon from "../assets/icons/strategy.svg";
+import productionicon from "../assets/icons/production.svg";
+import truck1 from "../assets/icons/truck1.svg";
+import packaging from "../assets/icons/gift.svg";
 
 const services = [
   {
     title: "Your Designs, Our Factory",
     subhead: "OEM Manufacturing for Custom Infantwear",
-    description: "Transform your designs into premium infantwear with our precision manufacturing expertise. Every stitch reflects our commitment to excellence.",
+    description:
+      "Transform your designs into premium infantwear with our precision manufacturing expertise. Every stitch reflects our commitment to excellence.",
     icon: [factory3d],
     features: [
       "Production-ready sampling from tech packs or physical references",
       "Sourcing support for organic, bamboo, or custom-dyed fabrics",
       "Cut & sew manufacturing with optional embellishments",
-      "Factory-grade QC checks with internal audit tracking"
-    ]
+      "Factory-grade QC checks with internal audit tracking",
+    ],
   },
   {
     title: "Bring Your Product to Life",
     subhead: "ODM Services from Concept to Pre-Production",
-    description: "From concept to market-ready products, our design team brings your vision to life with innovative solutions and technical mastery.",
+    description:
+      "From concept to market-ready products, our design team brings your vision to life with innovative solutions and technical mastery.",
     icon: [employee],
     features: [
       "Full product development: sketches, fit samples, labelling",
       "Pattern making and grading for size accuracy",
       "Material suggestion and cost balancing based on budget",
-      "Ideal for launching original ideas from scratch"
-    ]
+      "Ideal for launching original ideas from scratch",
+    ],
   },
   {
     title: "Launch-Ready Collections",
     subhead: "Private Label Garments, Packaged and Ready to Sell",
-    description: "Launch your brand instantly with our curated collections. Premium quality meets rapid deployment for market success.",
+    description:
+      "Launch your brand instantly with our curated collections. Premium quality meets rapid deployment for market success.",
     icon: [dummy],
     features: [
       "Pre-designed infantwear styles with your logo applied",
       "Flexible MOQs starting at 200 pieces per style",
       "Pre-set fabric and color combos to reduce lead time",
-      "Fast relabeling and branded packaging options"
-    ]
+      "Fast relabeling and branded packaging options",
+    ],
   },
   {
     title: "Packaging That Sells",
     subhead: "Custom Packaging for Brand Impact",
-    description: "Elevate your brand presence with luxury packaging that creates memorable unboxing experiences and drives customer loyalty.",
+    description:
+      "Elevate your brand presence with luxury packaging that creates memorable unboxing experiences and drives customer loyalty.",
     icon: [packaging],
     features: [
       "Custom box design for retail, gifting, or DTC",
       "Organic cotton bag and hangtag sourcing available",
       "Barcoding and SKU labeling for fulfillment centers",
-      "Sustainable packaging options on request"
-    ]
-  }
+      "Sustainable packaging options on request",
+    ],
+  },
 ];
 
 const capabilities = [
   {
     title: "ISO 9001:2015 Certified",
-    description: "Internationally recognized quality management system ensuring consistent excellence across every production run.",
-    icon: isologo
+    description:
+      "Internationally recognized quality management system ensuring consistent excellence across every production run.",
+    icon: isologo,
   },
   {
     title: "OEKO-TEX & GOTS Certified",
-    description: "Safe, organic materials meeting the highest global standards for infant safety and environmental responsibility.",
-    icon: orgcotton
+    description:
+      "Safe, organic materials meeting the highest global standards for infant safety and environmental responsibility.",
+    icon: orgcotton,
   },
   {
     title: "Global Export Ready",
-    description: "Seamless logistics and full documentation support for worldwide distribution to 30+ countries.",
-    icon: exporticon
-  }
+    description:
+      "Seamless logistics and full documentation support for worldwide distribution to 30+ countries.",
+    icon: exporticon,
+  },
 ];
 
 const processSteps = [
   {
     title: "Strategic Consultation",
-    description: "Clarify your brand goals and production needs with our manufacturing experts. We'll analyze your market position and create a tailored production strategy.",
+    description:
+      "Clarify your brand goals and production needs with our manufacturing experts. We'll analyze your market position and create a tailored production strategy.",
     icon: strategyicon,
-    className: 'strategy-icon-large'
+    className: "strategy-icon-large",
   },
   {
     title: "Design & Development",
-    description: "We turn your vision into tech packs, prototypes, and approval-ready samples. Our design team ensures every detail meets your specifications.",
-    icon: design1
+    description:
+      "We turn your vision into tech packs, prototypes, and approval-ready samples. Our design team ensures every detail meets your specifications.",
+    icon: design1,
   },
   {
     title: "Precision Production",
-    description: "Advanced manufacturing with real-time quality control ensures every piece meets our exacting standards. We maintain consistent quality across all production runs.",
-    icon: productionicon
+    description:
+      "Advanced manufacturing with real-time quality control ensures every piece meets our exacting standards. We maintain consistent quality across all production runs.",
+    icon: productionicon,
   },
   {
     title: "Global Delivery",
-    description: "Professional packaging and comprehensive logistics ensure your products reach their destination perfectly. We handle all documentation and shipping requirements.",
-    icon: truck1
-  }
+    description:
+      "Professional packaging and comprehensive logistics ensure your products reach their destination perfectly. We handle all documentation and shipping requirements.",
+    icon: truck1,
+  },
 ];
 ---
 
 <Layout title="Services - Kids Kreations">
   <Navigation />
-  
+
   <main>
-    <section class="hero services-hero">
-      <div class="container">
-        <div class="section-title">
-          <h1>Our Services</h1>
-          <p>From concept to delivery, we offer end-to-end manufacturing solutions.</p>
-        </div>
-      </div>
-    </section>
+    <PageHero
+      title="Our Services"
+      description="From concept to delivery, we offer end-to-end manufacturing solutions."
+      backgroundClass="services-hero"
+    />
 
     <section class="services">
       <div class="container">
         <div class="services-grid">
-          {services.map(service => (
-            <div class="service-card fade-in" tabindex="0">
-              <div class="spotlight"></div>
-              <div class="service-icon">
-                {service.icon.map((icon, index) => (
-                  <>
-                    <div class={`icon-wrapper icon-wrapper-${index + 1}`}>
-                      <Image 
-                        src={icon} 
-                        alt={`${service.title} icon ${index + 1}`}
-                        class="icon"
-                        width={48}
-                        height={48}
-                        loading="eager"
-                      />
-                    </div>
-                  </>
-                ))}
-              </div>
-              <div class="service-content">
-                <h3>{service.title}</h3>
-                <p class="service-subhead">{service.subhead}</p>
-                <p class="service-description">{service.description}</p>
-                <ul class="service-features">
-                  {service.features.map(feature => (
-                    <li>
-                      <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="20,6 9,17 4,12"/>
-                      </svg>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div class="service-cta">
-                  <a href="/contact" class="learn-more-link">
-                    Learn More →
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))}
+          {
+            services.map((service) => (
+              <ServiceCard
+                title={service.title}
+                subhead={service.subhead}
+                description={service.description}
+                features={service.features}
+                icons={service.icon}
+              />
+            ))
+          }
         </div>
       </div>
     </section>
 
-    <section class="capabilities">
-      <div class="container">
-        <div class="section-header">
-          <h2>Manufacturing Capabilities</h2>
-          <p>Certified excellence that opens doors to global markets</p>
-        </div>
-        <div class="capabilities-grid">
-          {capabilities.map(capability => (
-            <div class="capability-item fade-in">
-              <div class="capability-icon">
-                <Image 
-                  src={capability.icon} 
-                  alt={`${capability.title} icon`}
-                  width={48}
-                  height={48}
-                  class="cap-icon"
-                />
-              </div>
-              <h3>{capability.title}</h3>
-              <p>{capability.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <StatsSection
+      title="Manufacturing Capabilities"
+      description="Certified excellence that opens doors to global markets"
+      stats={capabilities.map((cap) => ({
+        label: cap.title,
+        description: cap.description,
+        icon: cap.icon,
+      }))}
+      backgroundClass="stats-capabilities"
+    />
 
     <section class="process">
       <div class="container">
         <div class="section-header">
           <h2>Our Partnership Journey</h2>
-          <p>A proven process refined over decades of manufacturing excellence</p>
+          <p>
+            A proven process refined over decades of manufacturing excellence
+          </p>
         </div>
         <div class="process-grid">
-          {processSteps.map((step, index) => (
-            <div class="process-card fade-in" data-step={index + 1}>
-              <div class="process-icon">
-                <Image 
-                  src={step.icon} 
-                  alt={`${step.title} icon`}
-                  width={step.className ? 56 : 48}
-                  height={step.className ? 56 : 48}
-                  class={`process-svg ${step.className || ''}`}
-                />
+          {
+            processSteps.map((step, index) => (
+              <div class="process-card fade-in" data-step={index + 1}>
+                <div class="process-icon">
+                  <Image
+                    src={step.icon}
+                    alt={`${step.title} icon`}
+                    width={step.className ? 56 : 48}
+                    height={step.className ? 56 : 48}
+                    class={`process-svg ${step.className || ""}`}
+                  />
+                </div>
+                <div class="process-number">{index + 1}</div>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
               </div>
-              <div class="process-number">{index + 1}</div>
-              <h3>{step.title}</h3>
-              <p>{step.description}</p>
-            </div>
-          ))}
+            ))
+          }
         </div>
       </div>
     </section>
@@ -227,12 +203,22 @@ const processSteps = [
       <div class="container">
         <div class="cta-content">
           <h2>Ready to Elevate Your Brand?</h2>
-          <p>Join the growing list of premium infantwear labels who partner with us to turn bold ideas into beautiful products. Let’s build something exceptional together.</p>
+          <p>
+            Join the growing list of premium infantwear labels who partner with
+            us to turn bold ideas into beautiful products. Let’s build something
+            exceptional together.
+          </p>
           <a href="/contact" class="button button-primary">
             <span>Start Your Project</span>
-            <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="5" y1="12" x2="19" y2="12"/>
-              <polyline points="12,5 19,12 12,19"/>
+            <svg
+              class="arrow-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12,5 19,12 12,19"></polyline>
             </svg>
           </a>
         </div>
@@ -245,7 +231,11 @@ const processSteps = [
 
 <style>
   .services-hero {
-    background: linear-gradient(to right, var(--primary-light), var(--background));
+    background: linear-gradient(
+      to right,
+      var(--primary-light),
+      var(--background)
+    );
     padding: var(--spacing-xl) 0;
     text-align: center;
   }
@@ -256,7 +246,7 @@ const processSteps = [
   }
 
   .section-title h1 {
-    font-family: 'Libre Baskerville', serif;
+    font-family: "Libre Baskerville", serif;
     font-size: 2.5rem;
     margin-bottom: var(--spacing-sm);
   }
@@ -275,7 +265,7 @@ const processSteps = [
   }
 
   .section-header h2 {
-    font-family: 'Libre Baskerville', serif;
+    font-family: "Libre Baskerville", serif;
     font-size: 2.5rem;
     font-weight: 700;
     color: #1e293b;
@@ -316,13 +306,13 @@ const processSteps = [
   }
 
   .service-card::before {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #2C5F9B, #E8B86D);
+    background: linear-gradient(90deg, #2c5f9b, #e8b86d);
     transform: scaleX(0);
     transition: transform 0.3s ease;
   }
@@ -455,7 +445,7 @@ const processSteps = [
   }
 
   .learn-more-link {
-    color: #2C5F9B;
+    color: #2c5f9b;
     text-decoration: none;
     font-weight: 600;
     font-size: 0.9rem;
@@ -552,13 +542,13 @@ const processSteps = [
   }
 
   .process-card::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #2C5F9B, #E8B86D);
+    background: linear-gradient(90deg, #2c5f9b, #e8b86d);
     border-radius: 12px 12px 0 0;
   }
 
@@ -596,7 +586,7 @@ const processSteps = [
     right: 20px;
     width: 32px;
     height: 32px;
-    background: linear-gradient(135deg, #E8B86D, #f39c12);
+    background: linear-gradient(135deg, #e8b86d, #f39c12);
     color: white;
     border-radius: 50%;
     display: flex;
@@ -623,7 +613,7 @@ const processSteps = [
   }
 
   .cta {
-    background: linear-gradient(135deg, #1e293b 0%, #2C5F9B 50%, #4A7BB8 100%);
+    background: linear-gradient(135deg, #1e293b 0%, #2c5f9b 50%, #4a7bb8 100%);
     color: white;
     padding: 80px 0;
     text-align: center;
@@ -631,13 +621,14 @@ const processSteps = [
   }
 
   .cta::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,10 90,90 10,90" fill="rgba(255,255,255,0.03)"/></svg>') repeat;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,10 90,90 10,90" fill="rgba(255,255,255,0.03)"/></svg>')
+      repeat;
   }
 
   .cta-content {
@@ -663,7 +654,7 @@ const processSteps = [
 
   .button-primary {
     background: white;
-    color: #2C5F9B;
+    color: #2c5f9b;
     border: none;
     padding: 16px 32px;
     border-radius: 8px;
@@ -708,29 +699,29 @@ const processSteps = [
     .section-header h2 {
       font-size: 2.5rem;
     }
-    
+
     .services-grid {
       grid-template-columns: 1fr;
       gap: 24px;
     }
-    
+
     .service-card {
       padding: 28px;
     }
-    
+
     .service-card h3 {
       font-size: 1.375rem;
     }
-    
+
     .capabilities-grid {
       grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .process-grid {
       grid-template-columns: 1fr;
       gap: 24px;
     }
-    
+
     .process-card {
       padding: 24px;
     }
@@ -740,22 +731,22 @@ const processSteps = [
     .section-header h2 {
       font-size: 2rem;
     }
-    
+
     .services,
     .capabilities,
     .process,
     .cta {
       padding: 40px 0;
     }
-    
+
     .service-card {
       padding: 24px;
     }
-    
+
     .capabilities-grid {
       grid-template-columns: 1fr;
     }
-    
+
     .cta h2 {
       font-size: 2rem;
     }
@@ -766,48 +757,51 @@ const processSteps = [
   // Script to fade in elements on scroll
   document.addEventListener("DOMContentLoaded", () => {
     // Fade-in animation
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const el = entry.target as HTMLElement;
-          el.style.opacity = "1";
-          el.style.transform = "translateY(0)";
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-in').forEach((el) => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            el.style.opacity = "1";
+            el.style.transform = "translateY(0)";
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 },
+    );
+    document.querySelectorAll(".fade-in").forEach((el) => {
       observer.observe(el);
     });
 
     // Spotlight effect
-    document.querySelectorAll('.service-card').forEach(card => {
-      const spotlight = card.querySelector('.spotlight') as HTMLElement | null;
-      card.addEventListener('mousemove', (e) => {
+    document.querySelectorAll(".service-card").forEach((card) => {
+      const spotlight = card.querySelector(".spotlight") as HTMLElement | null;
+      card.addEventListener("mousemove", (e) => {
         if (!spotlight) return;
         const event = e as MouseEvent;
         const rect = card.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
         spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(44,95,155,0.15), transparent 80%)`;
-        spotlight.style.opacity = '0.6';
+        spotlight.style.opacity = "0.6";
       });
-      card.addEventListener('mouseenter', () => {
+      card.addEventListener("mouseenter", () => {
         if (!spotlight) return;
-        spotlight.style.opacity = '0.6';
+        spotlight.style.opacity = "0.6";
       });
-      card.addEventListener('mouseleave', () => {
+      card.addEventListener("mouseleave", () => {
         if (!spotlight) return;
-        spotlight.style.opacity = '0';
+        spotlight.style.opacity = "0";
       });
-      card.addEventListener('focus', () => {
+      card.addEventListener("focus", () => {
         if (!spotlight) return;
-        spotlight.style.opacity = '0.6';
+        spotlight.style.opacity = "0.6";
       });
-      card.addEventListener('blur', () => {
+      card.addEventListener("blur", () => {
         if (!spotlight) return;
-        spotlight.style.opacity = '0';
+        spotlight.style.opacity = "0";
       });
     });
   });
-</script> 
+</script>
