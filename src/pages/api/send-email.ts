@@ -7,6 +7,14 @@ dotenv.config();
 
 export const prerender = false;
 
+// TEMPORARY: Disable email sending to prevent spam
+const EMAIL_DISABLED = true;
+
+// Rate limiting store (in-memory, resets on server restart)
+const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hour
+const MAX_REQUESTS_PER_WINDOW = 3;
+
 // Define types
 type FormData = {
   name: string;
@@ -14,6 +22,7 @@ type FormData = {
   company?: string;
   type: string;
   message: string;
+  honeypot?: string; // Hidden field to catch bots
 };
 
 type ValidatorFunction = (value: string) => string | null;
@@ -69,9 +78,60 @@ function sanitizeInput(input: string): string {
     .replace(/on\w+=/gi, ''); // Remove potential event handlers
 }
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, clientAddress }) => {
   try {
+    // Check if email is disabled
+    if (EMAIL_DISABLED) {
+      return new Response(JSON.stringify({
+        message: 'Contact form is temporarily disabled for maintenance. Please email us directly at lilsoft@kidskreationsco.com'
+      }), {
+        status: 503,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    }
+
     const data = await request.json() as FormData;
+    
+    // Honeypot check - if this field is filled, it's a bot
+    if (data.honeypot) {
+      console.log('Bot detected via honeypot field');
+      return new Response(JSON.stringify({
+        message: 'Email sent successfully' // Fake success to fool bots
+      }), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    }
+
+    // Rate limiting by IP
+    const ip = clientAddress || 'unknown';
+    const now = Date.now();
+    const rateLimit = rateLimitStore.get(ip);
+    
+    if (rateLimit) {
+      if (now < rateLimit.resetTime) {
+        if (rateLimit.count >= MAX_REQUESTS_PER_WINDOW) {
+          return new Response(JSON.stringify({
+            message: 'Too many requests. Please try again later.'
+          }), {
+            status: 429,
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+        }
+        rateLimit.count++;
+      } else {
+        // Reset window
+        rateLimitStore.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+      }
+    } else {
+      rateLimitStore.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+    }
     
     // Validate all fields
     const errors: Record<string, string> = {};
