@@ -1,12 +1,10 @@
 ---
-import { Image } from "astro:assets";
-
 interface Props {
   title: string;
   subhead: string;
   description: string;
   features: string[];
-  icons: ImageMetadata[];
+  icons: ImageMetadata | ImageMetadata[];
   ctaText?: string;
   ctaUrl?: string;
 }
@@ -20,23 +18,29 @@ const {
   ctaText = "Learn More →", 
   ctaUrl = "/contact" 
 } = Astro.props;
+
+// Normalize icons to array
+const iconsArray = Array.isArray(icons) ? icons : [icons];
 ---
 
 <div class="service-card fade-in" tabindex="0">
   <div class="spotlight"></div>
   <div class="service-icon">
-    {icons.map((icon, index) => (
-      <div class={`icon-wrapper icon-wrapper-${index + 1}`}>
-        <Image 
-          src={icon} 
-          alt={`${title} icon ${index + 1}`}
-          class="icon"
-          width={48}
-          height={48}
-          loading="eager"
-        />
-      </div>
-    ))}
+    {iconsArray.map((icon, index) => {
+      const iconSrc = typeof icon === 'object' && 'src' in icon ? icon.src : icon;
+      return (
+        <div class={`icon-wrapper icon-wrapper-${index + 1}`}>
+          <img 
+            src={iconSrc}
+            alt={`${title} icon ${index + 1}`}
+            class="icon"
+            width={48}
+            height={48}
+            loading="eager"
+          />
+        </div>
+      );
+    })}
   </div>
   <div class="service-content">
     <h3>{title}</h3>

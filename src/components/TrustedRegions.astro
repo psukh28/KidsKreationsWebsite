@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import australiaFlag from "../assets/flags/australia.svg";
 import usaFlag from "../assets/flags/usa.svg";
 import swissFlag from "../assets/flags/switzerland.svg";
@@ -56,8 +55,8 @@ const regions = [
                   <div class="carousel-card">
                     <div class="card-content">
                       <div class="flag-wrapper">
-                        <Image
-                          src={region.flag}
+                        <img
+                          src={region.flag.src || region.flag}
                           alt={`${region.name} flag`}
                           width={100}
                           height={75}

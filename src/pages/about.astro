@@ -234,22 +234,24 @@ const stats = [
       <div class="container">
         <div class="values-grid">
           {
-            values.map((value) => (
-              <div class="value-card fade-in" data-aos="fade-up">
-                <div class="value-icon">
-                  <Image
-                    src={value.icon}
-                    alt={value.title}
-                    width={64}
-                    height={64}
-                    quality={100}
-                    class="value-icon-img"
-                  />
+            values.map((value) => {
+              const iconSrc = typeof value.icon === 'object' && 'src' in value.icon ? value.icon.src : value.icon;
+              return (
+                <div class="value-card fade-in" data-aos="fade-up">
+                  <div class="value-icon">
+                    <img
+                      src={iconSrc}
+                      alt={value.title}
+                      width={64}
+                      height={64}
+                      class="value-icon-img"
+                    />
+                  </div>
+                  <h3>{value.title}</h3>
+                  <p>{value.description}</p>
                 </div>
-                <h3>{value.title}</h3>
-                <p>{value.description}</p>
-              </div>
-            ))
+              );
+            })
           }
         </div>
       </div>
@@ -268,20 +270,22 @@ const stats = [
       <div class="container">
         <div class="stats-grid">
           {
-            stats.map((stat) => (
-              <div class="stat-card fade-in" data-aos="fade-up">
-                <Image
-                  src={stat.icon}
-                  alt={stat.label}
-                  width={50}
-                  height={50}
-                  quality={100}
-                  class="stat-icon"
-                />
-                <div class="stat-number">{stat.number}</div>
-                <p class="stat-label">{stat.label}</p>
-              </div>
-            ))
+            stats.map((stat) => {
+              const iconSrc = typeof stat.icon === 'object' && 'src' in stat.icon ? stat.icon.src : stat.icon;
+              return (
+                <div class="stat-card fade-in" data-aos="fade-up">
+                  <img
+                    src={iconSrc}
+                    alt={stat.label}
+                    width={50}
+                    height={50}
+                    class="stat-icon"
+                  />
+                  <div class="stat-number">{stat.number}</div>
+                  <p class="stat-label">{stat.label}</p>
+                </div>
+              );
+            })
           }
         </div>
       </div>

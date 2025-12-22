@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import logo from "../assets/icons/logo1.svg";
 
 const menuItems = [
@@ -18,13 +17,11 @@ const currentPath = Astro.url.pathname;
     <div class="container">
       <div class="nav-content">
         <a href="/" class="logo">
-          <Image
-            src={logo}
+          <img
+            src={logo.src || logo}
             alt="Kids Kreations Logo"
             width={65}
             height={60}
-            quality={100}
-            format="svg"
             class="logo-img"
             loading="eager"
             fetchpriority="high"

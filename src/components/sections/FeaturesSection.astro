@@ -24,30 +24,37 @@ const { features } = Astro.props;
 		</div>
 		<div class="features-grid">
 			{
-				features.map((feature) => (
-					<div class="feature-card" data-aos="fade-up">
-						<div
-							class="feature-icon"
-							style={`--icon-color: ${feature.color}`}
-						>
-							{feature.type === "fa" ? (
-								<i class={`fas ${feature.icon}`} />
-							) : (
-								<Image
-									src={feature.icon as ImageMetadata}
-									alt={feature.title}
-									width={64}
-									height={64}
-									quality={100}
-									loading="lazy"
-									class="feature-icon-img"
-								/>
-							)}
+				features.map((feature) => {
+					// For SVGs, use img tag directly to avoid Sharp processing issues
+					// In Astro, imported SVGs have a .src property
+					const iconSrc = typeof feature.icon === 'object' && 'src' in feature.icon 
+						? (feature.icon as any).src 
+						: feature.icon;
+					
+					return (
+						<div class="feature-card" data-aos="fade-up">
+							<div
+								class="feature-icon"
+								style={`--icon-color: ${feature.color}`}
+							>
+								{feature.type === "fa" ? (
+									<i class={`fas ${feature.icon}`} />
+								) : (
+									<img
+										src={iconSrc}
+										alt={feature.title}
+										width={64}
+										height={64}
+										loading="lazy"
+										class="feature-icon-img"
+									/>
+								)}
+							</div>
+							<h3>{feature.title}</h3>
+							<p>{feature.description}</p>
 						</div>
-						<h3>{feature.title}</h3>
-						<p>{feature.description}</p>
-					</div>
-				))
+					);
+				})
 			}
 		</div>
 	</div>

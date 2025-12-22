@@ -1,6 +1,4 @@
 ---
-import { Image } from "astro:assets";
-
 // Import required styles
 import "../../styles/base/variables.css";
 
@@ -39,23 +37,25 @@ const {
         }
         <div class="stats-grid">
             {
-                stats.map((stat) => (
-                    <div class="stat-card fade-in">
-                        <Image
-                            src={stat.icon}
-                            alt={stat.title || stat.label}
-                            width={50}
-                            height={50}
-                            quality={100}
-                            class="stat-icon"
-                        />
-                        <div class="stat-number">{stat.number}</div>
-                        <p class="stat-label">{stat.label}</p>
-                        {stat.description && (
-                            <p class="stat-description">{stat.description}</p>
-                        )}
-                    </div>
-                ))
+                stats.map((stat) => {
+                    const iconSrc = typeof stat.icon === 'object' && 'src' in stat.icon ? stat.icon.src : stat.icon;
+                    return (
+                        <div class="stat-card fade-in">
+                            <img
+                                src={iconSrc}
+                                alt={stat.title || stat.label}
+                                width={50}
+                                height={50}
+                                class="stat-icon"
+                            />
+                            <div class="stat-number">{stat.number}</div>
+                            <p class="stat-label">{stat.label}</p>
+                            {stat.description && (
+                                <p class="stat-description">{stat.description}</p>
+                            )}
+                        </div>
+                    );
+                })
             }
         </div>
     </div>
