@@ -31,13 +31,19 @@ import "../styles/components/buttons.css";
 import "../styles/components/trusted-regions-mobile.css";
 import "../styles/utils/responsive.css";
 
-const features = [
+const features: Array<{
+	title: string;
+	description: string;
+	icon: ImageMetadata | string;
+	type: "image" | "fa";
+	color: string;
+}> = [
 	{
 		title: "Certified Organic Fabrics",
 		description:
 			"Certified materials ensuring the highest quality and safety standards for infantwear.",
 		icon: organiclogo,
-		type: "image",
+		type: "image" as const,
 		color: "var(--success)",
 	},
 	{
@@ -45,7 +51,7 @@ const features = [
 		description:
 			"Custom designs, packaging, and branding solutions tailored to your vision.",
 		icon: palette,
-		type: "image",
+		type: "image" as const,
 		color: "var(--primary)",
 	},
 	{
@@ -53,7 +59,7 @@ const features = [
 		description:
 			"Export-ready products meeting global safety and quality standards.",
 		icon: globe,
-		type: "image",
+		type: "image" as const,
 		color: "var(--primary)",
 	},
 ];

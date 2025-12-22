@@ -1,6 +1,4 @@
 ---
-import { Image } from "astro:assets";
-
 interface Feature {
 	title: string;
 	description: string;
@@ -14,6 +12,25 @@ interface Props {
 }
 
 const { features } = Astro.props;
+
+// Helper function to get SVG src
+function getImageSrc(icon: ImageMetadata | string): string {
+	if (typeof icon === 'string') {
+		return icon;
+	}
+	// Handle Astro's ImageMetadata object
+	if (icon && typeof icon === 'object') {
+		// Check for .src property (Astro's imported SVG)
+		if ('src' in icon && typeof (icon as any).src === 'string') {
+			return (icon as any).src;
+		}
+		// Fallback: try to stringify if it's a URL object
+		if ('href' in icon) {
+			return (icon as any).href;
+		}
+	}
+	return '';
+}
 ---
 
 <section class="features">
@@ -25,11 +42,7 @@ const { features } = Astro.props;
 		<div class="features-grid">
 			{
 				features.map((feature) => {
-					// For SVGs, use img tag directly to avoid Sharp processing issues
-					// In Astro, imported SVGs have a .src property
-					const iconSrc = typeof feature.icon === 'object' && 'src' in feature.icon 
-						? (feature.icon as any).src 
-						: feature.icon;
+					const iconSrc = getImageSrc(feature.icon);
 					
 					return (
 						<div class="feature-card" data-aos="fade-up">

@@ -235,7 +235,13 @@ const stats = [
         <div class="values-grid">
           {
             values.map((value) => {
-              const iconSrc = typeof value.icon === 'object' && 'src' in value.icon ? value.icon.src : value.icon;
+              const iconSrc = typeof value.icon === 'string' 
+                ? value.icon 
+                : (value.icon && typeof value.icon === 'object' && 'src' in value.icon 
+                  ? value.icon.src 
+                  : typeof value.icon === 'object' && 'href' in value.icon
+                  ? value.icon.href
+                  : '');
               return (
                 <div class="value-card fade-in" data-aos="fade-up">
                   <div class="value-icon">
@@ -271,7 +277,13 @@ const stats = [
         <div class="stats-grid">
           {
             stats.map((stat) => {
-              const iconSrc = typeof stat.icon === 'object' && 'src' in stat.icon ? stat.icon.src : stat.icon;
+              const iconSrc = typeof stat.icon === 'string' 
+                ? stat.icon 
+                : (stat.icon && typeof stat.icon === 'object' && 'src' in stat.icon 
+                  ? stat.icon.src 
+                  : typeof stat.icon === 'object' && 'href' in stat.icon
+                  ? stat.icon.href
+                  : '');
               return (
                 <div class="stat-card fade-in" data-aos="fade-up">
                   <img
