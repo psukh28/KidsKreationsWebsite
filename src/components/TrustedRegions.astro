@@ -56,11 +56,7 @@ const regions = [
                     <div class="card-content">
                       <div class="flag-wrapper">
                         <img
-                          src={typeof region.flag === 'object' && 'src' in region.flag 
-                            ? region.flag.src 
-                            : typeof region.flag === 'object' && 'href' in region.flag
-                            ? region.flag.href
-                            : region.flag}
+                          src={(region.flag as any)?.src || region.flag}
                           alt={`${region.name} flag`}
                           width={100}
                           height={75}

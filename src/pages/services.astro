@@ -179,13 +179,7 @@ const processSteps = [
         <div class="process-grid">
           {
             processSteps.map((step, index) => {
-              const iconSrc = typeof step.icon === 'string' 
-                ? step.icon 
-                : (step.icon && typeof step.icon === 'object' && 'src' in step.icon 
-                  ? step.icon.src 
-                  : typeof step.icon === 'object' && 'href' in step.icon
-                  ? step.icon.href
-                  : '');
+              const iconSrc = (step.icon as any)?.src || step.icon;
               return (
                 <div class="process-card fade-in" data-step={index + 1}>
                   <div class="process-icon">

@@ -18,11 +18,7 @@ const currentPath = Astro.url.pathname;
       <div class="nav-content">
         <a href="/" class="logo">
           <img
-            src={typeof logo === 'object' && 'src' in logo 
-              ? logo.src 
-              : typeof logo === 'object' && 'href' in logo
-              ? logo.href
-              : logo}
+            src={(logo as any)?.src || logo}
             alt="Kids Kreations Logo"
             width={65}
             height={60}

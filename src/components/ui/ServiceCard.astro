@@ -27,14 +27,10 @@ const iconsArray = Array.isArray(icons) ? icons : [icons];
   <div class="spotlight"></div>
   <div class="service-icon">
     {iconsArray.map((icon, index) => {
-      // Helper to get SVG src - handle both string and ImageMetadata object
+      // In Astro, imported SVGs have a .src property
       const iconSrc = typeof icon === 'string' 
         ? icon 
-        : (icon && typeof icon === 'object' && 'src' in icon 
-          ? (icon as any).src 
-          : typeof icon === 'object' && 'href' in icon
-          ? (icon as any).href
-          : '');
+        : (icon as any)?.src || icon;
       return (
         <div class={`icon-wrapper icon-wrapper-${index + 1}`}>
           <img 

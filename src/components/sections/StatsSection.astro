@@ -38,13 +38,7 @@ const {
         <div class="stats-grid">
             {
                 stats.map((stat) => {
-                    const iconSrc = typeof stat.icon === 'string' 
-                        ? stat.icon 
-                        : (stat.icon && typeof stat.icon === 'object' && 'src' in stat.icon 
-                            ? stat.icon.src 
-                            : typeof stat.icon === 'object' && 'href' in stat.icon
-                            ? stat.icon.href
-                            : '');
+                    const iconSrc = (stat.icon as any)?.src || stat.icon;
                     return (
                         <div class="stat-card fade-in">
                             <img
