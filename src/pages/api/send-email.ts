@@ -8,7 +8,7 @@ dotenv.config();
 export const prerender = false;
 
 // TEMPORARY: Disable email sending to prevent spam
-const EMAIL_DISABLED = true;
+const EMAIL_DISABLED = false;
 
 // Rate limiting store (in-memory, resets on server restart)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
