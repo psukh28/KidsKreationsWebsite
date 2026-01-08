@@ -8,7 +8,8 @@
 	color: #64748b;
 	text-transform: uppercase;
 	font-weight: 600;
-	margin-bottom: 0.5rem;
+	margin-bottom: 1.5rem;
+	margin-top: -0.5rem;
 	position: relative;
 }
 
@@ -26,7 +27,7 @@
 
 .hero-heading {
 	font-family: "Libre Baskerville", serif;
-	font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+	font-size: clamp(1.4rem, 3.2vw, 2rem);
 	line-height: 1.4 !important;
 	font-weight: 600;
 	color: #1e293b;
@@ -78,7 +79,7 @@
 .hero-text {
 	flex: 1 1 500px;
 	min-width: 300px;
-	max-width: 600px;
+	max-width: 750px;
 }
 
 .hero-image-wrapper {
@@ -134,8 +135,8 @@
 /* Cotton Frame Styling */
 .cotton-frame {
 	border: 3px solid rgba(148, 163, 184, 0.3);
-	border-radius: 24px;
-	padding: 2.5rem;
+	border-radius: 20px;
+	padding: 2.5rem 4rem;
 	box-shadow: 0 20px 40px rgba(30, 41, 59, 0.08);
 	background: rgba(255, 255, 255, 0.95);
 	backdrop-filter: blur(10px);
@@ -200,6 +201,7 @@
 	transition: all 0.3s ease;
 	justify-content: center;
 	flex-wrap: wrap;
+	margin-top: 2.5rem;
 }
 
 .btn-primary {
@@ -264,4 +266,69 @@
 	color: #334155;
 	transform: translateY(-2px);
 	box-shadow: 0 8px 25px rgba(100, 116, 139, 0.15);
+}
+
+/* Hero Features List */
+.hero-features {
+	list-style: none;
+	padding: 0;
+	margin: 2rem 0;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	align-items: flex-start;
+	max-width: 450px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 2rem;
+}
+
+.hero-feature-item {
+	font-family: "Inter", sans-serif;
+	font-size: 1rem;
+	color: #475569;
+	font-weight: 500;
+	position: relative;
+	padding-left: 2rem;
+	text-align: left;
+	width: 100%;
+	line-height: 1.5;
+}
+
+.hero-feature-item::before {
+	content: "✓";
+	position: absolute;
+	left: 0;
+	top: 0;
+	color: #10b981;
+	font-weight: 700;
+	font-size: 1.1rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(16, 185, 129, 0.1);
+	border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+	.hero-features {
+		gap: 0.8rem;
+		margin: 1.5rem 0;
+		max-width: 100%;
+	}
+	
+	.hero-feature-item {
+		font-size: 0.95rem;
+	}
+
+	
+	.cotton-frame {
+		padding: 2rem 1.5rem;
+	}
+	
+	.hero-cta {
+		margin-top: 2rem;
+	}
 }

@@ -6,10 +6,11 @@ interface Props {
 	title: string;
 	subtitle: string;
 	description: string;
+	features?: string[];
 	note: string;
 }
 
-const { heroImage, title, subtitle, description, note } = Astro.props;
+const { heroImage, title, subtitle, description, features, note } = Astro.props;
 ---
 
 <section class="hero-section">
@@ -19,6 +20,13 @@ const { heroImage, title, subtitle, description, note } = Astro.props;
 				<div class="hero-tagline">{subtitle}</div>
 				<h1 class="hero-heading leading-tight" set:html={title}></h1>
 				<p class="hero-subtext">{description}</p>
+				{features && (
+					<ul class="hero-features">
+						{features.map((feature) => (
+							<li class="hero-feature-item">{feature}</li>
+						))}
+					</ul>
+				)}
 				<p class="hero-note">{note}</p>
 				<div class="hero-cta">
 					<a
