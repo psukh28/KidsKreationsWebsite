@@ -4,6 +4,7 @@ import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import { Image } from "astro:assets";
 import { products } from "../data/products";
+import PageHero from "../components/sections/PageHero.astro";
 
 // Preload critical images for faster navigation
 const preloadImages = products.flatMap((product) =>
@@ -18,17 +19,11 @@ const preloadImages = products.flatMap((product) =>
   <Navigation />
 
   <main>
-    <section class="hero product-hero">
-      <div class="container">
-        <div class="section-title">
-          <h1>Explore Our Infantwear Collection</h1>
-          <p>
-            Flexible MOQs, GOTS-certified materials, custom packaging, and
-            export-ready babywear.
-          </p>
-        </div>
-      </div>
-    </section>
+    <PageHero 
+      title="Explore Our Infantwear Collection" 
+      description="Flexible MOQs, GOTS-certified materials, custom packaging, and export-ready babywear." 
+      backgroundClass="products-hero" 
+    />
 
     <section class="products">
       <div class="container">
@@ -168,65 +163,7 @@ const preloadImages = products.flatMap((product) =>
 </Layout>
 
 <style>
-  .product-hero {
-    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);
-    padding: var(--spacing-xl) 1rem;
-    text-align: center;
-    position: relative;
-    width: 100%;
-    box-sizing: border-box;
-    overflow-x: hidden;
-  }
-
-  .product-hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(
-        circle at 25% 25%,
-        rgba(148, 163, 184, 0.05) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 75% 75%,
-        rgba(203, 213, 225, 0.05) 0%,
-        transparent 50%
-      );
-    pointer-events: none;
-  }
-
-  .section-title {
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-    width: 100%;
-    padding: 0 1rem;
-    box-sizing: border-box;
-  }
-
-  .section-title h1 {
-    font-family: "Libre Baskerville", serif;
-    font-size: 2.5rem;
-    margin-bottom: var(--spacing-sm);
-    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .section-title h1::after {
-    content: "";
-    display: block;
-    width: 80px;
-    height: 3px;
-    background: linear-gradient(90deg, #94a3b8, #cbd5e1, #e2e8f0);
-    margin: 12px auto 0;
-    border-radius: 2px;
-    opacity: 0.8;
-  }
+  /* PageHero styles govern the header now */
 
   .products {
     padding: var(--spacing-xl) 0;

@@ -48,7 +48,11 @@ const { heroImage, title, subtitle, description, features, note } = Astro.props;
 				alt="Happy baby in premium infantwear"
 				width={2200}
 				height={2200}
+				quality={90}
+				format="webp"
 				loading="eager"
+				decoding="sync"
+				fetchpriority="high"
 				class="hero-img"
 			/>
 		</div>

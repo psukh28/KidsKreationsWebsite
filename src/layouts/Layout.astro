@@ -3,6 +3,8 @@ import { Image } from 'astro:assets';
 import PerformanceOptimizer from '../components/PerformanceOptimizer.astro';
 import PerformanceMonitor from '../components/PerformanceMonitor.astro';
 import Analytics from '@vercel/analytics/astro';
+import '../styles/base/variables.css';
+import '../styles/base/typography.css';
 
 
 interface Props {
@@ -226,48 +228,7 @@ const fontLinks = [
 </html>
 
 <style is:global>
-  :root {
-    /* Primary Colors - Updated to Neutral Scheme */
-    --primary: #475569;
-    --primary-dark: #334155;
-    --primary-light: #f1f5f9;
-    
-    /* Neutral Colors */
-    --text-dark: #1e293b;
-    --text-light: #64748b;
-    --text-lighter: #94a3b8;
-    
-    /* Background Colors */
-    --background: #ffffff;
-    --background-alt: #f8fafc;
-    --background-dark: #f1f5f9;
-    
-    /* Border Colors */
-    --border: #e2e8f0;
-    --border-dark: #cbd5e1;
-    
-    /* Status Colors */
-    --success: #059669;
-    --warning: #d97706;
-    --error: #dc2626;
-    
-    /* Spacing */
-    --spacing-xs: 0.5rem;
-    --spacing-sm: 1rem;
-    --spacing-md: 1.5rem;
-    --spacing-lg: 2rem;
-    --spacing-xl: 3rem;
-    
-    /* Border Radius */
-    --radius-sm: 0.25rem;
-    --radius-md: 0.375rem;
-    --radius-lg: 0.5rem;
-    
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-  }
+  /* Global variables are now managed in src/styles/base/variables.css */
   
   * {
     margin: 0;

@@ -82,7 +82,7 @@
 .card-icon {
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  background: linear-gradient(135deg, var(--background-alt) 0%, var(--background) 100%);
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -95,7 +95,7 @@
 
 .feature-card:hover .card-icon,
 .service-card:hover .card-icon {
-  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+  background: linear-gradient(135deg, var(--background) 0%, var(--background-dark) 100%);
   transform: scale(1.05);
 }
 

@@ -19,8 +19,8 @@
 	backdrop-filter: blur(10px);
 	padding: 2.5rem 2rem;
 	border-radius: 20px;
-	box-shadow: 0 10px 40px rgba(30, 41, 59, 0.08);
-	border: 1px solid rgba(226, 232, 240, 0.5);
+	box-shadow: 0 10px 40px rgba(45, 45, 45, 0.06);
+	border: 1px solid rgba(232, 228, 223, 0.5);
 	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 	text-align: center;
 	position: relative;
@@ -34,7 +34,7 @@
 	left: 0;
 	right: 0;
 	height: 4px;
-	background: linear-gradient(90deg, #94a3b8, #cbd5e1, #e2e8f0);
+	background: linear-gradient(90deg, var(--accent), var(--primary-light), var(--primary));
 	opacity: 0;
 	transition: opacity 0.3s ease;
 }
@@ -45,14 +45,14 @@
 
 .feature-card:hover {
 	transform: translateY(-8px);
-	box-shadow: 0 20px 60px rgba(30, 41, 59, 0.15);
-	background: rgba(255, 255, 255, 0.95);
+	box-shadow: 0 20px 60px rgba(45, 45, 45, 0.1);
+	background: rgba(255, 255, 255, 0.98);
 }
 
 .feature-icon {
 	width: 80px;
 	height: 80px;
-	background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+	background: linear-gradient(135deg, var(--background-alt) 0%, var(--border) 100%);
 	border-radius: 20px;
 	display: flex;
 	align-items: center;
@@ -64,7 +64,7 @@
 }
 
 .feature-card:hover .feature-icon {
-	background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+	background: linear-gradient(135deg, var(--border) 0%, var(--border-dark) 100%);
 	transform: scale(1.05);
 }
 
