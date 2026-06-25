@@ -30,6 +30,12 @@ const fontLinks = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <!-- Critical CSS inline to prevent FOUC -->
+    <style>
+      html{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;background:#f8f9fa}body{margin:0;padding:0;overflow-x:hidden}*{box-sizing:border-box}
+    </style>
+    
     <title>{title ?? 'Kids Kreations Company Limited – Trusted Babywear Manufacturer Since 2000'}</title>
     <meta name="description" content={description ?? 'Manufacturer of premium baby gift sets and infant garments based in Thailand. Trusted OEM & ODM supplier for brands worldwide since 2000.'} />
     <meta name="robots" content="index, follow" />
@@ -56,13 +62,15 @@ const fontLinks = [
       preconnect={["https://fonts.googleapis.com", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"]}
     />
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts - Preload to prevent FOUC -->
     {fontLinks.map(link => (
-      <link rel="stylesheet" href={link} />
+      <link rel="preload" href={link} as="style" onload="this.onload=null;this.rel='stylesheet'" />
+      <noscript><link rel="stylesheet" href={link} /></noscript>
     ))}
 
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- FontAwesome Icons - Async load to prevent FOUC -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" /></noscript>
 
     <!-- Performance Monitoring -->
     <PerformanceMonitor />
