@@ -1,10 +1,11 @@
 ---
-import logo from "../assets/icons/logo1.svg";
+import logo from "../assets/icons/kklogonew.png";
 
 const menuItems = [
   { href: "/", text: "Home" },
   { href: "/about", text: "About" },
   { href: "/services", text: "Services" },
+  { href: "/lookbook", text: "Lookbook" },
   { href: "/products", text: "Products" },
   { href: "/contact", text: "Contact" },
 ];
@@ -404,8 +405,9 @@ const currentPath = Astro.url.pathname;
       
       // Close menu when clicking outside
       document.addEventListener("click", function(e) {
-        const target = e.target;
+        const target = e.target as Node;
         if (navMenu.classList.contains("active") && 
+            target && 
             !navMenu.contains(target) && 
             !menuToggle.contains(target)) {
           navMenu.classList.remove("active");

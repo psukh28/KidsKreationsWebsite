@@ -18,7 +18,7 @@ const fontLinks = [
 ];
 ---
 
-<Layout title="Contact Us - Kids Kreations">
+<Layout title="Contact Us - Kids Kreations" canonicalPath="/contact">
   {fontLinks.map(link => (
 		<link rel="stylesheet" href={link} />
 	))}
@@ -68,7 +68,7 @@ const fontLinks = [
                       height="180"
                       style="border:0; border-radius: 12px;"
                       allowfullscreen=""
-                      loading="eager"
+                      loading="lazy"
                       referrerpolicy="no-referrer-when-downgrade"
                       title="Our Location"
                     ></iframe>
@@ -84,7 +84,7 @@ const fontLinks = [
               <a href="https://www.tiktok.com/@elegantkidsth" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
               <a href="https://www.facebook.com/lilsoftbaby" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
               <a href="https://www.instagram.com/elegantkids_by_lilsoft/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-              <a href="https://www.linkedin.com/company/kids-kreations-company-limited" target="_blank" rel="noopener noreferrer" aria-label="Youtube"><i class="fab fa-linkedin"></i></a>
+              <a href="https://www.linkedin.com/company/kids-kreations-company-limited" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
             </div>
             <div class="schedule-meeting-wrapper">
               <div class="schedule-meeting-info">
@@ -338,8 +338,8 @@ const fontLinks = [
   }
   .schedule-meeting-btn {
     display: inline-block;
-    border: 2px solid #2563eb;
-    color: #2563eb;
+    border: 2px solid var(--primary);
+    color: var(--primary);
     padding: 0.9rem 1.5rem;
     font-size: 1rem;
     font-weight: 600;
@@ -347,14 +347,14 @@ const fontLinks = [
     background: white;
     transition: all 0.2s ease;
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+    box-shadow: 0 2px 8px rgba(138, 126, 113, 0.15);
     margin-top: 0.5rem;
   }
   .schedule-meeting-btn:hover {
-    background: #f0f4ff;
-    color: #1e40af;
+    background: var(--background-alt);
+    color: var(--primary-dark);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 4px 12px rgba(138, 126, 113, 0.15);
   }
 
   .schedule-meeting-info {

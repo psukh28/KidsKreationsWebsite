@@ -1,0 +1,301 @@
+/* ============================================================
+   Homepage Hero — Editorial redesign (Direction A: Atelier grid)
+   Scoped under .kk-hero. Handoff fonts loaded in Layout.astro.
+   Values map to design_handoff_hero (high-fidelity).
+   ============================================================ */
+
+.kk-hero {
+	/* hero-local tokens (mapped from design handoff) */
+	--kk-cream: #f4f1e9;
+	--kk-card: #fbf9f3;
+	--kk-ink: #463f33;
+	--kk-ink-soft: #574e3f;
+	--kk-muted: #8c8475;
+	--kk-muted-2: #a8a091;
+	--kk-gold: #a89468;
+	--kk-gold-line: #c7b891;
+	--kk-btn: #6b5f4f;
+	--kk-btn-2: #564c3e;
+	--kk-sage-bg: #e5eadd;
+	--kk-caption: #6e5f45;
+	--kk-line: rgba(70, 63, 51, 0.14);
+	--kk-line-soft: rgba(70, 63, 51, 0.08);
+	--kk-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+	--kk-serif: "Spectral", Georgia, serif;
+	--kk-sans: "Mulish", system-ui, sans-serif;
+
+	position: relative;
+	font-family: var(--kk-sans);
+	color: var(--kk-ink);
+	background:
+		radial-gradient(120% 90% at 88% 30%, #faf7f0 0%, var(--kk-cream) 55%);
+	padding: 3rem 0 4rem;
+}
+
+.kk-hero-grid {
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 0 56px;
+	display: grid;
+	grid-template-columns: 540px 1fr;
+	gap: 56px;
+	align-items: center;
+}
+
+/* ---------- Left content card ---------- */
+.kk-card {
+	background: linear-gradient(180deg, #fcfaf5, #f8f5ee);
+	border: 1px solid var(--kk-line-soft);
+	border-radius: 22px;
+	padding: 52px 54px 56px;
+	box-shadow: 0 24px 50px -34px rgba(70, 55, 35, 0.28);
+}
+
+.kk-eyebrow {
+	font-family: var(--kk-sans);
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+	color: var(--kk-muted-2);
+	margin: 0 0 26px;
+}
+.kk-eyebrow b {
+	color: var(--kk-muted);
+	font-weight: 700;
+	border-bottom: 1.5px solid var(--kk-gold-line);
+	padding-bottom: 4px;
+}
+
+.kk-headline {
+	font-family: var(--kk-serif);
+	font-weight: 600;
+	font-size: 56px;
+	line-height: 1.04;
+	letter-spacing: -0.5px;
+	color: var(--kk-ink);
+	margin: 0 0 22px;
+	text-wrap: balance;
+}
+
+.kk-subhead {
+	font-size: 21px;
+	line-height: 1.4;
+	color: var(--kk-muted);
+	margin: 0 0 30px;
+}
+
+.kk-checks {
+	list-style: none;
+	margin: 0 0 30px;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 17px;
+}
+.kk-checks li {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	font-size: 18px;
+	color: var(--kk-ink-soft);
+}
+.kk-check {
+	flex: none;
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	background: var(--kk-sage-bg);
+	display: grid;
+	place-items: center;
+}
+.kk-check svg {
+	width: 14px;
+	height: 14px;
+}
+
+.kk-lede {
+	font-size: 18px;
+	line-height: 1.55;
+	color: var(--kk-muted);
+	margin: 0 0 34px;
+	max-width: 430px;
+}
+
+/* ---------- CTAs ---------- */
+.kk-cta {
+	display: flex;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+.kk-btn {
+	font-family: var(--kk-sans);
+	font-size: 16.5px;
+	font-weight: 600;
+	border-radius: 12px;
+	padding: 16px 26px;
+	cursor: pointer;
+	border: 1px solid transparent;
+	text-decoration: none;
+	display: inline-block;
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.kk-btn-primary {
+	background: linear-gradient(180deg, var(--kk-btn), var(--kk-btn-2));
+	color: #f6f1e6;
+	box-shadow: 0 10px 22px -12px rgba(70, 55, 35, 0.6);
+}
+.kk-btn-primary:hover {
+	color: #f6f1e6;
+	transform: translateY(-1px);
+	box-shadow: 0 14px 26px -12px rgba(70, 55, 35, 0.7);
+}
+.kk-btn-ghost {
+	background: transparent;
+	border-color: var(--kk-line);
+	color: var(--kk-ink-soft);
+}
+.kk-btn-ghost:hover {
+	color: var(--kk-ink-soft);
+	transform: translateY(-1px);
+	box-shadow: 0 10px 22px -16px rgba(70, 55, 35, 0.4);
+}
+
+/* ---------- Right editorial image grid ---------- */
+.kk-grid {
+	display: grid;
+	grid-template-columns: 1.18fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	gap: 16px;
+	height: 560px;
+}
+.kk-tile {
+	position: relative;
+	margin: 0;
+	border-radius: 6px;
+	overflow: hidden;
+	border: 1px solid rgba(120, 100, 70, 0.16);
+	box-shadow: 0 18px 40px -30px rgba(70, 55, 35, 0.45);
+}
+.kk-tile--hero {
+	grid-row: 1 / span 2;
+}
+.kk-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.kk-tile:hover .kk-img {
+	transform: scale(1.02);
+}
+
+/* captions over the image */
+.kk-cap {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 2;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	padding: 13px 14px;
+	font-family: var(--kk-mono);
+	font-size: 10.5px;
+	letter-spacing: 0.6px;
+	line-height: 1.35;
+	text-transform: uppercase;
+	color: var(--kk-caption);
+	pointer-events: none;
+	background: linear-gradient(
+		180deg,
+		rgba(251, 249, 243, 0.92) 0%,
+		rgba(251, 249, 243, 0) 100%
+	);
+}
+.kk-cap .kk-num {
+	color: var(--kk-gold);
+	font-weight: 500;
+}
+.kk-foot {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 2;
+	margin: 0;
+	padding: 26px 14px 13px;
+	font-family: var(--kk-mono);
+	font-size: 10.5px;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
+	color: var(--kk-caption);
+	pointer-events: none;
+	background: linear-gradient(
+		0deg,
+		rgba(251, 249, 243, 0.92) 0%,
+		rgba(251, 249, 243, 0) 100%
+	);
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+/* Tablet: content flexes narrower, grid gap tightens */
+@media (max-width: 1024px) {
+	.kk-hero-grid {
+		grid-template-columns: minmax(0, 460px) 1fr;
+		gap: 32px;
+		padding: 0 32px;
+	}
+	.kk-grid {
+		gap: 12px;
+		height: 520px;
+	}
+	.kk-headline {
+		font-size: 46px;
+	}
+	.kk-card {
+		padding: 40px 38px 44px;
+	}
+}
+
+/* Mobile: stack — content on top, image grid below full width */
+@media (max-width: 768px) {
+	.kk-hero {
+		padding: 2rem 0 3rem;
+	}
+	.kk-hero-grid {
+		grid-template-columns: 1fr;
+		gap: 28px;
+		padding: 0 1rem;
+	}
+	.kk-headline {
+		font-size: clamp(34px, 9vw, 44px);
+	}
+	.kk-subhead {
+		font-size: 19px;
+	}
+	.kk-card {
+		padding: 32px 24px 36px;
+		border-radius: 18px;
+	}
+	/* large tile across the top, two macros side-by-side below */
+	.kk-grid {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto auto;
+		height: auto;
+		gap: 12px;
+	}
+	.kk-tile--hero {
+		grid-row: auto;
+		grid-column: 1 / span 2;
+		aspect-ratio: 4 / 3;
+	}
+	.kk-grid .kk-tile:not(.kk-tile--hero) {
+		aspect-ratio: 1 / 1;
+	}
+}

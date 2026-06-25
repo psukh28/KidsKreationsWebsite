@@ -1,0 +1,572 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+import { Image, getImage } from "astro:assets";
+import { lookbookCategories } from "../data/lookbook";
+import PageHero from "../components/sections/PageHero.astro";
+import { getWebImagesByCategory } from "../lib/supabase";
+
+// Supabase-managed lookbook images (by category id). Falls back to bundled assets.
+const dbLookbook = await getWebImagesByCategory("lookbook");
+const categories = lookbookCategories.map((c) => ({
+  ...c,
+  remote: dbLookbook[c.id] ?? [],
+}));
+
+// Preload the first few images for the first category
+const first = categories[0];
+const preloadImages = first
+  ? (first.remote.length > 0
+      ? first.remote.slice(0, 4).map((img) => img.src)
+      : first.images.slice(0, 4).map((img) => img.src))
+  : [];
+
+// High-resolution sources for the lightbox, keyed by the original imported image
+const fullResMap = new Map<unknown, string>();
+for (const category of lookbookCategories) {
+  for (const img of category.images) {
+    const optimized = await getImage({ src: img, width: 1400, format: "webp" });
+    fullResMap.set(img, optimized.src);
+  }
+}
+---
+
+<Layout title="What We Make - Kids Kreations" canonicalPath="/lookbook">
+  {preloadImages.map((src) => <link rel="preload" as="image" href={src} />)}
+
+  <Navigation />
+
+  <main class="lookbook-page">
+    <PageHero 
+      title="What We Make" 
+      description="A showcase of the apparel categories we produce, highlighting our manufacturing capabilities across a wide range of styles, fabrics, and constructions." 
+      backgroundClass="lookbook-hero" 
+    />
+
+    <section class="lookbook-container">
+      <div class="lookbook-layout">
+        
+        <!-- Sticky Sidebar Navigation -->
+        <aside class="sidebar-nav">
+          <div class="sticky-wrapper">
+            <h3>Categories</h3>
+            <ul id="category-nav">
+              {lookbookCategories.map((category) => (
+                <li>
+                  <a href={`#${category.id}`} class="nav-link">
+                    {category.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="lookbook-content">
+          {categories.map((category, index) => (
+            <div id={category.id} class="category-section">
+              <div class="category-header">
+                <h2>{category.title}</h2>
+                <p>{category.description}</p>
+              </div>
+
+              <div class="image-grid">
+                {category.remote.length > 0
+                  ? category.remote.map((img, imgIndex) => (
+                      <div class="image-wrapper" data-full={img.src}>
+                        <div class="image-inner">
+                          <img
+                            src={img.src}
+                            alt={img.alt || `${category.title} product example ${imgIndex + 1}`}
+                            class="lookbook-image"
+                            loading={index === 0 && imgIndex < 4 ? "eager" : "lazy"}
+                            decoding="async"
+                          />
+                          <div class="image-overlay">
+                            <button class="zoom-btn" aria-label="Zoom image">
+                              <i class="fas fa-search-plus"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  : category.images.map((img, imgIndex) => (
+                      <div class="image-wrapper" data-full={fullResMap.get(img)}>
+                        <div class="image-inner">
+                          <Image
+                            src={img}
+                            alt={`${category.title} product example ${imgIndex + 1}`}
+                            class="lookbook-image"
+                            width={400}
+                            quality={85}
+                            format="webp"
+                            loading={index === 0 && imgIndex < 4 ? "eager" : "lazy"}
+                            decoding="async"
+                          />
+                          <div class="image-overlay">
+                            <button class="zoom-btn" aria-label="Zoom image">
+                              <i class="fas fa-search-plus"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Reusable Image Modal -->
+  <div id="imageModal" class="image-modal" role="dialog" aria-modal="true" aria-label="Lookbook image viewer">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close modal">×</button>
+      <div class="modal-image-container">
+        <img id="modalImage" src="" alt="Lookbook expanded image" class="modal-image" loading="lazy" decoding="async" />
+      </div>
+    </div>
+  </div>
+
+  <Footer />
+</Layout>
+
+<style>
+  .lookbook-page {
+    background: var(--background);
+    color: var(--text-dark);
+  }
+
+  .lookbook-container {
+    padding: var(--spacing-xl) 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Grid Layout: Sidebar + Content */
+  .lookbook-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: var(--spacing-2xl);
+    max-width: 1536px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+  }
+
+  /* Sidebar Styles */
+  .sidebar-nav {
+    display: block;
+    height: 100%;
+  }
+
+  .sticky-wrapper {
+    position: sticky;
+    top: 120px; /* Offset for fixed header */
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .sticky-wrapper h3 {
+    font-size: 1.1rem;
+    font-family: var(--font-serif);
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--border);
+    color: var(--primary-dark);
+  }
+
+  #category-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    color: var(--text-light);
+    font-weight: 500;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-normal);
+  }
+
+  .nav-link:hover, .nav-link.active {
+    color: var(--primary-dark);
+    background: var(--background-alt);
+    padding-left: 1rem;
+  }
+
+  /* Content area styles */
+  .lookbook-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem; /* Even larger spacing between categories */
+  }
+
+  .category-section {
+    scroll-margin-top: 120px; /* So the sticky header doesn't cover the title when anchored */
+  }
+
+  .category-header {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .category-header h2 {
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+  }
+
+  .category-header p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    max-width: 600px;
+  }
+
+  /* Image Grid */
+  .image-grid {
+    column-count: 3;
+    column-gap: var(--spacing-xl);
+  }
+
+  .image-wrapper {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: var(--spacing-xl);
+    position: relative;
+    top: 0;
+    border-radius: var(--radius-sm);
+    background: #ffffff;
+    padding: 0.75rem; 
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+    transition: top var(--transition-normal), box-shadow var(--transition-normal);
+    
+    /* Masonry column fixes */
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+  }
+
+  .image-wrapper:hover {
+    top: -6px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  .image-inner {
+    position: relative;
+    overflow: hidden;
+    border-radius: calc(var(--radius-sm) - 0.25rem); /* Inner radius */
+  }
+
+  .lookbook-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform var(--transition-slow);
+  }
+
+  .image-wrapper:hover .lookbook-image {
+    transform: scale(1.03);
+  }
+
+  .image-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(250, 250, 249, 0.4);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .image-wrapper:hover .image-overlay {
+    opacity: 1;
+  }
+
+  .zoom-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: var(--primary);
+    color: white;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(20px);
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+  }
+
+  .image-wrapper:hover .zoom-btn {
+    transform: translateY(0);
+  }
+
+  .zoom-btn:hover {
+    background: var(--primary-dark);
+    transform: scale(1.1) !important;
+  }
+
+  /* Modal */
+  .image-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(30, 41, 59, 0.9);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .image-modal.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  .modal-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+  }
+
+  .modal-image-container {
+    max-width: 90vw;
+    max-height: 90vh;
+  }
+
+  .modal-image {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: white;
+    color: var(--text-dark);
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1001;
+    transition: all 0.2s;
+  }
+
+  .modal-close:hover {
+    background: var(--background-alt);
+    transform: scale(1.1);
+  }
+
+  /* Responsive styling */
+  @media (max-width: 992px) {
+    .lookbook-layout {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg);
+    }
+
+    .sidebar-nav {
+      position: sticky;
+      top: 80px;
+      z-index: 10;
+      background: rgba(250, 250, 249, 0.95);
+      backdrop-filter: blur(10px);
+      margin: 0 calc(-1 * var(--spacing-sm));
+      padding: var(--spacing-sm);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sticky-wrapper {
+      position: static;
+      background: none;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+    }
+
+    .sticky-wrapper::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
+    }
+
+    .sticky-wrapper h3 {
+      display: none;
+    }
+
+    #category-nav {
+      flex-direction: row;
+      gap: 0.5rem;
+      padding-bottom: 0.25rem;
+    }
+
+    .nav-link {
+      white-space: nowrap;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      background: white;
+    }
+
+    .nav-link.active, .nav-link:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      padding-left: 1rem; /* reset hover from desktop */
+    }
+  }
+
+  @media (max-width: 576px) {
+    .image-grid {
+      column-count: 2;
+      column-gap: var(--spacing-sm);
+    }
+    
+    .image-wrapper {
+      margin-bottom: var(--spacing-sm);
+    }
+    
+    .category-header h2 {
+      font-size: 1.75rem;
+    }
+    
+    .zoom-btn {
+      width: 36px;
+      height: 36px;
+      font-size: 1rem;
+    }
+    
+    .modal-close {
+      top: 1rem;
+      right: 1rem;
+      width: 36px;
+      height: 36px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Lightbox Functionality
+    const imageWrappers = document.querySelectorAll('.image-wrapper');
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage') as HTMLImageElement;
+    const closeModal = document.querySelector('.modal-close');
+
+    imageWrappers.forEach(wrapper => {
+      wrapper.addEventListener('click', () => {
+        const img = wrapper.querySelector('.lookbook-image') as HTMLImageElement;
+        if (img && modal && modalImage) {
+          modalImage.src = (wrapper as HTMLElement).dataset.full || img.src;
+          modal.style.display = 'flex';
+          // Trigger reflow for transition
+          void modal.offsetWidth;
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+      });
+    });
+
+    const close = () => {
+      if (modal) {
+        modal.classList.remove('active');
+        setTimeout(() => {
+          modal.style.display = 'none';
+        }, 300); // match transition duration
+        document.body.style.overflow = '';
+      }
+    };
+
+    closeModal?.addEventListener('click', close);
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) close();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+
+    // Intersection Observer for highlighting side nav based on scroll position
+    const sections = document.querySelectorAll('.category-section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-150px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${id}`) {
+              link.classList.add('active');
+              // On mobile, scroll the active link into view in the horizontal list
+              if (window.innerWidth <= 992) {
+                link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+              }
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (this: HTMLAnchorElement, e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href')?.substring(1);
+        const targetElement = document.getElementById(targetId || '');
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 100, // Account for fixed header
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  });
+</script>

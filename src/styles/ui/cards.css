@@ -27,7 +27,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #2C5F9B, #E8B86D);
+  background: linear-gradient(90deg, var(--primary-dark), var(--accent));
   transform: scaleX(0);
   transition: transform var(--transition-normal);
 }
@@ -44,7 +44,7 @@
   padding: var(--spacing-xl);
   border-radius: 20px;
   box-shadow: 0 10px 40px rgba(30, 41, 59, 0.08);
-  border: 1px solid rgba(226, 232, 240, 0.5);
+  border: 1px solid rgba(232, 228, 223, 0.5);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
   position: relative;
@@ -61,7 +61,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #94a3b8, #cbd5e1, #e2e8f0);
+  background: linear-gradient(90deg, var(--primary-light), var(--border-dark), var(--background-dark));
   opacity: 0;
   transition: opacity var(--transition-normal);
 }

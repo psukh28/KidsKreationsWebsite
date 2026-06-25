@@ -165,5 +165,49 @@ export const products = [
       packaging: "Hanger pack with custom tag and size sticker.",
       moq: "Contact us for MOQ"
     }
+  },
+  {
+    title: "Bodysuits",
+    description: "Everyday essential bodysuits in soft, breathable cotton, with easy snap closures for quick changes.",
+    badges: ["Everyday Essential", "Snap-Close Convenience", "Skin-Safe Cotton"],
+    images: [],
+    slug: "bodysuits",
+    orientation: "portrait",
+    features: [
+      "Lap-shoulder neckline and bottom snaps for easy dressing",
+      "Soft, breathable cotton gentle on delicate skin",
+      "Layering staple for everyday wear",
+      "Size range: 0–24 months"
+    ],
+    details: {
+      materials: "100% combed cotton single jersey. Nickel-free snaps for sensitive skin.",
+      sizes: "0-3m, 3-6m, 6-12m, 12-18m, 18-24m",
+      care: "Machine wash cold with like colors. Tumble dry low. Do not bleach.",
+      certifications: ["OEKO-TEX Standard 100", "GOTS Certified Fabric"],
+      packaging: "Individually folded and packed in clear poly bags. Custom bands available.",
+      moq: "Contact us for MOQ"
+    }
+  },
+  {
+    title: "Dresses",
+    description: "Charming dresses for everyday and occasion wear, designed for comfort and effortless style.",
+    badges: ["Occasion Ready", "Soft Comfort Fit", "Timeless Style"],
+    images: [],
+    slug: "dresses",
+    orientation: "portrait",
+    features: [
+      "Comfortable, non-restrictive cuts for active little ones",
+      "Premium soft-woven and knit fabrics",
+      "Thoughtful prints and finishing details",
+      "Size range: 0–36 months"
+    ],
+    details: {
+      materials: "Soft cotton-rich woven and knit fabrics, gentle on delicate skin.",
+      sizes: "0-6m, 6-12m, 12-18m, 18-24m, 2T, 3T",
+      care: "Machine wash cold on gentle cycle. Tumble dry low. Iron on low if needed.",
+      certifications: ["OEKO-TEX Standard 100"],
+      packaging: "Folded with tissue and packed in poly bags. Hanger packs available.",
+      moq: "Contact us for MOQ"
+    }
   }
-]; 
+];

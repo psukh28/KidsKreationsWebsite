@@ -10,13 +10,17 @@ import '../styles/base/typography.css';
 interface Props {
   title: string;
   description?: string;
+  canonicalPath?: string;
 }
 
-const { title, description = "Premium infantwear OEM/ODM manufacturer in Thailand. 23+ years experience, GOTS certified, ethical production. Partner with 30+ global brands." } = Astro.props;
+const { title, description = "Premium infantwear OEM/ODM manufacturer in Thailand. 23+ years experience, GOTS certified, ethical production. Partner with 30+ global brands.", canonicalPath = '' } = Astro.props;
+const canonicalUrl = `https://kidskreationsco.com${canonicalPath}`;
 
 const fontLinks = [
   'https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;500;600;700&display=swap',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap'
+  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap',
+  // Hero (editorial redesign) typeface set — scoped to the homepage hero
+  'https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700&family=Cormorant+Garamond:ital,wght@1,600&family=Mulish:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap'
 ];
 ---
 
@@ -29,7 +33,7 @@ const fontLinks = [
     <title>{title ?? 'Kids Kreations Company Limited – Trusted Babywear Manufacturer Since 2000'}</title>
     <meta name="description" content={description ?? 'Manufacturer of premium baby gift sets and infant garments based in Thailand. Trusted OEM & ODM supplier for brands worldwide since 2000.'} />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://kidskreationsco.com/" />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- Open Graph (Facebook, LinkedIn, etc.) -->
     <meta property="og:type" content="website" />
@@ -64,10 +68,7 @@ const fontLinks = [
     <PerformanceMonitor />
 
     <!-- Technical and Favicon -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <html lang="en" />
 
     <!-- Organization Structured Data -->
     <script type="application/ld+json">
@@ -210,7 +211,7 @@ const fontLinks = [
           box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
         .cookie-actions button:hover {
-          background: #0074D9;
+          background: #8A7E71;
           color: #fff;
         }
         @media (max-width: 600px) {
@@ -243,14 +244,14 @@ const fontLinks = [
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    overflow-x: clip;
     width: 100%;
   }
 
   body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    overflow-x: clip;
     width: 100%;
     max-width: 100vw;
     position: relative;

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kids Kreations — Hero (Atelier Grid)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700&family=Cormorant+Garamond:ital,wght@1,600&family=Mulish:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="stage">
+    <div class="scaler" id="scaler">
+      <div class="hero">
+        <nav class="nav">
+          <div class="brand">
+            <div class="monogram"><span>KK</span></div>
+            <div class="brand-name">Kids Kreations</div>
+          </div>
+          <div class="nav-links">
+            <a class="active" href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Lookbook</a>
+            <a href="#">Products</a>
+            <a href="#">Contact</a>
+          </div>
+        </nav>
+
+        <div class="hero-grid">
+          <!-- LEFT — unchanged -->
+          <div class="lcard">
+            <p class="eyebrow">Trusted by <b>Global Brands</b></p>
+            <h1 class="headline">Your Partner in Premium Babywear Manufacturing</h1>
+            <p class="subhead">Large-scale OEM manufacturing for brands and retailers.</p>
+            <ul class="checks">
+              <li>
+                <span class="check"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#5E7A4C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                Certified organic &amp; sustainable production
+              </li>
+              <li>
+                <span class="check"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#5E7A4C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                In-house design, development &amp; sampling
+              </li>
+              <li>
+                <span class="check"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#5E7A4C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                Seamless global logistics and compliance
+              </li>
+            </ul>
+            <p class="lede">Chosen by international partners across Europe, the UK, the US, and Asia. Built for quality. Engineered for scale.</p>
+            <div class="cta">
+              <button class="btn btn-primary">Explore Products →</button>
+              <button class="btn btn-ghost">Schedule a Meeting</button>
+            </div>
+          </div>
+
+          <!-- RIGHT — Direction A: Atelier editorial grid -->
+          <div class="rstage">
+            <div class="dirA">
+              <div class="a-tile a-hero">
+                <div class="a-cap"><span>Organic cotton · folded</span><span class="num">01</span></div>
+                <div class="a-foot">Studio flat-lay</div>
+                <image-slot id="kk-hero" shape="rounded" radius="6" placeholder="Drop folded-garment flat-lay"></image-slot>
+              </div>
+              <div class="a-tile a-1">
+                <div class="a-cap"><span>Interlock weave · 180gsm</span><span class="num">02</span></div>
+                <image-slot id="kk-weave" shape="rounded" radius="6" placeholder="Drop fabric macro"></image-slot>
+              </div>
+              <div class="a-tile a-2">
+                <div class="a-cap"><span>Flatlock seam detail</span><span class="num">03</span></div>
+                <image-slot id="kk-seam" shape="rounded" radius="6" placeholder="Drop stitch macro"></image-slot>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="image-slot.js"></script>
+  <script>
+    (function () {
+      const scaler = document.getElementById("scaler");
+      function fit() {
+        const s = Math.min(window.innerWidth / 1280, window.innerHeight / 940);
+        const ox = (window.innerWidth - 1280 * s) / 2;
+        const oy = (window.innerHeight - 940 * s) / 2;
+        scaler.style.transform = "translate(" + ox + "px," + oy + "px) scale(" + s + ")";
+      }
+      fit();
+      window.addEventListener("resize", fit);
+    })();
+  </script>
+</body>
+</html>

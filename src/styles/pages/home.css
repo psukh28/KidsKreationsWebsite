@@ -121,17 +121,17 @@ section:not(.cta):not(.hero-section)::after {
 }
 
 .section-header h2 {
-    color: #1e293b;
+    color: var(--text-dark);
     font-size: clamp(2rem, 4vw, 2.5rem);
     margin-bottom: 1rem;
-    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+    background: linear-gradient(135deg, var(--text-dark) 0%, var(--primary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
 .section-header p {
-    color: #64748b;
+    color: var(--text-light);
     font-size: 1.1rem;
     line-height: 1.6;
 }

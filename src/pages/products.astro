@@ -2,120 +2,81 @@
 import Layout from "../layouts/Layout.astro";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
-import { Image } from "astro:assets";
 import { products } from "../data/products";
 import PageHero from "../components/sections/PageHero.astro";
+import ProductCategoryCard from "../components/products/ProductCategoryCard.astro";
+import { getWebImagesByCategory } from "../lib/supabase";
 
-// Preload critical images for faster navigation
-const preloadImages = products.flatMap((product) =>
-  product.images.slice(0, 2).map((img) => img.src),
-);
+// Pull managed images from Supabase (grouped by category slug).
+// Falls back to the static `images` in products.ts when a category has none.
+const dbImages = await getWebImagesByCategory("product");
+
+const cards = products.map((product) => {
+  const remote = dbImages[product.slug] ?? [];
+  const hasRemote = remote.length > 0;
+  const localImages = hasRemote ? [] : product.images;
+  // Single hero image per card: prefer Supabase-managed, else first static image.
+  const remoteHero = hasRemote ? remote[0] : null;
+  const localHero = !hasRemote ? (localImages[0] ?? null) : null;
+  return {
+    product,
+    remoteHero,
+    localHero,
+    galleryCount: hasRemote ? remote.length : localImages.length,
+  };
+});
+
+// Curated bundles (Gift / Starter) use lifestyle flat-lay photography on a
+// different background than the clean studio category shots, so we group them
+// into their own section below the main collection grid.
+const curatedSlugs = ["gift-sets", "starter-sets"];
+const mainCards = cards.filter((c) => !curatedSlugs.includes(c.product.slug));
+const curatedCards = cards.filter((c) => curatedSlugs.includes(c.product.slug));
+
+// Preload the single hero image per main card.
+const preloadImages = mainCards
+  .map(({ remoteHero, localHero }) => remoteHero?.src ?? localHero?.src)
+  .filter((src): src is string => Boolean(src));
 ---
 
-<Layout title="Products - Kids Kreations">
+<Layout title="Products - Kids Kreations" canonicalPath="/products">
   <!-- Preload critical images for faster navigation -->
   {preloadImages.map((src) => <link rel="preload" as="image" href={src} />)}
 
   <Navigation />
 
   <main>
-    <PageHero 
-      title="Explore Our Infantwear Collection" 
-      description="Flexible MOQs, GOTS-certified materials, custom packaging, and export-ready babywear." 
-      backgroundClass="products-hero" 
+    <PageHero
+      title="Explore Our Infantwear Collection"
+      description="Flexible MOQs, GOTS-certified materials, custom packaging, and export-ready babywear."
+      backgroundClass="products-hero"
     />
 
     <section class="products">
       <div class="container">
         <div class="products-grid">
           {
-            products.map((product, productIndex) => (
-              <article
-                class="product-card"
-                data-orientation={product.orientation}
-                data-slug={product.slug}
-              >
-                <div class="product-image-wrapper">
-                  {product.images && product.images.length > 0 && (
-                    <div class="product-gallery">
-                      {product.images.map((image, imageIndex) => (
-                        <Image
-                          src={image}
-                          alt={`${product.title} - View ${imageIndex + 1}`}
-                          class="product-image"
-                          loading={
-                            productIndex < 3
-                              ? imageIndex < 2
-                                ? "eager"
-                                : "lazy"
-                              : "lazy"
-                          }
-                          decoding="async"
-                          style={`display: ${imageIndex === 0 ? "block" : "none"}`}
-                          width={600}
-                          height={450}
-                          quality={85}
-                          format="webp"
-                        />
-                      ))}
-                      <button
-                        class="gallery-nav gallery-prev"
-                        aria-label="Previous image"
-                      >
-                        ←
-                      </button>
-                      <button
-                        class="gallery-nav gallery-next"
-                        aria-label="Next image"
-                      >
-                        →
-                      </button>
-                      <div class="gallery-dots">
-                        {product.images.map((_, imageIndex) => (
-                          <button
-                            class="gallery-dot"
-                            aria-label={`View image ${imageIndex + 1}`}
-                            data-index={imageIndex}
-                          />
-                        ))}
-                      </div>
-                      <button class="zoom-button" aria-label="Zoom image">
-                        <i class="fas fa-search-plus" />
-                      </button>
-                      <div class="loading-indicator" style="display: none;">
-                        <div class="spinner" />
-                      </div>
-                    </div>
-                  )}
-                </div>
-                <div class="product-info">
-                  <h3 class="product-title">{product.title}</h3>
-                  <p class="product-description">{product.description}</p>
-                  <ul class="product-features">
-                    {product.features.map((feature) => (
-                      <li class="feature-item">
-                        <i class="fas fa-check" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  {/* BADGE ROTATOR START */}
-                  <div
-                    class="badge-rotator"
-                    id={`badge-rotator-${productIndex}`}
-                    data-badges={JSON.stringify(product.badges)}
-                  >
-                    <span
-                      class="badge badge-animated"
-                      id={`rotatingBadge-${productIndex}`}
-                    />
-                  </div>
-                  {/* BADGE ROTATOR END */}
-                </div>
-              </article>
+            mainCards.map((card, i) => (
+              <ProductCategoryCard {...card} eager={i < 3} />
             ))
           }
         </div>
+
+        {curatedCards.length > 0 && (
+          <div class="curated-group">
+            <div class="group-header">
+              <span>Curated Gift &amp; Starter Sets</span>
+            </div>
+            <p class="group-subtitle">
+              Ready-to-gift bundles, beautifully packaged for retail and gifting.
+            </p>
+            <div class="products-grid">
+              {curatedCards.map((card) => (
+                <ProductCategoryCard {...card} eager={false} />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
 
@@ -133,32 +94,6 @@ const preloadImages = products.flatMap((product) =>
     </section>
   </main>
 
-  <!-- Image Modal -->
-  <div
-    id="imageModal"
-    class="image-modal"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Product image viewer"
-  >
-    <div class="modal-content">
-      <button class="modal-close" aria-label="Close modal">×</button>
-      <button class="modal-nav modal-prev" aria-label="Previous image">←</button
-      >
-      <button class="modal-nav modal-next" aria-label="Next image">→</button>
-      <div class="modal-image-container">
-        <img
-          id="modalImage"
-          src=""
-          alt="Product image"
-          class="modal-image"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-    </div>
-  </div>
-
   <Footer />
 </Layout>
 
@@ -167,455 +102,67 @@ const preloadImages = products.flatMap((product) =>
 
   .products {
     padding: var(--spacing-xl) 0;
-    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);
-    position: relative;
-  }
-
-  .products::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(
-        circle at 20% 30%,
-        rgba(148, 163, 184, 0.03) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 80% 70%,
-        rgba(203, 213, 225, 0.03) 0%,
-        transparent 50%
-      );
-    pointer-events: none;
-    z-index: 1;
+    background: var(--background);
   }
 
   .products-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2.5rem;
-    max-width: 1400px;
+    gap: 2rem;
+    max-width: 1280px;
     margin: 0 auto;
-    position: relative;
-    z-index: 2;
     width: 100%;
-    padding: 0 1rem;
+    padding: 0 var(--spacing-lg);
     box-sizing: border-box;
   }
 
-  .product-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(15px);
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow:
-      0 10px 40px rgba(30, 41, 59, 0.08),
-      0 0 0 1px rgba(226, 232, 240, 0.6) inset;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    height: 100%;
-    min-height: 420px;
+  /* Curated Gift & Starter Sets group */
+  .curated-group {
+    max-width: 1280px;
+    margin: var(--spacing-2xl) auto 0;
+    padding: 0 var(--spacing-lg);
+    box-sizing: border-box;
+  }
+
+  .group-header {
     display: flex;
-    flex-direction: column;
-    animation: fadeIn 0.5s ease-out;
-    cursor: pointer;
-    position: relative;
-    transform-style: preserve-3d;
+    align-items: center;
+    gap: var(--spacing-md);
   }
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .product-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #94a3b8, #cbd5e1, #e2e8f0);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    border-radius: 24px 24px 0 0;
-    z-index: 2;
-  }
-
-  .product-card:hover::before {
-    opacity: 1;
-  }
-
-  .product-card:hover {
-    box-shadow:
-      0 25px 60px rgba(30, 41, 59, 0.15),
-      0 0 0 2px rgba(148, 163, 184, 0.3) inset;
-    transform: translateY(-12px) rotateX(2deg);
-    background: rgba(255, 255, 255, 1);
-  }
-
-  .product-image-wrapper {
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    aspect-ratio: var(--aspect-ratio);
-    margin: 1.5rem 1.5rem 0;
-    border-radius: 20px;
-    box-shadow:
-      0 8px 25px rgba(30, 41, 59, 0.08),
-      0 0 0 1px rgba(226, 232, 240, 0.4) inset;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .product-card:hover .product-image-wrapper {
-    box-shadow:
-      0 15px 40px rgba(30, 41, 59, 0.15),
-      0 0 0 2px rgba(148, 163, 184, 0.2) inset;
-    transform: translateY(-4px);
-  }
-
-  .product-card[data-orientation="portrait"] {
-    --aspect-ratio: 3/4;
-  }
-
-  .product-card[data-orientation="landscape"] {
-    --aspect-ratio: 4/3;
-  }
-
-  .product-gallery {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    touch-action: pan-y pinch-zoom; /* Allow vertical scrolling but optimize for horizontal swipes */
-    cursor: grab;
-    transition: transform 0.1s ease;
-  }
-
-  .product-gallery:active {
-    cursor: grabbing;
-  }
-
-  .product-gallery.swiping {
-    transform: scale(0.98);
-    transition: transform 0.1s ease;
-  }
-
-  .product-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 20px;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    filter: saturate(0.95) brightness(1.05);
-    user-select: none;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-  }
-
-  .product-card:hover .product-image {
-    transform: scale(1.05);
-    filter: saturate(1) brightness(1.1);
-  }
-
-  .loading-indicator {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 30;
-  }
-
-  .spinner {
-    width: 24px;
-    height: 24px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top: 2px solid var(--primary);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  .product-info {
-    padding: 1.5rem 2rem 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-    flex-grow: 1;
-    position: relative;
-  }
-
-  .product-info::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 2rem;
-    right: 2rem;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(148, 163, 184, 0.2) 20%,
-      rgba(148, 163, 184, 0.4) 50%,
-      rgba(148, 163, 184, 0.2) 80%,
-      transparent 100%
-    );
-  }
-
-  .product-title {
-    font-family: "Libre Baskerville", serif;
-    font-size: 1.375rem;
+  .group-header span {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
-    line-height: 1.3;
-    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--text-dark);
+    white-space: nowrap;
   }
 
-  .product-description {
-    color: #64748b;
+  .group-header::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border-dark);
+  }
+
+  .group-subtitle {
+    margin: 0.5rem 0 var(--spacing-lg);
+    color: var(--text-light);
     font-size: 1rem;
     line-height: 1.6;
-    margin: 0 0 0.5rem 0;
-    min-height: 57px;
   }
 
-  .product-features {
-    list-style: none;
+  /* The curated grid sits inside .curated-group, which already provides
+     max-width + padding, so reset those on the nested grid. */
+  .curated-group .products-grid {
+    max-width: none;
     padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .feature-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.9rem;
-    color: #64748b;
-    line-height: 1.5;
-  }
-
-  .feature-item i {
-    color: #059669;
-    font-size: 0.8rem;
-    width: 18px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #ecfdf5;
-    border-radius: 50%;
-    flex-shrink: 0;
-    box-shadow: 0 2px 6px rgba(5, 150, 105, 0.15);
-  }
-
-  .feature-more {
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-    color: #2563eb;
-    font-weight: 500;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    background: #eff6ff;
-    border-radius: 6px;
-    border: 1px solid #dbeafe;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    width: fit-content;
-  }
-
-  .feature-more:hover {
-    background: #dbeafe;
-    border-color: #93c5fd;
-    transform: translateY(-1px);
-  }
-
-  .feature-more::after {
-    content: "↓";
-    font-size: 0.8rem;
-    transition: transform 0.2s ease;
-  }
-
-  .feature-more:hover::after {
-    transform: translateY(2px);
-  }
-
-  .product-badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: auto;
-    padding-top: 1rem;
-    justify-content: flex-start;
-  }
-
-  .badge {
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    white-space: nowrap;
-    border: 1px solid transparent;
-    transition: all 0.2s ease;
-  }
-
-  .badge-blue {
-    background: #eff6ff;
-    color: #1e40af;
-    border-color: #dbeafe;
-  }
-
-  .badge-green {
-    background: #ecfdf5;
-    color: #047857;
-    border-color: #a7f3d0;
-  }
-
-  .badge-purple {
-    background: #f5f3ff;
-    color: #5b21b6;
-    border-color: #c4b5fd;
-  }
-
-  .badge:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .zoom-button {
-    position: absolute;
-    top: var(--spacing-sm);
-    right: var(--spacing-sm);
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 20;
-    backdrop-filter: blur(4px);
-    opacity: 0;
-    box-shadow: 0 4px 12px rgba(30, 41, 59, 0.15);
-  }
-
-  .product-card:hover .zoom-button {
-    opacity: 1;
-  }
-
-  .zoom-button:hover {
-    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
-    color: white;
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(30, 41, 59, 0.25);
-  }
-
-  .gallery-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    cursor: pointer;
-    color: var(--text-dark);
-    transition: all 0.3s ease;
-    z-index: 20;
-    opacity: 0;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 4px 12px rgba(30, 41, 59, 0.15);
-  }
-
-  .gallery-prev {
-    left: 8px;
-  }
-
-  .gallery-next {
-    right: 8px;
-  }
-
-  .product-card:hover .gallery-nav {
-    opacity: 1;
-  }
-
-  .gallery-nav:hover {
-    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
-    color: rgb(255, 255, 255);
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 6px 20px rgba(30, 41, 59, 0.25);
-  }
-
-  .gallery-dots {
-    position: absolute;
-    bottom: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 4px;
-    z-index: 20;
-    background: rgba(255, 255, 255, 0.5);
-    padding: 4px 8px;
-    border-radius: var(--radius-full);
-    backdrop-filter: blur(4px);
-  }
-
-  .gallery-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.3);
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .gallery-dot.active {
-    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
-    transform: scale(1.2);
-    box-shadow: 0 2px 6px rgba(30, 41, 59, 0.25);
   }
 
   @media (max-width: 1200px) {
     .products-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
+      gap: 1.75rem;
     }
   }
 
@@ -623,659 +170,16 @@ const preloadImages = products.flatMap((product) =>
     .products-grid {
       grid-template-columns: 1fr;
       gap: 2rem;
-      padding: 0 1rem;
-      width: 100%;
-      max-width: 100%;
-      overflow-x: hidden;
+      max-width: 480px;
     }
 
-    .product-card {
-      max-width: 500px;
+    .curated-group .products-grid {
+      max-width: 480px;
       margin: 0 auto;
     }
 
-    .product-info {
-      padding: 1.5rem 1.5rem 2rem;
-      gap: 0.875rem;
-      align-items: center;
-      text-align: center;
+    .group-header span {
+      font-size: 1.4rem;
     }
-
-    .product-info::before {
-      left: 1.5rem;
-      right: 1.5rem;
-    }
-
-    .product-title {
-      font-size: 1.25rem;
-    }
-
-    .product-description {
-      font-size: 0.9rem;
-    }
-
-    .feature-item {
-      font-size: 0.85rem;
-      gap: 0.625rem;
-    }
-
-    .badge-animated {
-      font-size: 0.6rem;
-      padding: 0.4rem 0.9rem;
-      min-width: 70px;
-      max-width: 220px;
-      white-space: normal;
-      text-align: center;
-    }
-
-    .gallery-nav {
-      display: none;
-    }
-
-    /* Add swipe indicator for mobile */
-    .product-gallery::after {
-      content: "← Swipe →";
-      position: absolute;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-      z-index: 25;
-    }
-
-    .product-card:hover .product-gallery::after {
-      opacity: 1;
-    }
-
-    .product-gallery.show-swipe-hint::after {
-      opacity: 1;
-    }
-
-    /* Improve touch feedback */
-    .product-gallery {
-      touch-action: pan-y pinch-zoom;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .product-info {
-      padding: 1rem;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .product-badges {
-      gap: 0.5rem;
-    }
-
-    .badge-rotator {
-      min-height: 24px;
-    }
-
-    .badge-animated {
-      font-size: 0.75rem;
-      padding: 0.3rem 0.7rem;
-      min-width: 60px;
-      max-width: 100px;
-    }
-
-    .product-card {
-      width: 100%;
-      max-width: 100%;
-      margin: 0 auto;
-      box-sizing: border-box;
-    }
-
-    .product-image-wrapper {
-      width: calc(100% - 2rem);
-      margin: 1rem 1rem 0;
-      box-sizing: border-box;
-    }
-
-    .products {
-      width: 100%;
-      overflow-x: hidden;
-      box-sizing: border-box;
-    }
-  }
-
-  .image-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    box-sizing: border-box;
-  }
-
-  .image-modal.active {
-    display: flex;
-    opacity: 1;
-  }
-
-  .modal-content {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--spacing-xl);
-    box-sizing: border-box;
-    max-width: 100%;
-  }
-
-  .modal-image-container {
-    max-width: 90vw;
-    max-height: 90vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .modal-image {
-    max-width: 100%;
-    max-height: 90vh;
-    object-fit: contain;
-    border-radius: var(--radius-lg);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  }
-
-  .modal-close {
-    position: absolute;
-    top: var(--spacing-lg);
-    right: var(--spacing-lg);
-    background: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--text-dark);
-    transition: all 0.3s ease;
-    z-index: 1001;
-  }
-
-  .modal-close:hover {
-    background: var(--primary);
-    color: white;
-    transform: scale(1.1);
-  }
-
-  .modal-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--text-dark);
-    transition: all 0.3s ease;
-    z-index: 1001;
-    backdrop-filter: blur(4px);
-  }
-
-  .modal-prev {
-    left: var(--spacing-lg);
-  }
-
-  .modal-next {
-    right: var(--spacing-lg);
-  }
-
-  .modal-nav:hover {
-    background: var(--primary);
-    color: white;
-    transform: translateY(-50%) scale(1.1);
-  }
-
-  .badge-rotator {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-    min-height: 32px;
-    position: static;
-    z-index: 3;
-  }
-  .badge-animated {
-    display: inline-block;
-    padding: 0.5rem 1.1rem;
-    border-radius: 20px;
-    background: rgba(30, 41, 59, 0.9);
-    color: #fff;
-    font-size: 0.75rem;
-    font-weight: 600;
-    opacity: 1;
-    transition: all 0.4s;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 90px;
-    max-width: 280px;
-    text-align: center;
-    box-shadow:
-      0 4px 12px rgba(30, 41, 59, 0.25),
-      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    backdrop-filter: blur(10px);
-  }
-
-  .product-card:hover .badge-animated {
-    transform: translateY(-2px);
-    box-shadow:
-      0 6px 20px rgba(30, 41, 59, 0.35),
-      0 0 0 1px rgba(255, 255, 255, 0.15) inset;
-  }
-  .badge-animated.fade-out {
-    opacity: 0;
   }
 </style>
-
-<script is:inline>
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".badge-rotator").forEach((rotator) => {
-      const badgeEl = rotator.querySelector(".badge-animated");
-      let badges;
-      try {
-        badges = JSON.parse(rotator.getAttribute("data-badges"));
-      } catch {
-        badges = [];
-      }
-      if (!badgeEl || !badges.length) return;
-      let current = 0;
-      function showBadge(idx) {
-        badgeEl.classList.add("fade-out");
-        setTimeout(() => {
-          badgeEl.textContent = badges[idx];
-          badgeEl.classList.remove("fade-out");
-        }, 400);
-      }
-      setInterval(() => {
-        current = (current + 1) % badges.length;
-        showBadge(current);
-      }, 2500);
-      // Initialize
-      badgeEl.textContent = badges[0];
-    });
-  });
-</script>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // Initialize image galleries with optimized loading
-    document
-      .querySelectorAll<HTMLElement>(".product-gallery")
-      .forEach((gallery) => {
-        const images = Array.from(
-          gallery.querySelectorAll<HTMLImageElement>(".product-image"),
-        );
-        const dots = Array.from(
-          gallery.querySelectorAll<HTMLButtonElement>(".gallery-dot"),
-        );
-        const prevBtn =
-          gallery.querySelector<HTMLButtonElement>(".gallery-prev");
-        const nextBtn =
-          gallery.querySelector<HTMLButtonElement>(".gallery-next");
-        const zoomBtn =
-          gallery.querySelector<HTMLButtonElement>(".zoom-button");
-        const loadingIndicator =
-          gallery.querySelector<HTMLElement>(".loading-indicator");
-        let currentIndex = 0;
-
-        // Swipe functionality for mobile
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let touchEndX = 0;
-        let touchEndY = 0;
-        let isSwiping = false;
-        let touchStartTime = 0;
-
-        gallery.addEventListener(
-          "touchstart",
-          (event: TouchEvent) => {
-            touchStartX = event.changedTouches[0].screenX;
-            touchStartY = event.changedTouches[0].screenY;
-            touchStartTime = Date.now();
-            isSwiping = false;
-          },
-          { passive: false },
-        );
-
-        gallery.addEventListener(
-          "touchmove",
-          (event: TouchEvent) => {
-            if (!touchStartX || !touchStartY) return;
-
-            const currentX = event.changedTouches[0].screenX;
-            const currentY = event.changedTouches[0].screenY;
-            const deltaX = Math.abs(currentX - touchStartX);
-            const deltaY = Math.abs(currentY - touchStartY);
-
-            // If we've moved horizontally more than vertically, prevent scroll
-            if (deltaX > deltaY && deltaX > 10) {
-              event.preventDefault();
-              isSwiping = true;
-              gallery.classList.add("swiping");
-            }
-          },
-          { passive: false },
-        );
-
-        gallery.addEventListener(
-          "touchend",
-          (event: TouchEvent) => {
-            if (!touchStartX || !touchStartY) return;
-
-            const touchEndTime = Date.now();
-            const touchDuration = touchEndTime - touchStartTime;
-
-            touchEndX = event.changedTouches[0].screenX;
-            touchEndY = event.changedTouches[0].screenY;
-
-            // Remove swiping class
-            gallery.classList.remove("swiping");
-
-            // Only process swipe if it was a quick gesture (less than 500ms) and we detected swiping
-            if (isSwiping && touchDuration < 500) {
-              event.preventDefault();
-              handleSwipe();
-            }
-
-            // Reset touch state
-            touchStartX = 0;
-            touchStartY = 0;
-            touchEndX = 0;
-            touchEndY = 0;
-            touchStartTime = 0;
-            isSwiping = false;
-          },
-          { passive: false },
-        );
-
-        function handleSwipe() {
-          const swipeThreshold = 80; // Increased threshold for more reliable detection
-          const deltaX = touchEndX - touchStartX;
-          const deltaY = touchEndY - touchStartY;
-
-          // Check if it's a horizontal swipe and not a vertical scroll
-          if (
-            Math.abs(deltaX) > Math.abs(deltaY) &&
-            Math.abs(deltaX) > swipeThreshold
-          ) {
-            if (deltaX < -swipeThreshold) {
-              // Swiped left - next image
-              const newIndex = (currentIndex + 1) % images.length;
-              showImage(newIndex);
-            } else if (deltaX > swipeThreshold) {
-              // Swiped right - previous image
-              const newIndex =
-                (currentIndex - 1 + images.length) % images.length;
-              showImage(newIndex);
-            }
-          }
-        }
-
-        // Preload next and previous images for faster navigation
-        function preloadAdjacentImages() {
-          const nextIndex = (currentIndex + 1) % images.length;
-          const prevIndex = (currentIndex - 1 + images.length) % images.length;
-
-          // Preload next image
-          if (images[nextIndex] && !images[nextIndex].complete) {
-            const nextImg = new window.Image();
-            nextImg.src = images[nextIndex].src;
-          }
-
-          // Preload previous image
-          if (images[prevIndex] && !images[prevIndex].complete) {
-            const prevImg = new window.Image();
-            prevImg.src = images[prevIndex].src;
-          }
-        }
-
-        function showImage(index: number) {
-          // Show loading indicator
-          if (loadingIndicator) {
-            loadingIndicator.style.display = "flex";
-          }
-
-          // Hide all images
-          images.forEach((img) => {
-            img.style.display = "none";
-            img.style.opacity = "0";
-          });
-
-          // Update dots
-          dots.forEach((dot) => {
-            dot.classList.remove("active");
-          });
-
-          // Show target image
-          const targetImage = images[index];
-          if (!targetImage) return;
-
-          targetImage.style.display = "block";
-
-          // Check if image is already loaded
-          if (targetImage.complete && targetImage.naturalHeight !== 0) {
-            targetImage.style.opacity = "1";
-            if (loadingIndicator) {
-              loadingIndicator.style.display = "none";
-            }
-          } else {
-            // Wait for image to load
-            targetImage.onload = () => {
-              targetImage.style.opacity = "1";
-              if (loadingIndicator) {
-                loadingIndicator.style.display = "none";
-              }
-            };
-
-            // Fallback in case onload doesn't fire
-            setTimeout(() => {
-              targetImage.style.opacity = "1";
-              if (loadingIndicator) {
-                loadingIndicator.style.display = "none";
-              }
-            }, 1000);
-          }
-
-          if (dots[index]) {
-            dots[index].classList.add("active");
-          }
-          currentIndex = index;
-
-          // Preload adjacent images for next navigation
-          setTimeout(preloadAdjacentImages, 100);
-        }
-
-        if (prevBtn) {
-          prevBtn.onclick = (e: MouseEvent) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const newIndex = (currentIndex - 1 + images.length) % images.length;
-            showImage(newIndex);
-          };
-        }
-
-        if (nextBtn) {
-          nextBtn.onclick = (e: MouseEvent) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const newIndex = (currentIndex + 1) % images.length;
-            showImage(newIndex);
-          };
-        }
-
-        dots.forEach((dot, index) => {
-          dot.onclick = (e: MouseEvent) => {
-            e.preventDefault();
-            e.stopPropagation();
-            showImage(index);
-          };
-        });
-
-        if (zoomBtn) {
-          zoomBtn.onclick = (e: MouseEvent) => {
-            e.preventDefault();
-            e.stopPropagation();
-            if (images[currentIndex]) {
-              openModal(
-                images[currentIndex].src,
-                gallery as HTMLElement,
-                currentIndex,
-              );
-            }
-          };
-        }
-
-        // Initialize first image
-        showImage(0);
-
-        // Show swipe indicator briefly on mobile
-        if (window.innerWidth <= 768) {
-          setTimeout(() => {
-            gallery.classList.add("show-swipe-hint");
-            setTimeout(() => {
-              gallery.classList.remove("show-swipe-hint");
-            }, 2000);
-          }, 1000);
-        }
-      });
-
-    // Make product cards clickable
-    document.querySelectorAll<HTMLElement>(".product-card").forEach((card) => {
-      card.addEventListener("click", (e) => {
-        // Don't navigate if a button or an element within the gallery controls was clicked
-        if ((e.target as HTMLElement).closest("button")) {
-          return;
-        }
-
-        const slug = card.dataset.slug;
-        if (slug) {
-          window.location.href = `/products/${slug}`;
-        }
-      });
-    });
-
-    // Modal functionality
-    const modal = document.getElementById("imageModal");
-    const modalImg = document.getElementById(
-      "modalImage",
-    ) as HTMLImageElement | null;
-    const closeBtn = document.querySelector(".modal-close");
-    const modalPrevBtn = document.querySelector(".modal-prev");
-    const modalNextBtn = document.querySelector(".modal-next");
-
-    let currentGallery: HTMLElement | null = null;
-    let currentImageIndex = 0;
-
-    function openModal(imageSrc: string, gallery: HTMLElement, index: number) {
-      if (!modal || !modalImg) return;
-      modalImg.src = imageSrc;
-      modal.classList.add("active");
-      document.body.style.overflow = "hidden";
-      currentGallery = gallery;
-      currentImageIndex = index;
-      updateNavigationButtons();
-
-      // Trap focus within modal
-      modal.focus();
-    }
-
-    function closeModal() {
-      if (!modal) return;
-      modal.classList.remove("active");
-      document.body.style.overflow = "";
-      currentGallery = null;
-    }
-
-    function showNextImage() {
-      if (!currentGallery || !modalImg) return;
-      const images =
-        currentGallery.querySelectorAll<HTMLImageElement>(".product-image");
-      currentImageIndex = (currentImageIndex + 1) % images.length;
-      if (images[currentImageIndex]) {
-        modalImg.src = images[currentImageIndex].src;
-      }
-      updateNavigationButtons();
-    }
-
-    function showPrevImage() {
-      if (!currentGallery || !modalImg) return;
-      const images =
-        currentGallery.querySelectorAll<HTMLImageElement>(".product-image");
-      currentImageIndex =
-        (currentImageIndex - 1 + images.length) % images.length;
-      if (images[currentImageIndex]) {
-        modalImg.src = images[currentImageIndex].src;
-      }
-      updateNavigationButtons();
-    }
-
-    function updateNavigationButtons() {
-      if (!currentGallery || !modalPrevBtn || !modalNextBtn) return;
-      const images = currentGallery.querySelectorAll(".product-image");
-      (modalPrevBtn as HTMLElement).style.display =
-        images.length > 1 ? "flex" : "none";
-      (modalNextBtn as HTMLElement).style.display =
-        images.length > 1 ? "flex" : "none";
-    }
-
-    if (closeBtn) closeBtn.addEventListener("click", closeModal);
-
-    if (modal) {
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) {
-          closeModal();
-        }
-      });
-    }
-
-    if (modalPrevBtn) modalPrevBtn.addEventListener("click", showPrevImage);
-    if (modalNextBtn) modalNextBtn.addEventListener("click", showNextImage);
-
-    document.addEventListener("keydown", (e) => {
-      if (!modal || !modal.classList.contains("active")) return;
-
-      switch (e.key) {
-        case "Escape":
-          closeModal();
-          break;
-        case "ArrowLeft":
-          showPrevImage();
-          break;
-        case "ArrowRight":
-          showNextImage();
-          break;
-      }
-    });
-  });
-</script>

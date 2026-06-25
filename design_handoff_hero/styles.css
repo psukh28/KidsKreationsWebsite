@@ -1,0 +1,281 @@
+/* ============================================================
+   Kids Kreations — hero recreation + 3 right-visual directions
+   Warm taupe/cream palette, serif headings, minimal editorial.
+   ============================================================ */
+
+:root {
+  --cream:      #F4F1E9;  /* page background */
+  --cream-2:    #ECE7DB;  /* deeper cream for tiles */
+  --cream-3:    #E3DCCC;
+  --card:       #FBF9F3;  /* left content card */
+  --ink:        #463F33;  /* headline brown */
+  --ink-soft:   #574E3F;
+  --muted:      #8C8475;  /* body gray */
+  --muted-2:    #A8A091;
+  --gold:       #A89468;  /* logo / accent */
+  --gold-soft:  #BBAA82;
+  --gold-line:  #C7B891;
+  --btn:        #6B5F4F;
+  --btn-2:      #564C3E;
+  --sage:       #7E9A6B;
+  --sage-bg:    #E5EADD;
+  --line:       rgba(70,63,51,0.14);
+  --line-soft:  rgba(70,63,51,0.08);
+  --shadow:     0 30px 60px -28px rgba(70,55,35,0.30);
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --serif: "Spectral", Georgia, serif;
+  --display: "Cormorant Garamond", Georgia, serif;
+  --sans: "Mulish", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+/* ---------- Hero shell ---------- */
+.hero {
+  position: relative;
+  width: 1280px;
+  height: 940px;
+  background:
+    radial-gradient(120% 90% at 88% 30%, #FAF7F0 0%, var(--cream) 55%);
+  font-family: var(--sans);
+  color: var(--ink);
+  overflow: hidden;
+}
+/* faint vertical paper grain on the right */
+.hero::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg,
+    rgba(120,105,80,0.018) 0 2px, transparent 2px 9px);
+  pointer-events: none;
+}
+
+/* ---------- Top nav ---------- */
+.nav {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 92px;
+  display: flex; align-items: center;
+  padding: 0 56px;
+  border-bottom: 1px solid var(--line-soft);
+  z-index: 5;
+}
+.brand { display: flex; align-items: center; gap: 16px; }
+.monogram {
+  width: 50px; height: 50px;
+  background: linear-gradient(150deg, #B5A276, #9A865C);
+  border-radius: 4px;
+  display: grid; place-items: center;
+  box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.5),
+              inset 0 0 0 5px rgba(255,255,255,0), 0 1px 2px rgba(0,0,0,.12);
+  position: relative;
+}
+.monogram::before {
+  content: ""; position: absolute; inset: 5px;
+  border: 1px solid rgba(255,255,255,0.55);
+  border-radius: 2px;
+}
+.monogram span {
+  font-family: var(--display); font-weight: 600; font-style: italic;
+  font-size: 22px; color: #FBF7EC; letter-spacing: -1px;
+  position: relative; z-index: 1;
+}
+.brand-name {
+  font-family: var(--serif); font-weight: 500;
+  font-size: 28px; letter-spacing: 0.2px; color: var(--ink);
+}
+.nav-links {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 40px;
+  font-size: 17px; color: var(--ink-soft);
+}
+.nav-links a { color: inherit; text-decoration: none; position: relative; padding-bottom: 4px; }
+.nav-links a.active { color: var(--ink); }
+.nav-links a.active::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
+  height: 1.5px; background: var(--gold);
+}
+
+/* ---------- Layout grid ---------- */
+.hero-grid {
+  position: absolute; inset: 92px 56px 0 56px;
+  display: grid;
+  grid-template-columns: 540px 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+/* ---------- Left content card ---------- */
+.lcard {
+  background: linear-gradient(180deg, #FCFAF5, #F8F5EE);
+  border: 1px solid var(--line-soft);
+  border-radius: 22px;
+  padding: 52px 54px 56px;
+  box-shadow: 0 24px 50px -34px rgba(70,55,35,0.28);
+}
+.eyebrow {
+  font-size: 14px; font-weight: 700; letter-spacing: 3px;
+  color: var(--muted-2); text-transform: uppercase; margin: 0 0 26px;
+}
+.eyebrow b { color: var(--muted); font-weight: 700; border-bottom: 1.5px solid var(--gold-line); padding-bottom: 4px; }
+.headline {
+  font-family: var(--serif); font-weight: 600;
+  font-size: 56px; line-height: 1.04; letter-spacing: -0.5px;
+  color: var(--ink); margin: 0 0 22px;
+  text-wrap: balance;
+}
+.subhead {
+  font-size: 21px; color: var(--muted); margin: 0 0 30px; line-height: 1.4;
+}
+.checks { list-style: none; margin: 0 0 30px; padding: 0; display: flex; flex-direction: column; gap: 17px; }
+.checks li { display: flex; align-items: center; gap: 14px; font-size: 18px; color: var(--ink-soft); }
+.check {
+  flex: none; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--sage-bg); display: grid; place-items: center;
+}
+.check svg { width: 14px; height: 14px; }
+.lede { font-size: 18px; line-height: 1.55; color: var(--muted); margin: 0 0 34px; max-width: 430px; }
+.cta { display: flex; gap: 16px; }
+.btn {
+  font-family: var(--sans); font-size: 16.5px; font-weight: 600;
+  border-radius: 12px; padding: 16px 26px; cursor: pointer;
+  border: 1px solid transparent; transition: transform .15s ease;
+}
+.btn-primary {
+  background: linear-gradient(180deg, var(--btn), var(--btn-2));
+  color: #F6F1E6; box-shadow: 0 10px 22px -12px rgba(70,55,35,0.6);
+}
+.btn-ghost { background: transparent; border-color: var(--line); color: var(--ink-soft); }
+
+/* ---------- Right visual frame (shared) ---------- */
+.rstage { position: relative; width: 100%; height: 560px; }
+
+/* ===== Striped labeled placeholders ===== */
+.plate {
+  position: relative;
+  border: 1px solid rgba(120,100,70,0.18);
+  background-color: var(--cream-2);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(125,108,78,0.10) 0 8px,
+    rgba(125,108,78,0.0) 8px 18px);
+  overflow: hidden;
+}
+.plate.tone-weave  { background-color: #E4DAC6; background-image: repeating-linear-gradient(-45deg, rgba(120,100,65,.14) 0 7px, transparent 7px 15px); }
+.plate.tone-flat   { background-color: #F0EBDF; background-image: repeating-linear-gradient(-45deg, rgba(120,100,65,.08) 0 8px, transparent 8px 20px); }
+.plate.tone-soft   { background-color: #EBE3D4; background-image: repeating-linear-gradient(-45deg, rgba(120,100,65,.07) 0 9px, transparent 9px 22px); }
+.plate.tone-stitch { background-color: #DED2BB; background-image: repeating-linear-gradient(-45deg, rgba(120,100,65,.16) 0 5px, transparent 5px 12px); }
+.plate-meta {
+  position: absolute; left: 14px; bottom: 12px; right: 14px;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 10px;
+}
+.plate-tag {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.5px;
+  color: #6E5F45; text-transform: uppercase;
+  background: rgba(251,249,243,0.78); backdrop-filter: blur(2px);
+  padding: 5px 9px; border-radius: 3px; line-height: 1.3;
+}
+.plate-idx {
+  font-family: var(--mono); font-size: 11px; color: #8a7c61;
+  background: rgba(251,249,243,0.78); padding: 5px 8px; border-radius: 3px;
+}
+
+/* ---------- Full-viewport scaler for the standalone hero ---------- */
+.stage { position: fixed; inset: 0; background: var(--cream); overflow: hidden; }
+.scaler { position: absolute; top: 0; left: 0; width: 1280px; height: 940px; transform-origin: top left; }
+
+/* ============================================================
+   DIRECTION A — Atelier editorial grid (refined, with image slots)
+   ============================================================ */
+.dirA { display: grid; grid-template-columns: 1.18fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px; height: 560px; }
+.dirA .a-hero { grid-row: 1 / span 2; }
+.a-tile {
+  position: relative; border-radius: 6px; overflow: hidden;
+  border: 1px solid rgba(120,100,70,0.16);
+  box-shadow: 0 18px 40px -30px rgba(70,55,35,0.45);
+}
+.a-tile image-slot { width: 100%; height: 100%; display: block; }
+/* editorial caption that sits above the image */
+.a-cap {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 2;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 13px 14px;
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: .6px;
+  color: #6E5F45; text-transform: uppercase; line-height: 1.35;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(251,249,243,0.92) 0%, rgba(251,249,243,0) 100%);
+}
+.a-cap .num { color: var(--gold); font-weight: 500; }
+.a-foot {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  padding: 26px 14px 13px;
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: .6px;
+  color: #6E5F45; text-transform: uppercase; pointer-events: none;
+  background: linear-gradient(0deg, rgba(251,249,243,0.92) 0%, rgba(251,249,243,0) 100%);
+}
+
+/* ============================================================
+   DIRECTION B — Layered material study
+   ============================================================ */
+.dirB { position: relative; height: 560px; }
+.dirB .b-base {
+  position: absolute; top: 28px; right: 0; width: 78%; height: 440px;
+  border-radius: 6px; box-shadow: var(--shadow);
+}
+.dirB .b-card {
+  position: absolute; bottom: 0; left: 0; width: 50%; height: 320px;
+  border-radius: 6px; box-shadow: var(--shadow);
+  border: 6px solid #FBF9F3;
+}
+.dirB .b-seal {
+  position: absolute; top: 0; right: 36px;
+  width: 116px; height: 116px; border-radius: 50%;
+  background: linear-gradient(150deg,#B5A276,#937F55);
+  color: #FBF7EC; display: grid; place-items: center; text-align: center;
+  box-shadow: 0 14px 30px -14px rgba(80,60,30,.7);
+  border: 1px solid rgba(255,255,255,.3);
+}
+.dirB .b-seal .seal-in {
+  border: 1px solid rgba(255,255,255,.5); border-radius: 50%;
+  width: 96px; height: 96px; display: grid; place-items: center;
+}
+.dirB .b-seal b { display:block; font-family: var(--display); font-style: italic; font-size: 26px; line-height: 1; }
+.dirB .b-seal span { font-family: var(--mono); font-size: 8.5px; letter-spacing: 1.5px; text-transform: uppercase; }
+.dirB .b-vtext {
+  position: absolute; top: 40px; left: -6px;
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font-family: var(--mono); font-size: 11px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--muted-2);
+}
+
+/* ============================================================
+   DIRECTION C — Lookbook plate (type / image interplay)
+   ============================================================ */
+.dirC { position: relative; height: 560px; }
+.dirC .c-img {
+  position: absolute; top: 0; left: 70px; width: 380px; height: 470px;
+  border-radius: 4px; box-shadow: var(--shadow);
+}
+.dirC .c-word {
+  position: absolute; top: 150px; left: -18px;
+  font-family: var(--serif); font-style: italic; font-weight: 500;
+  font-size: 96px; line-height: .8; color: var(--ink);
+  letter-spacing: -2px; z-index: 3; text-shadow: 0 1px 0 rgba(251,249,243,.6);
+}
+.dirC .c-word small { display: block; font-family: var(--mono); font-style: normal; font-size: 12px; letter-spacing: 3px; color: var(--gold); margin-top: 14px; text-transform: uppercase; }
+.dirC .c-plate {
+  position: absolute; top: 6px; right: 10px; text-align: right;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 1px;
+  color: var(--muted); text-transform: uppercase; line-height: 1.6;
+}
+.dirC .c-strip {
+  position: absolute; bottom: 0; right: 0; width: 300px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+}
+.dirC .c-sw { height: 92px; border-radius: 4px; box-shadow: 0 10px 22px -16px rgba(70,55,35,.5); }
+.dirC .c-strip .lab { margin-top: 7px; font-family: var(--mono); font-size: 9.5px; letter-spacing: .5px; color: var(--muted); text-transform: uppercase; }
+/* crop ticks */
+.tick { position: absolute; width: 14px; height: 14px; z-index: 4; }
+.tick::before, .tick::after { content:""; position:absolute; background: var(--gold); }
+.tick::before { width: 14px; height: 1.5px; }
+.tick::after  { width: 1.5px; height: 14px; }
+.dirC .c-img .tick { } 
