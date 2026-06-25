@@ -370,8 +370,8 @@ const currentPath = Astro.url.pathname;
 </style>
 
 <script>
-  // Wait for DOM to be fully loaded
-  document.addEventListener("DOMContentLoaded", function() {
+  // Function to initialize navigation
+  function initNav() {
     // Add padding to body for fixed header
     document.body.style.paddingTop = "80px";
     
@@ -384,22 +384,25 @@ const currentPath = Astro.url.pathname;
       // Initialize aria-expanded attribute
       menuToggle.setAttribute("aria-expanded", "false");
       
-      // Add click event with debugging
-      menuToggle.addEventListener("click", function(e) {
+      // Remove old listeners by cloning
+      const newMenuToggle = menuToggle.cloneNode(true);
+      menuToggle.parentNode?.replaceChild(newMenuToggle, menuToggle);
+      
+      // Add click event
+      newMenuToggle.addEventListener("click", function(e) {
         e.preventDefault();
         e.stopPropagation();
         
-        // Toggle menu visibility
         const isActive = navMenu.classList.contains("active");
         
         if (isActive) {
           navMenu.classList.remove("active");
-          menuToggle.classList.remove("active");
-          menuToggle.setAttribute("aria-expanded", "false");
+          newMenuToggle.classList.remove("active");
+          newMenuToggle.setAttribute("aria-expanded", "false");
         } else {
           navMenu.classList.add("active");
-          menuToggle.classList.add("active");
-          menuToggle.setAttribute("aria-expanded", "true");
+          newMenuToggle.classList.add("active");
+          newMenuToggle.setAttribute("aria-expanded", "true");
         }
       });
       
@@ -409,10 +412,10 @@ const currentPath = Astro.url.pathname;
         if (navMenu.classList.contains("active") && 
             target && 
             !navMenu.contains(target) && 
-            !menuToggle.contains(target)) {
+            !newMenuToggle.contains(target)) {
           navMenu.classList.remove("active");
-          menuToggle.classList.remove("active");
-          menuToggle.setAttribute("aria-expanded", "false");
+          newMenuToggle.classList.remove("active");
+          newMenuToggle.setAttribute("aria-expanded", "false");
         }
       });
     }
@@ -424,5 +427,11 @@ const currentPath = Astro.url.pathname;
         link.classList.add("active");
       }
     });
-  });
+  }
+  
+  // Run on initial load
+  document.addEventListener("DOMContentLoaded", initNav);
+  
+  // Re-run on View Transitions navigation
+  document.addEventListener("astro:page-load", initNav);
 </script>
