@@ -6,13 +6,16 @@ import TrustedRegions from "../components/TrustedRegions.astro";
 import HeroSection from "../components/sections/HeroSection.astro";
 import FeaturesSection from "../components/sections/FeaturesSection.astro";
 import FeaturedProductsSection from "../components/sections/FeaturedProductsSection.astro";
+import LookbookTeaserSection from "../components/sections/LookbookTeaserSection.astro";
 import CTASection from "../components/sections/CTASection.astro";
 
 // Import assets
 import romper from "../assets/products/romper.webp";
 import giftset from "../assets/products/giftset.webp";
 import twopiece from "../assets/products/2piece.jpg";
-import herobaby from "../assets/home/herobaby5.png";
+import heroGarment from "../assets/home/home_01.png";
+import heroWeave from "../assets/home/home_02.png";
+import heroSeam from "../assets/home/home_03.png";
 import organiclogo from "../assets/icons/organic.svg";
 import palette from "../assets/icons/paintbrush.svg";
 import globe from "../assets/icons/international.svg";
@@ -24,6 +27,7 @@ import "../styles/ui/cards.css";
 import "../styles/utils/animations.css";
 import "../styles/pages/home.css";
 import "../styles/components/hero.css";
+import "../styles/components/hero-editorial.css";
 import "../styles/components/features.css";
 import "../styles/components/products.css";
 import "../styles/components/cta.css";
@@ -92,24 +96,31 @@ const featuredProducts = [
 ];
 ---
 
-<Layout title="Kids Kreations - Premium Infantwear Manufacturing">
+<Layout
+	title="Kids Kreations - Premium Infantwear Manufacturing"
+	canonicalPath="/"
+>
 	<Navigation />
 
 	<main>
 		<HeroSection
-			heroImage={herobaby}
+			tileGarment={heroGarment}
+			tileWeave={heroWeave}
+			tileSeam={heroSeam}
 			title="Your Partner in Premium Babywear Manufacturing"
-			subtitle="TRUSTED BY GLOBAL BRANDS"
+			subtitle="Trusted by <b>Global Brands</b>"
 			description="Large-scale OEM manufacturing for brands and retailers."
 			features={[
 				"Certified organic & sustainable production",
-				"In-house design, development & sampling", 
-				"Seamless global logistics and compliance"
+				"In-house design, development & sampling",
+				"Seamless global logistics and compliance",
 			]}
 			note="Chosen by international partners across Europe, the UK, the US, and Asia. Built for quality. Engineered for scale."
 		/>
 
 		<div class="section-connector"></div>
+		<LookbookTeaserSection />
+
 		<FeaturedProductsSection products={featuredProducts} />
 
 		<TrustedRegions />
@@ -140,7 +151,7 @@ const featuredProducts = [
 			},
 			{
 				threshold: 0.1,
-			},
+			}
 		);
 
 		document.querySelectorAll("[data-aos]").forEach((element) => {

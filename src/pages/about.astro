@@ -3,7 +3,6 @@ import Layout from "../layouts/Layout.astro";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import PageHero from "../components/sections/PageHero.astro";
-import StatsSection from "../components/sections/StatsSection.astro";
 import { Image } from "astro:assets";
 
 // Import styles
@@ -20,10 +19,6 @@ import fabricSpreader from "../assets/factory/spreader2.jpeg";
 import readingBook from "../assets/icons/reading-book.svg";
 import goal from "../assets/icons/goal.svg";
 import trust from "../assets/icons/trust.svg";
-import chronometer from "../assets/icons/chronometer.svg";
-import global from "../assets/icons/global.svg";
-import quality from "../assets/icons/quality.svg";
-import international from "../assets/icons/international2.svg";
 
 const values = [
   {
@@ -49,37 +44,12 @@ const values = [
   },
 ];
 
-const stats = [
-  {
-    number: "23+",
-    label: "Years of Experience",
-    icon: chronometer,
-    type: "image",
-  },
-  {
-    number: "30+",
-    label: "Global Brands",
-    icon: global,
-    type: "image",
-  },
-  {
-    number: "100%",
-    label: "Quality Guarantee",
-    icon: quality,
-    type: "image",
-  },
-  {
-    number: "50+",
-    label: "Countries Served",
-    icon: international,
-    type: "image",
-  },
-];
 ---
 
 <Layout
   title="About Kids Kreations – Trusted Babywear Manufacturer in Thailand"
   description="Discover the story, mission, and values of Kids Kreations, a leading OEM/ODM babywear manufacturer in Thailand since 2000. Learn why global brands trust us for premium infant garments and gift sets."
+  canonicalPath="/about"
 >
   <Navigation />
 
@@ -159,7 +129,7 @@ const stats = [
                     height={600}
                     quality={100}
                     class="factory-img"
-                    loading="eager"
+                    loading="lazy"
                   />
                   <figcaption>
                     Automatic fabric cutter for precise and efficient cutting
@@ -175,7 +145,7 @@ const stats = [
                     height={600}
                     quality={100}
                     class="factory-img"
-                    loading="eager"
+                    loading="lazy"
                   />
                   <figcaption>
                     High-quality stitching of baby garments using industrial
@@ -192,7 +162,7 @@ const stats = [
                     height={600}
                     quality={100}
                     class="factory-img"
-                    loading="eager"
+                    loading="lazy"
                   />
                   <figcaption>
                     Even and efficient fabric spreading to prepare for accurate
@@ -257,39 +227,6 @@ const stats = [
       </div>
     </section>
 
-    <section class="quote">
-      <div class="container">
-        <blockquote>
-          "We don't just manufacture clothes. We help brands grow through
-          craftsmanship, care, and consistency."
-        </blockquote>
-      </div>
-    </section>
-
-    <section class="stats">
-      <div class="container">
-        <div class="stats-grid">
-          {
-            stats.map((stat) => {
-              const iconSrc = (stat.icon as any)?.src || stat.icon;
-              return (
-                <div class="stat-card fade-in" data-aos="fade-up">
-                  <img
-                    src={iconSrc}
-                    alt={stat.label}
-                    width={50}
-                    height={50}
-                    class="stat-icon"
-                  />
-                  <div class="stat-number">{stat.number}</div>
-                  <p class="stat-label">{stat.label}</p>
-                </div>
-              );
-            })
-          }
-        </div>
-      </div>
-    </section>
   </main>
 
   <Footer />
@@ -310,7 +247,7 @@ const stats = [
 
   .presentation-container h2 {
     margin-bottom: 2rem;
-    color: #2c3e50;
+    color: var(--text-dark);
     font-size: 2.2rem;
   }
 
@@ -326,7 +263,7 @@ const stats = [
   }
 
   .presentation-wrapper iframe {
-    border: 1px solid #e0e0e0;
+    border: 1px solid var(--border);
     border-radius: 4px;
   }
 
@@ -338,7 +275,7 @@ const stats = [
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background-color: #3498db;
+    background-color: var(--primary-dark);
     color: white;
     padding: 0.75rem 1.5rem;
     border-radius: 4px;
@@ -347,22 +284,10 @@ const stats = [
   }
 
   .btn-primary:hover {
-    background-color: #2980b9;
+    background-color: var(--primary);
   }
 
   /* Page-specific styles only */
-  
-  /* Stats Section */
-  .stats {
-    padding: var(--spacing-xl, 3rem) 0;
-    background: linear-gradient(180deg, var(--background) 0%, var(--background-alt) 100%);
-  }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--spacing-lg, 2rem);
-  }
 
   /* About Content Section */
   .about-content {
@@ -465,23 +390,6 @@ const stats = [
     gap: var(--spacing-lg);
   }
 
-  /* Quote Section */
-  .quote {
-    padding: var(--spacing-xl) 0;
-    background: var(--background);
-  }
-
-  blockquote {
-    max-width: 800px;
-    margin: 0 auto;
-    font-family: "DM Serif Display", serif;
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
-    line-height: 1.4;
-    color: var(--text-dark);
-    text-align: center;
-    font-style: italic;
-  }
-
   @media (max-width: 1024px) {
     .image-grid {
       grid-template-columns: repeat(2, 1fr);
@@ -518,14 +426,8 @@ const stats = [
       height: 250px;
     }
 
-    .values-grid,
-    .stats-grid {
+    .values-grid {
       grid-template-columns: 1fr;
-    }
-
-    blockquote {
-      font-size: 1.5rem;
-      padding: 0 var(--spacing-md);
     }
   }
 

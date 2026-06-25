@@ -2,59 +2,118 @@
 import { Image } from "astro:assets";
 
 interface Props {
-	heroImage: ImageMetadata;
 	title: string;
 	subtitle: string;
 	description: string;
 	features?: string[];
 	note: string;
+	// Editorial image grid (right column)
+	tileGarment: ImageMetadata;
+	tileWeave: ImageMetadata;
+	tileSeam: ImageMetadata;
 }
 
-const { heroImage, title, subtitle, description, features, note } = Astro.props;
+const {
+	title,
+	subtitle,
+	description,
+	features,
+	note,
+	tileGarment,
+	tileWeave,
+	tileSeam,
+} = Astro.props;
 ---
 
-<section class="hero-section">
-	<div class="hero-content">
-		<div class="cotton-frame">
-			<div class="hero-text text-center max-w-md mx-auto">
-				<div class="hero-tagline">{subtitle}</div>
-				<h1 class="hero-heading leading-tight" set:html={title}></h1>
-				<p class="hero-subtext">{description}</p>
-				{features && (
-					<ul class="hero-features">
-						{features.map((feature) => (
-							<li class="hero-feature-item">{feature}</li>
-						))}
-					</ul>
-				)}
-				<p class="hero-note">{note}</p>
-				<div class="hero-cta">
-					<a
-						class="btn-primary text-sm font-semibold"
-						href="/products">Explore Products →</a
-					>
-					<a
-						class="btn-outline text-sm font-semibold"
-						href="https://calendar.app.google/Zi9Mo7C2ggxqiDym6"
-						target="_blank"
-						rel="noopener noreferrer">Schedule a Meeting</a
-					>
-				</div>
+<section class="kk-hero">
+	<div class="kk-hero-grid">
+		<!-- LEFT — content card -->
+		<div class="kk-card">
+			<p class="kk-eyebrow" set:html={subtitle}></p>
+			<h1 class="kk-headline">{title}</h1>
+			<p class="kk-subhead">{description}</p>
+			{features && (
+				<ul class="kk-checks">
+					{features.map((feature) => (
+						<li>
+							<span class="kk-check">
+								<svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+									<path
+										d="M2.5 7.5L5.5 10.5L11.5 3.5"
+										stroke="#5E7A4C"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"></path>
+								</svg>
+							</span>
+							{feature}
+						</li>
+					))}
+				</ul>
+			)}
+			<p class="kk-lede">{note}</p>
+			<div class="kk-cta">
+				<a class="kk-btn kk-btn-primary" href="/products">Explore Products →</a>
+				<a
+					class="kk-btn kk-btn-ghost"
+					href="https://calendar.app.google/Zi9Mo7C2ggxqiDym6"
+					target="_blank"
+					rel="noopener noreferrer">Schedule a Meeting</a
+				>
 			</div>
 		</div>
-		<div class="hero-image-wrapper max-w-md mx-auto mt-6">
-			<Image
-				src={heroImage}
-				alt="Happy baby in premium infantwear"
-				width={2200}
-				height={2200}
-				quality={90}
-				format="webp"
-				loading="eager"
-				decoding="sync"
-				fetchpriority="high"
-				class="hero-img"
-			/>
+
+		<!-- RIGHT — editorial image grid (the redesign) -->
+		<div class="kk-grid">
+			<figure class="kk-tile kk-tile--hero">
+				<figcaption class="kk-cap">
+					<span>Organic cotton · folded</span><span class="kk-num">01</span>
+				</figcaption>
+				<Image
+					src={tileGarment}
+					alt="Folded organic-cotton babywear flat-lay with wooden buttons"
+					width={760}
+					height={1040}
+					quality={85}
+					format="webp"
+					loading="eager"
+					fetchpriority="high"
+					class="kk-img"
+				/>
+				<figcaption class="kk-foot">Studio flat-lay</figcaption>
+			</figure>
+
+			<figure class="kk-tile">
+				<figcaption class="kk-cap">
+					<span>Interlock weave · 180gsm</span><span class="kk-num">02</span>
+				</figcaption>
+				<Image
+					src={tileWeave}
+					alt="Interlock knit fabric weave close-up"
+					width={620}
+					height={510}
+					quality={85}
+					format="webp"
+					loading="eager"
+					class="kk-img"
+				/>
+			</figure>
+
+			<figure class="kk-tile">
+				<figcaption class="kk-cap">
+					<span>Flatlock seam detail</span><span class="kk-num">03</span>
+				</figcaption>
+				<Image
+					src={tileSeam}
+					alt="Flatlock stitching seam detail macro"
+					width={620}
+					height={510}
+					quality={85}
+					format="webp"
+					loading="eager"
+					class="kk-img"
+				/>
+			</figure>
 		</div>
 	</div>
 </section>
